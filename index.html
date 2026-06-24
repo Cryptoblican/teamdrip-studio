@@ -729,12 +729,12 @@ async function generate() {
 }
 
 async function generateText(apiKey, prompt, school) {
-  // Try gpt-image-1 first, fall back to dall-e-3
+  // Try gpt-image-1 first (returns b64_json by default), fall back to dall-e-3 (returns url)
   for (const model of ['gpt-image-1', 'dall-e-3']) {
     try {
-      const body = model === 'gpt-image-1'
-        ? { model, prompt, n: 1, size: '1024x1024', output_format: 'b64_json' }
-        : { model, prompt, n: 1, size: '1024x1024', response_format: 'b64_json' };
+      const body = { model, prompt, n: 1, size: '1024x1024' };
+      // gpt-image-1 supports quality param; dall-e-3 supports quality too
+      if (model === 'gpt-image-1') body.quality = 'standard';
 
       const res = await fetch('https://api.openai.com/v1/images/generations', {
         method: 'POST',
@@ -746,9 +746,11 @@ async function generateText(apiKey, prompt, school) {
         continue;
       }
       const data = await res.json();
-      const b64 = data.data?.[0]?.b64_json;
-      if (!b64) continue;
-      return makeResult(b64, school);
+      const item = data.data?.[0];
+      if (!item) continue;
+      // gpt-image-1 returns b64_json; dall-e-3 returns url
+      if (item.b64_json) return makeResult(item.b64_json, school);
+      if (item.url)      return makeResultFromUrl(item.url, school);
     } catch(e) { if (model === 'dall-e-3') { showError(e.message); return null; } }
   }
   return null;
@@ -794,6 +796,17 @@ function makeResult(b64, school) {
   return {
     id: Date.now() + Math.random(),
     dataUrl: `data:image/png;base64,${b64}`,
+    isB64: true,
+    label: school,
+    meta: `${selectedGarment} · ${selectedStyle.split(' ').slice(0,3).join(' ')}`,
+    prompt: buildPrompt(),
+  };
+}
+function makeResultFromUrl(url, school) {
+  return {
+    id: Date.now() + Math.random(),
+    dataUrl: url,
+    isB64: false,
     label: school,
     meta: `${selectedGarment} · ${selectedStyle.split(' ').slice(0,3).join(' ')}`,
     prompt: buildPrompt(),
@@ -838,12 +851,24 @@ function renderResults() {
   `).join('');
 }
 
-function dl(id) {
+async function dl(id) {
   const r = results.find(x => x.id==id); if (!r) return;
-  const a = document.createElement('a');
-  a.href = r.dataUrl;
-  a.download = `teamdrip-${r.label.replace(/\s+/g,'-').toLowerCase()}-${Date.now()}.png`;
-  a.click();
+  const filename = `teamdrip-${r.label.replace(/\s+/g,'-').toLowerCase()}-${Date.now()}.png`;
+  if (r.isB64) {
+    const a = document.createElement('a');
+    a.href = r.dataUrl; a.download = filename; a.click();
+  } else {
+    // URL-based (dall-e-3): fetch then blob download
+    try {
+      const blob = await fetch(r.dataUrl).then(res => res.blob());
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    } catch {
+      // CORS fallback: open in new tab
+      window.open(r.dataUrl, '_blank');
+    }
+  }
 }
 
 function useAsRef(id) {
