@@ -455,42 +455,42 @@
 <script>
 // ── SCHOOL LIBRARY ─────────────────────────────────────────────────────────
 const SCHOOLS = [
-  // Utah HS — TeamDrip clients/prospects
-  { name: "Skyridge Falcons",        abbr: "SR",   p: "#1a3a6b", s: "#c0933a" },
-  { name: "Lehi Pioneers",           abbr: "LHS",  p: "#003087", s: "#ffffff" },
-  { name: "Copper Hills Grizzlies",  abbr: "CH",   p: "#1a5c2a", s: "#c8993a" },
-  { name: "Westlake Thunder",        abbr: "WHS",  p: "#111111", s: "#0047ab" },
-  { name: "Skyline Eagles",          abbr: "SKY",  p: "#002868", s: "#BF0A30" },
-  { name: "Mountain Ridge Sentinels",abbr: "MR",   p: "#003366", s: "#cc0000" },
-  { name: "Herriman Mustangs",       abbr: "HHS",  p: "#1a1a2e", s: "#e94560" },
-  { name: "Corner Canyon Chargers",  abbr: "CC",   p: "#002366", s: "#c8993a" },
-  { name: "Lone Peak Knights",       abbr: "LP",   p: "#003087", s: "#c0933a" },
-  { name: "Pleasant Grove Vikings",  abbr: "PG",   p: "#0a2463", s: "#d62828" },
-  { name: "Timpview Thunderbirds",   abbr: "TV",   p: "#b31312", s: "#ffffff" },
-  { name: "American Fork Cavemen",   abbr: "AF",   p: "#002147", s: "#c0933a" },
-  { name: "Layton Lancers",          abbr: "LHS",  p: "#003087", s: "#c8993a" },
-  { name: "Bountiful Redhawks",      abbr: "BHS",  p: "#b31312", s: "#ffffff" },
-  // Universities
-  { name: "University of Utah Utes", abbr: "UTAH", p: "#cc0000", s: "#ffffff" },
-  { name: "BYU Cougars",             abbr: "BYU",  p: "#002E5D", s: "#ffffff" },
-  { name: "Utah State Aggies",       abbr: "USU",  p: "#003263", s: "#ffffff" },
-  { name: "Weber State Wildcats",    abbr: "WSU",  p: "#4f2682", s: "#ffffff" },
-  { name: "SUU Thunderbirds",        abbr: "SUU",  p: "#c8102e", s: "#ffffff" },
-  { name: "Utah Valley Wolverines",  abbr: "UVU",  p: "#275d38", s: "#ffffff" },
-  // Arizona
-  { name: "Arizona Wildcats",        abbr: "UA",   p: "#CC0033", s: "#003366" },
-  { name: "Arizona State Sun Devils",abbr: "ASU",  p: "#8C1D40", s: "#FFC627" },
-  // Nevada
-  { name: "UNLV Runnin Rebels",      abbr: "UNLV", p: "#cf0a2c", s: "#898d8d" },
-  { name: "Nevada Wolf Pack",        abbr: "UNR",  p: "#003366", s: "#807F84" },
-  // Colorado
-  { name: "Colorado Buffaloes",      abbr: "CU",   p: "#CFB87C", s: "#000000" },
-  { name: "Colorado State Rams",     abbr: "CSU",  p: "#1E4D2B", s: "#C8C372" },
-  // Idaho
-  { name: "Boise State Broncos",     abbr: "BSU",  p: "#0033A0", s: "#d64309" },
-  { name: "Idaho Vandals",           abbr: "UI",   p: "#F1BE48", s: "#000000" },
-  // Custom
-  { name: "TeamDrip Demo",           abbr: "TD",   p: "#6c63ff", s: "#ff6584" },
+  // ── Utah 6A/5A HS — verified via Prep Sportswear / official sites ──────────
+  { name: "Skyridge Falcons",         abbr: "SR",   p: "#BF5700", s: "#7A8B8B" }, // burnt orange + steel gray
+  { name: "Lehi Pioneers",            abbr: "LHS",  p: "#003087", s: "#c0933a" }, // blue + gold (verify)
+  { name: "Copper Hills Grizzlies",   abbr: "CH",   p: "#002D62", s: "#355E3B" }, // navy + hunter green
+  { name: "Westlake Thunder",         abbr: "WHS",  p: "#002D62", s: "#6CACE4" }, // navy + columbia blue
+  { name: "Herriman Mustangs",        abbr: "HHS",  p: "#002D62", s: "#800000" }, // navy + maroon
+  { name: "Corner Canyon Chargers",   abbr: "CC",   p: "#002D62", s: "#A8A9AD" }, // navy + silver
+  { name: "Lone Peak Knights",        abbr: "LP",   p: "#800000", s: "#CFB53B" }, // maroon + vegas gold
+  { name: "Mountain Ridge Sentinels", abbr: "MR",   p: "#003366", s: "#cc0000" }, // verify
+  { name: "Skyline Eagles",           abbr: "SKY",  p: "#002868", s: "#BF0A30" }, // verify
+  { name: "Pleasant Grove Vikings",   abbr: "PG",   p: "#4B0082", s: "#FFD700" }, // verify
+  { name: "Timpview Thunderbirds",    abbr: "TV",   p: "#b31312", s: "#ffffff" }, // verify
+  { name: "American Fork Cavemen",    abbr: "AF",   p: "#CC0000", s: "#ffffff" }, // verify
+  { name: "Layton Lancers",           abbr: "LHS",  p: "#003087", s: "#c8993a" }, // verify
+  { name: "Bountiful Redhawks",       abbr: "BHS",  p: "#b31312", s: "#ffffff" }, // verify
+  // ── Utah Universities — verified ─────────────────────────────────────────
+  { name: "University of Utah Utes",  abbr: "UTAH", p: "#CC0000", s: "#ffffff" },
+  { name: "BYU Cougars",              abbr: "BYU",  p: "#002E5D", s: "#ffffff" },
+  { name: "Utah State Aggies",        abbr: "USU",  p: "#003263", s: "#ffffff" },
+  { name: "Weber State Wildcats",     abbr: "WSU",  p: "#4f2682", s: "#ffffff" },
+  { name: "SUU Thunderbirds",         abbr: "SUU",  p: "#c8102e", s: "#ffffff" },
+  { name: "Utah Valley Wolverines",   abbr: "UVU",  p: "#275d38", s: "#ffffff" },
+  // ── Arizona ───────────────────────────────────────────────────────────────
+  { name: "Arizona Wildcats",         abbr: "UA",   p: "#CC0033", s: "#003366" },
+  { name: "Arizona State Sun Devils", abbr: "ASU",  p: "#8C1D40", s: "#FFC627" },
+  // ── Nevada ────────────────────────────────────────────────────────────────
+  { name: "UNLV Runnin Rebels",       abbr: "UNLV", p: "#cf0a2c", s: "#898d8d" },
+  { name: "Nevada Wolf Pack",         abbr: "UNR",  p: "#003366", s: "#807F84" },
+  // ── Colorado ──────────────────────────────────────────────────────────────
+  { name: "Colorado Buffaloes",       abbr: "CU",   p: "#CFB87C", s: "#000000" },
+  { name: "Colorado State Rams",      abbr: "CSU",  p: "#1E4D2B", s: "#C8C372" },
+  // ── Idaho ─────────────────────────────────────────────────────────────────
+  { name: "Boise State Broncos",      abbr: "BSU",  p: "#0033A0", s: "#d64309" },
+  { name: "Idaho Vandals",            abbr: "UI",   p: "#F1BE48", s: "#000000" },
+  // ── Custom ────────────────────────────────────────────────────────────────
+  { name: "TeamDrip Demo",            abbr: "TD",   p: "#6c63ff", s: "#ff6584" },
 ];
 
 let filteredSchools = [...SCHOOLS];
