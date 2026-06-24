@@ -298,16 +298,17 @@
           <input type="text" id="mascot" placeholder="e.g. SR, FALCONS, SKYRIDGE" />
         </div>
 
-        <div class="color-row">
-          <div class="form-group">
-            <label>Primary Color</label>
+        <div style="display:flex; align-items:flex-end; gap:8px;">
+          <div class="form-group" style="flex:1; margin-bottom:0">
+            <label>Primary Color <span style="font-size:0.7rem; opacity:0.6">(base garment)</span></label>
             <div class="color-input-wrap">
               <input type="color" id="primaryColorPicker" value="#1a3a6b" oninput="syncColor('primary')" />
               <input type="text" id="primaryColor" value="#1a3a6b" placeholder="#1a3a6b" oninput="syncPicker('primary')" />
             </div>
           </div>
-          <div class="form-group">
-            <label>Secondary Color</label>
+          <button onclick="swapColors()" title="Swap colors" style="flex-shrink:0; margin-bottom:1px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text2); width:34px; height:34px; font-size:1rem; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">⇄</button>
+          <div class="form-group" style="flex:1; margin-bottom:0">
+            <label>Secondary Color <span style="font-size:0.7rem; opacity:0.6">(text / logo)</span></label>
             <div class="color-input-wrap">
               <input type="color" id="secondaryColorPicker" value="#c0933a" oninput="syncColor('secondary')" />
               <input type="text" id="secondaryColor" value="#c0933a" placeholder="#c0933a" oninput="syncPicker('secondary')" />
@@ -554,6 +555,14 @@ function syncColor(w) {
 function syncPicker(w) {
   const v = document.getElementById(w+'Color').value;
   if (/^#[0-9A-Fa-f]{6}$/.test(v)) document.getElementById(w+'ColorPicker').value = v;
+}
+function swapColors() {
+  const p = document.getElementById('primaryColor').value;
+  const s = document.getElementById('secondaryColor').value;
+  document.getElementById('primaryColor').value = s;
+  document.getElementById('primaryColorPicker').value = s;
+  document.getElementById('secondaryColor').value = p;
+  document.getElementById('secondaryColorPicker').value = p;
 }
 
 // ── SCHOOL DROPDOWN ────────────────────────────────────────────────────────
