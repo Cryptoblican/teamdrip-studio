@@ -737,31 +737,28 @@ async function generate() {
 }
 
 async function generateText(apiKey, prompt, school) {
-  // Try gpt-image-1 first (returns b64_json by default), fall back to dall-e-3 (returns url)
-  for (const model of ['gpt-image-1', 'dall-e-3']) {
-    try {
-      const body = { model, prompt, n: 1, size: '1024x1024' };
-      // gpt-image-1 supports quality param; dall-e-3 supports quality too
-      if (model === 'gpt-image-1') body.quality = 'standard';
-
-      const res = await fetch('https://api.openai.com/v1/images/generations', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      if (!res.ok) {
-        if (model === 'dall-e-3') { const e = await res.json(); showError(e?.error?.message || `API error ${res.status}`); return null; }
-        continue;
-      }
-      const data = await res.json();
-      const item = data.data?.[0];
-      if (!item) continue;
-      // gpt-image-1 returns b64_json; dall-e-3 returns url
-      if (item.b64_json) return makeResult(item.b64_json, school);
-      if (item.url)      return makeResultFromUrl(item.url, school);
-    } catch(e) { if (model === 'dall-e-3') { showError(e.message); return null; } }
+  try {
+    const res = await fetch('https://api.openai.com/v1/images/generations', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'gpt-image-1', prompt, n: 1, size: '1024x1024' }),
+    });
+    if (!res.ok) {
+      const e = await res.json();
+      showError(e?.error?.message || `API error ${res.status}`);
+      return null;
+    }
+    const data = await res.json();
+    const item = data.data?.[0];
+    if (!item) { showError('No image returned from API.'); return null; }
+    if (item.b64_json) return makeResult(item.b64_json, school);
+    if (item.url)      return makeResultFromUrl(item.url, school);
+    showError('Unexpected API response format.');
+    return null;
+  } catch(e) {
+    showError('Network error: ' + e.message);
+    return null;
   }
-  return null;
 }
 
 async function generateWithRefs(apiKey, prompt, school) {
@@ -786,7 +783,6 @@ async function generateWithRefs(apiKey, prompt, school) {
     });
 
     if (!res.ok) {
-      // Fallback to text-only
       return await generateText(apiKey, prompt, school);
     }
 
