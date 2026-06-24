@@ -286,7 +286,7 @@
           <label>School or Client Name</label>
           <div class="school-row">
             <div class="form-group" style="margin-bottom:0; position:relative; flex:1">
-              <input type="text" id="schoolName" placeholder="e.g. Skyridge Falcons" oninput="filterSchools()" onblur="hideDropdown()" onkeydown="handleSchoolKey(event)" autocomplete="off" />
+              <input type="text" id="schoolName" placeholder="e.g. Skyridge Falcons" oninput="filterSchools()" onfocus="filterSchools()" onblur="hideDropdown()" onkeydown="handleSchoolKey(event)" autocomplete="off" />
               <div class="school-dropdown" id="schoolDropdown" style="display:none"></div>
             </div>
             <button class="school-preset-btn" onclick="toggleDropdown()">📚 Presets</button>
@@ -524,7 +524,6 @@ let selectedCount = 1;
 // ── INIT ───────────────────────────────────────────────────────────────────
 window.onload = () => {
   updateApiStatus();
-  renderSchoolDropdown(SCHOOLS);
 };
 
 // ── API KEY ────────────────────────────────────────────────────────────────
