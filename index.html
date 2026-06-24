@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TeamDrip Mockup Studio</title>
+  <style>
+    :root {
+      --bg: #0f0f13;
+      --surface: #1a1a24;
+      --surface2: #22222f;
+      --border: #2e2e40;
+      --accent: #6c63ff;
+      --accent2: #ff6584;
+      --text: #e8e8f0;
+      --text2: #9090a8;
+      --success: #38d9a9;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo svg { width: 32px; height: 32px; }
+    .logo-text { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+    .logo-text span { color: var(--accent); }
+    .api-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text2);
+      cursor: pointer;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    .api-status:hover { border-color: var(--accent); color: var(--text); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+    .dot.active { background: var(--success); box-shadow: 0 0 6px var(--success); }
+
+    /* LAYOUT */
+    .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+    .layout { display: grid; grid-template-columns: 360px 1fr; gap: 28px; align-items: start; }
+
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { padding: 12px 16px; }
+      .container { padding: 20px 16px; }
+    }
+
+    /* PANEL */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .panel-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 20px;
+    }
+
+    /* FORM */
+    .form-group { margin-bottom: 16px; }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text2);
+      margin-bottom: 6px;
+      letter-spacing: 0.3px;
+    }
+    input[type="text"], input[type="password"], select, textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
+    }
+    select option { background: var(--surface2); }
+    textarea { resize: vertical; min-height: 72px; }
+
+    .color-row { display: flex; gap: 10px; }
+    .color-row .form-group { flex: 1; }
+    .color-input-wrap { display: flex; gap: 8px; align-items: center; }
+    input[type="color"] {
+      width: 36px; height: 36px; border: 1px solid var(--border);
+      border-radius: 6px; padding: 2px; cursor: pointer;
+      background: var(--surface2);
+    }
+    .color-input-wrap input[type="text"] { flex: 1; }
+
+    .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+      color: var(--text2);
+      user-select: none;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--text); }
+    .chip.selected { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+
+    .count-row { display: flex; gap: 8px; }
+    .count-btn {
+      flex: 1; padding: 8px; border: 1px solid var(--border);
+      border-radius: 8px; background: transparent; color: var(--text2);
+      font-size: 0.85rem; cursor: pointer; transition: all 0.2s; font-family: inherit;
+    }
+    .count-btn:hover { border-color: var(--accent); color: var(--text); }
+    .count-btn.selected { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+
+    .generate-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+      margin-top: 8px;
+    }
+    .generate-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(108,99,255,0.4); }
+    .generate-btn:active { transform: translateY(0); }
+    .generate-btn:disabled {
+      background: var(--surface2); color: var(--text2); cursor: not-allowed;
+      transform: none; box-shadow: none;
+    }
+
+    /* RESULTS */
+    .results-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .results-title { font-size: 1.1rem; font-weight: 700; }
+    .results-sub { font-size: 0.8rem; color: var(--text2); margin-top: 2px; }
+    .clear-btn {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text2); border-radius: 6px; padding: 6px 12px;
+      font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
+    }
+    .clear-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+    .image-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .image-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+    .image-card img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; }
+    .image-card-body { padding: 12px; }
+    .image-card-label { font-size: 0.8rem; font-weight: 600; margin-bottom: 4px; }
+    .image-card-meta { font-size: 0.75rem; color: var(--text2); margin-bottom: 10px; }
+    .image-card-actions { display: flex; gap: 8px; }
+    .dl-btn {
+      flex: 1; padding: 7px; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); font-size: 0.8rem; cursor: pointer;
+      text-align: center; text-decoration: none; transition: all 0.2s;
+      font-family: inherit;
+    }
+    .dl-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .dl-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+    .dl-btn.primary:hover { background: #5a52e0; border-color: #5a52e0; color: #fff; }
+
+    /* LOADING */
+    .loading-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .skeleton {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .skeleton-img {
+      width: 100%; aspect-ratio: 1;
+      background: linear-gradient(90deg, var(--surface2) 25%, var(--surface) 50%, var(--surface2) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .skeleton-body { padding: 12px; }
+    .skeleton-line { height: 10px; border-radius: 4px; background: var(--surface2); margin-bottom: 8px; }
+    .skeleton-line.short { width: 60%; }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center; padding: 60px 20px;
+      border: 2px dashed var(--border); border-radius: var(--radius);
+    }
+    .empty-icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+    .empty-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; color: var(--text2); }
+    .empty-sub { font-size: 0.85rem; color: var(--text2); opacity: 0.7; }
+
+    /* API KEY MODAL */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7); z-index: 1000;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px; max-width: 440px; width: 90%;
+    }
+    .modal h2 { font-size: 1.2rem; margin-bottom: 8px; }
+    .modal p { font-size: 0.85rem; color: var(--text2); margin-bottom: 20px; line-height: 1.6; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .btn-primary {
+      flex: 1; padding: 11px; background: var(--accent);
+      border: none; border-radius: 8px; color: #fff;
+      font-size: 0.9rem; font-weight: 700; cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary:hover { background: #5a52e0; }
+    .btn-ghost {
+      padding: 11px 18px; background: transparent;
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--text2); font-size: 0.9rem; cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-ghost:hover { border-color: var(--text2); color: var(--text); }
+
+    /* ERROR */
+    .error-banner {
+      background: rgba(255,101,132,0.1); border: 1px solid rgba(255,101,132,0.3);
+      border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+      font-size: 0.85rem; color: #ff8fa3; display: none;
+    }
+    .error-banner.show { display: block; }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+    /* PROMPT PREVIEW */
+    .prompt-preview {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 12px; font-size: 0.78rem;
+      color: var(--text2); line-height: 1.5; margin-top: 12px;
+      font-style: italic; display: none;
+    }
+    .prompt-preview.show { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 32 32" fill="none">
+      <rect width="32" height="32" rx="8" fill="#6c63ff"/>
+      <path d="M8 22L12 10L16 18L20 13L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="logo-text">Team<span>Drip</span> Studio</div>
+  </div>
+  <div class="api-status" id="apiStatusBtn" onclick="openModal()">
+    <div class="dot" id="apiDot"></div>
+    <span id="apiStatusText">Set API Key</span>
+  </div>
+</nav>
+
+<!-- API KEY MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h2>🔑 OpenAI API Key</h2>
+    <p>
+      Your key is stored only in your browser (localStorage) — never sent anywhere except directly to OpenAI.
+      <br><br>
+      Get your key at <strong>platform.openai.com/api-keys</strong>. Each image costs ~$0.04–0.08.
+    </p>
+    <div class="form-group">
+      <label>API Key</label>
+      <input type="password" id="apiKeyInput" placeholder="sk-proj-..." autocomplete="off" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveApiKey()">Save Key</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+  <div class="layout">
+
+    <!-- LEFT: FORM -->
+    <div>
+      <div class="panel">
+        <div class="panel-title">Mockup Settings</div>
+
+        <div class="form-group">
+          <label>School / Entity Name</label>
+          <input type="text" id="schoolName" placeholder="e.g. Skyridge Falcons" />
+        </div>
+
+        <div class="form-group">
+          <label>Abbreviation or Mascot Text</label>
+          <input type="text" id="mascot" placeholder="e.g. SR, FALCONS, SKYRIDGE" />
+        </div>
+
+        <div class="color-row">
+          <div class="form-group">
+            <label>Primary Color</label>
+            <div class="color-input-wrap">
+              <input type="color" id="primaryColorPicker" value="#1a3a6b" oninput="syncColor('primary')" />
+              <input type="text" id="primaryColor" value="#1a3a6b" placeholder="#1a3a6b" oninput="syncPicker('primary')" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Secondary Color</label>
+            <div class="color-input-wrap">
+              <input type="color" id="secondaryColorPicker" value="#c0933a" oninput="syncColor('secondary')" />
+              <input type="text" id="secondaryColor" value="#c0933a" placeholder="#c0933a" oninput="syncPicker('secondary')" />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Garment Type</label>
+          <div class="chip-group" id="garmentChips">
+            <div class="chip selected" data-value="hoodie" onclick="selectChip('garment', this)">Hoodie</div>
+            <div class="chip" data-value="bomber jacket" onclick="selectChip('garment', this)">Bomber Jacket</div>
+            <div class="chip" data-value="t-shirt" onclick="selectChip('garment', this)">T-Shirt</div>
+            <div class="chip" data-value="quarter-zip pullover" onclick="selectChip('garment', this)">Quarter-Zip</div>
+            <div class="chip" data-value="crewneck sweatshirt" onclick="selectChip('garment', this)">Crewneck</div>
+            <div class="chip" data-value="polo shirt" onclick="selectChip('garment', this)">Polo</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Text Style</label>
+          <div class="chip-group" id="styleChips">
+            <div class="chip selected" data-value="bold collegiate block letters" onclick="selectChip('style', this)">Collegiate Block</div>
+            <div class="chip" data-value="arched varsity lettering" onclick="selectChip('style', this)">Arch / Varsity</div>
+            <div class="chip" data-value="clean modern sans-serif" onclick="selectChip('style', this)">Modern Sans</div>
+            <div class="chip" data-value="athletic script" onclick="selectChip('style', this)">Script</div>
+            <div class="chip" data-value="embroidered patch style" onclick="selectChip('style', this)">Embroidered Patch</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Shot Style</label>
+          <div class="chip-group" id="shotChips">
+            <div class="chip selected" data-value="worn on athletic model, studio background" onclick="selectChip('shot', this)">Model Wearing</div>
+            <div class="chip" data-value="professional flat lay on white background" onclick="selectChip('shot', this)">Flat Lay</div>
+            <div class="chip" data-value="hanging on wall hanger, clean background" onclick="selectChip('shot', this)">Hanging</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Extra Details (optional)</label>
+          <textarea id="extraDetails" placeholder="e.g. add a falcon logo on the sleeve, dark background, vintage washed look..."></textarea>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="form-group">
+          <label>Number of Images</label>
+          <div class="count-row" id="countBtns">
+            <button class="count-btn selected" data-value="1" onclick="selectCount(this)">1</button>
+            <button class="count-btn" data-value="2" onclick="selectCount(this)">2</button>
+            <button class="count-btn" data-value="3" onclick="selectCount(this)">3</button>
+            <button class="count-btn" data-value="4" onclick="selectCount(this)">4</button>
+          </div>
+        </div>
+
+        <div class="error-banner" id="errorBanner"></div>
+
+        <button class="generate-btn" id="generateBtn" onclick="generate()">
+          ✦ Generate Mockups
+        </button>
+
+        <div class="prompt-preview" id="promptPreview"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: RESULTS -->
+    <div>
+      <div class="results-header">
+        <div>
+          <div class="results-title">Generated Mockups</div>
+          <div class="results-sub" id="resultsCount">No mockups yet — fill out the form and hit generate</div>
+        </div>
+        <button class="clear-btn" onclick="clearResults()">Clear All</button>
+      </div>
+
+      <div id="loadingGrid" class="loading-grid" style="display:none"></div>
+      <div id="imageGrid" class="image-grid"></div>
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">👕</div>
+        <div class="empty-title">No mockups yet</div>
+        <div class="empty-sub">Fill out the form on the left and hit Generate</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // State
+  let selectedGarment = 'hoodie';
+  let selectedStyle = 'bold collegiate block letters';
+  let selectedShot = 'worn on athletic model, studio background';
+  let selectedCount = 1;
+  let results = [];
+  let isLoading = false;
+
+  // Init
+  window.onload = () => {
+    updateApiStatus();
+  };
+
+  // Color sync
+  function syncColor(which) {
+    const picker = document.getElementById(which + 'ColorPicker');
+    const text = document.getElementById(which + 'Color');
+    text.value = picker.value;
+  }
+  function syncPicker(which) {
+    const text = document.getElementById(which + 'Color');
+    const picker = document.getElementById(which + 'ColorPicker');
+    if (/^#[0-9A-Fa-f]{6}$/.test(text.value)) picker.value = text.value;
+  }
+
+  // Chip selection
+  function selectChip(group, el) {
+    const parent = el.parentElement;
+    parent.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    if (group === 'garment') selectedGarment = el.dataset.value;
+    if (group === 'style') selectedStyle = el.dataset.value;
+    if (group === 'shot') selectedShot = el.dataset.value;
+  }
+
+  function selectCount(btn) {
+    document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedCount = parseInt(btn.dataset.value);
+  }
+
+  // API Key modal
+  function openModal() {
+    const key = localStorage.getItem('openai_api_key') || '';
+    document.getElementById('apiKeyInput').value = key;
+    document.getElementById('modalOverlay').classList.add('open');
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+  }
+  function saveApiKey() {
+    const key = document.getElementById('apiKeyInput').value.trim();
+    if (!key) return;
+    localStorage.setItem('openai_api_key', key);
+    closeModal();
+    updateApiStatus();
+  }
+  document.getElementById('modalOverlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  });
+  function updateApiStatus() {
+    const key = localStorage.getItem('openai_api_key');
+    const dot = document.getElementById('apiDot');
+    const text = document.getElementById('apiStatusText');
+    if (key) {
+      dot.classList.add('active');
+      text.textContent = 'API Key ✓';
+    } else {
+      dot.classList.remove('active');
+      text.textContent = 'Set API Key';
+    }
+  }
+
+  // Build prompt
+  function buildPrompt() {
+    const school = document.getElementById('schoolName').value.trim() || 'School Name';
+    const mascot = document.getElementById('mascot').value.trim();
+    const primary = document.getElementById('primaryColor').value;
+    const secondary = document.getElementById('secondaryColor').value;
+    const extra = document.getElementById('extraDetails').value.trim();
+
+    const primaryName = hexToColorName(primary);
+    const secondaryName = hexToColorName(secondary);
+
+    let prompt = `Professional athletic apparel product photography. `;
+    prompt += `${selectedShot}. `;
+    prompt += `${selectedGarment.charAt(0).toUpperCase() + selectedGarment.slice(1)} in ${primaryName} (${primary}) as the primary color`;
+    if (secondary) prompt += `, ${secondaryName} (${secondary}) accent details`;
+    prompt += `. `;
+    prompt += `Front chest features "${school}" in ${selectedStyle}`;
+    if (mascot) prompt += ` with "${mascot}" below`;
+    prompt += `. `;
+    prompt += `High-quality commercial apparel photography. Clean, sharp, professional. Suitable for a sales presentation or catalog.`;
+    if (extra) prompt += ` Additional details: ${extra}`;
+
+    return prompt;
+  }
+
+  function hexToColorName(hex) {
+    // Very rough mapping for common colors
+    const h = hex.toLowerCase();
+    if (h.match(/#[0-9a-f]{2}[0-1][0-9a-f][0-9a-f]{2}/) || h.includes('00') && h.includes('ff')) return 'navy blue';
+    const r = parseInt(h.slice(1,3),16), g = parseInt(h.slice(3,5),16), b = parseInt(h.slice(5,7),16);
+    if (r > 200 && g < 100 && b < 100) return 'red';
+    if (r < 80 && g < 80 && b > 160) return 'navy blue';
+    if (r < 50 && g < 50 && b > 200) return 'royal blue';
+    if (r > 200 && g > 150 && b < 80) return 'gold';
+    if (r > 200 && g > 200 && b < 80) return 'yellow';
+    if (r < 50 && g < 50 && b < 50) return 'black';
+    if (r > 220 && g > 220 && b > 220) return 'white';
+    if (r > 150 && g < 80 && b > 150) return 'purple';
+    if (r < 80 && g > 150 && b < 80) return 'green';
+    if (r > 180 && g > 100 && b < 80) return 'orange';
+    if (r > 150 && g > 150 && b > 150) return 'gray';
+    return hex; // fallback to hex
+  }
+
+  // Generate
+  async function generate() {
+    const apiKey = localStorage.getItem('openai_api_key');
+    if (!apiKey) { openModal(); return; }
+
+    const school = document.getElementById('schoolName').value.trim();
+    if (!school) {
+      showError('Please enter a school or entity name.');
+      return;
+    }
+
+    hideError();
+    isLoading = true;
+    document.getElementById('generateBtn').disabled = true;
+    document.getElementById('generateBtn').textContent = '⏳ Generating...';
+
+    const prompt = buildPrompt();
+    document.getElementById('promptPreview').textContent = '📝 Prompt: ' + prompt;
+    document.getElementById('promptPreview').classList.add('show');
+
+    // Show skeletons
+    showSkeletons(selectedCount);
+    document.getElementById('emptyState').style.display = 'none';
+
+    const promises = [];
+    for (let i = 0; i < selectedCount; i++) {
+      promises.push(generateOne(apiKey, prompt, school));
+    }
+
+    const newResults = await Promise.all(promises);
+    results = [...newResults.filter(r => r), ...results];
+
+    hideSkeletons();
+    renderResults();
+
+    isLoading = false;
+    document.getElementById('generateBtn').disabled = false;
+    document.getElementById('generateBtn').textContent = '✦ Generate Mockups';
+  }
+
+  async function generateOne(apiKey, prompt, school) {
+    try {
+      const res = await fetch('https://api.openai.com/v1/images/generations', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-image-1',
+          prompt: prompt,
+          n: 1,
+          size: '1024x1024',
+          output_format: 'b64_json',
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        const msg = err?.error?.message || `API error ${res.status}`;
+        showError(msg);
+        // Try dall-e-3 fallback
+        if (res.status === 404 || res.status === 400) {
+          return await generateOneFallback(apiKey, prompt, school);
+        }
+        return null;
+      }
+
+      const data = await res.json();
+      const b64 = data.data?.[0]?.b64_json;
+      if (!b64) return null;
+
+      return {
+        id: Date.now() + Math.random(),
+        dataUrl: `data:image/png;base64,${b64}`,
+        label: school,
+        meta: `${selectedGarment} · ${selectedStyle}`,
+        prompt: prompt,
+      };
+    } catch (e) {
+      showError('Network error: ' + e.message);
+      return null;
+    }
+  }
+
+  async function generateOneFallback(apiKey, prompt, school) {
+    try {
+      const res = await fetch('https://api.openai.com/v1/images/generations', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'dall-e-3',
+          prompt: prompt,
+          n: 1,
+          size: '1024x1024',
+          response_format: 'b64_json',
+        }),
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      const b64 = data.data?.[0]?.b64_json;
+      if (!b64) return null;
+      return {
+        id: Date.now() + Math.random(),
+        dataUrl: `data:image/png;base64,${b64}`,
+        label: school,
+        meta: `${selectedGarment} · ${selectedStyle}`,
+        prompt: prompt,
+      };
+    } catch { return null; }
+  }
+
+  function showSkeletons(count) {
+    const grid = document.getElementById('loadingGrid');
+    grid.innerHTML = Array(count).fill(`
+      <div class="skeleton">
+        <div class="skeleton-img"></div>
+        <div class="skeleton-body">
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line short"></div>
+        </div>
+      </div>
+    `).join('');
+    grid.style.display = 'grid';
+  }
+  function hideSkeletons() {
+    document.getElementById('loadingGrid').style.display = 'none';
+  }
+
+  function renderResults() {
+    const grid = document.getElementById('imageGrid');
+    const empty = document.getElementById('emptyState');
+    const countEl = document.getElementById('resultsCount');
+
+    if (results.length === 0) {
+      empty.style.display = 'block';
+      grid.innerHTML = '';
+      countEl.textContent = 'No mockups yet — fill out the form and hit generate';
+      return;
+    }
+
+    empty.style.display = 'none';
+    countEl.textContent = `${results.length} mockup${results.length > 1 ? 's' : ''} generated`;
+
+    grid.innerHTML = results.map(r => `
+      <div class="image-card">
+        <img src="${r.dataUrl}" alt="${r.label}" loading="lazy" />
+        <div class="image-card-body">
+          <div class="image-card-label">${r.label}</div>
+          <div class="image-card-meta">${r.meta}</div>
+          <div class="image-card-actions">
+            <button class="dl-btn primary" onclick="downloadImage('${r.id}')">⬇ Download PNG</button>
+            <button class="dl-btn" onclick="copyPrompt('${r.id}')">📋 Prompt</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function downloadImage(id) {
+    const r = results.find(x => x.id == id);
+    if (!r) return;
+    const a = document.createElement('a');
+    a.href = r.dataUrl;
+    a.download = `teamdrip-${r.label.replace(/\s+/g,'-').toLowerCase()}-${Date.now()}.png`;
+    a.click();
+  }
+
+  function copyPrompt(id) {
+    const r = results.find(x => x.id == id);
+    if (!r) return;
+    navigator.clipboard.writeText(r.prompt).then(() => alert('Prompt copied to clipboard!'));
+  }
+
+  function clearResults() {
+    results = [];
+    renderResults();
+    document.getElementById('promptPreview').classList.remove('show');
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('errorBanner');
+    el.textContent = '⚠ ' + msg;
+    el.classList.add('show');
+  }
+  function hideError() {
+    document.getElementById('errorBanner').classList.remove('show');
+  }
+</script>
+</body>
+</html>
