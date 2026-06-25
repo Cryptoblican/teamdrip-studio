@@ -368,7 +368,7 @@
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2>🔑 OpenAI API Key</h2>
-    <p>Saved in your browser only — sent directly to OpenAI. Get a key at <strong>platform.openai.com/api-keys</strong>.<br>Load ~$10 in credits; each mockup costs ~$0.04–0.08.</p>
+    <p>Saved in your browser only - sent directly to OpenAI. Get a key at <strong>platform.openai.com/api-keys</strong>.<br>Load ~$10 in credits; each mockup costs ~$0.04-0.08.</p>
     <div class="form-group">
       <label>API Key</label>
       <input type="password" id="apiKeyInput" placeholder="sk-proj-..." autocomplete="off" />
@@ -386,12 +386,12 @@
     <!-- ═══════════════════════════════ LEFT COLUMN ═══════════════════════════════ -->
     <div>
 
-      <!-- ① SCHOOL / ENTITY -->
+      <!-- 1 SCHOOL / ENTITY -->
       <div class="panel">
         <div class="panel-title"><span class="panel-title-icon">🏫</span> School / Entity</div>
 
         <div class="form-group">
-          <label>School / Client Name <span style="font-weight:400;opacity:0.55;font-size:0.72rem;">— color &amp; context only · not printed on garment</span></label>
+          <label>School / Client Name <span style="font-weight:400;opacity:0.55;font-size:0.72rem;">- color &amp; context only · not printed on garment</span></label>
           <div class="input-with-btn">
             <div class="school-wrap">
               <input type="text" id="schoolName" placeholder="e.g. Skyridge Falcons"
@@ -403,7 +403,7 @@
         </div>
 
         <div class="form-group">
-          <label>Front Chest Text / Abbreviation <span style="font-weight:400;opacity:0.6">— <strong style="color:var(--success)">type exactly what prints on front</strong> (e.g. OSU, BU, SR, UV)</span></label>
+          <label>Front Chest Text / Abbreviation <span style="font-weight:400;opacity:0.6">- <strong style="color:var(--success)">type exactly what prints on front</strong> (e.g. OSU, BU, SR, UV)</span></label>
           <div class="input-with-btn">
             <input type="text" id="mascot" placeholder="e.g. SR, FALCONS, SKYRIDGE" />
             <button class="icon-btn" id="logoToggleBtn" onclick="toggleLogoPanel()">🔍 Logo</button>
@@ -415,7 +415,7 @@
             <div class="logo-upload-zone" title="Upload a logo file">
               <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" />
               <div style="font-size:1.4rem; margin-bottom:5px;">⬆️</div>
-              <div class="logo-upload-zone-text">Click to upload a logo file<br><span style="font-size:0.72rem; opacity:0.65">PNG, SVG, JPG — transparent background preferred</span></div>
+              <div class="logo-upload-zone-text">Click to upload a logo file<br><span style="font-size:0.72rem; opacity:0.65">PNG, SVG, JPG - transparent background preferred</span></div>
             </div>
             <div style="font-size:0.75rem; color:var(--text2); margin-bottom:6px;">Or paste a logo image URL:</div>
             <div style="display:flex; gap:8px;">
@@ -478,7 +478,7 @@
 
       </div>
 
-      <!-- ② GARMENT TYPE -->
+      <!-- 2 GARMENT TYPE -->
       <div class="panel">
         <div class="panel-title"><span class="panel-title-icon">👕</span> Garment Type</div>
         <div class="garment-grid" id="garmentGrid">
@@ -509,7 +509,7 @@
         </div>
       </div>
 
-      <!-- ③ TEXT / LOGO STYLE -->
+      <!-- 3 TEXT / LOGO STYLE -->
       <div class="panel">
         <div class="panel-title"><span class="panel-title-icon">🎨</span> Text / Logo Style</div>
         <div class="chip-group" id="textStyleChips">
@@ -522,7 +522,7 @@
         </div>
       </div>
 
-      <!-- ⑤ SHOT STYLE -->
+      <!-- 5 SHOT STYLE -->
       <div class="panel">
         <div class="panel-title"><span class="panel-title-icon">📸</span> Shot Style</div>
         <div class="shot-grid">
@@ -556,7 +556,7 @@
         </div>
       </div>
 
-      <!-- ⑤ MODEL PRESENTATION -->
+      <!-- 5 MODEL PRESENTATION -->
       <div class="panel" id="modelPanel">
         <div class="panel-title"><span class="panel-title-icon">👥</span> Model Presentation</div>
         <div class="model-grid">
@@ -589,7 +589,7 @@
         <div class="toggle-row">
           <div class="toggle-label-wrap">
             <div class="tl">Auto-Diverse Cast</div>
-            <div class="ts">Varied ethnicities &amp; body types — inclusive, real</div>
+            <div class="ts">Varied ethnicities &amp; body types - inclusive, real</div>
           </div>
           <label class="toggle">
             <input type="checkbox" id="diverseToggle" checked />
@@ -598,7 +598,7 @@
         </div>
       </div>
 
-      <!-- ⑥ STYLE REFERENCES -->
+      <!-- 6 STYLE REFERENCES -->
       <div class="panel">
         <div class="panel-title">
           <span class="panel-title-icon">🖼️</span> Style References
@@ -606,7 +606,7 @@
         </div>
 
         <div class="flash-banner info show" style="margin-bottom:14px;">
-          Upload actual TeamDrip garment photos as <strong>templates per garment type</strong>. Save them — the AI mirrors your exact design style every time. Front + back, both genders = best results.
+          Upload actual TeamDrip garment photos as <strong>templates per garment type</strong>. Save them - the AI mirrors your exact design style every time. Front + back, both genders = best results.
         </div>
 
         <!-- Saved garment templates -->
@@ -633,20 +633,20 @@
         <!-- Session refs -->
         <div>
           <div class="ref-section-title">
-            🖼️ Extra Refs — This Session Only
+            🖼️ Extra Refs - This Session Only
             <span class="ref-count" id="extraRefCount">0</span>
           </div>
           <div class="ref-zone" id="extraRefZone"
             ondragover="handleDragOver(event,'extra')" ondragleave="handleDragLeave('extra')" ondrop="handleDrop(event,'extra')">
             <input type="file" accept="image/*" multiple onchange="handleFileInput(event,'extra')" />
             <div class="ref-zone-icon">🖼️</div>
-            <div class="ref-zone-text">Drag &amp; drop additional references<br><span style="font-size:0.72rem; opacity:0.65">PNG, JPG, WEBP — not saved between sessions</span></div>
+            <div class="ref-zone-text">Drag &amp; drop additional references<br><span style="font-size:0.72rem; opacity:0.65">PNG, JPG, WEBP - not saved between sessions</span></div>
           </div>
           <div class="ref-thumbs" id="extraRefThumbs"></div>
         </div>
       </div>
 
-      <!-- ⑦ CUSTOM DETAILS -->
+      <!-- 7 CUSTOM DETAILS -->
       <div class="panel">
         <div class="panel-title"><span class="panel-title-icon">✏️</span> Custom Details</div>
         <div class="form-group">
@@ -655,7 +655,7 @@
         </div>
       </div>
 
-      <!-- ⑧ GENERATE -->
+      <!-- 8 GENERATE -->
       <div class="panel">
         <div class="panel-title"><span class="panel-title-icon">✦</span> Generate</div>
         <div class="form-group">
@@ -684,7 +684,7 @@
               <div class="preview-title">Live Preview</div>
               <span class="live-badge">● LIVE</span>
             </div>
-            <div class="preview-sub">Updates as you configure — layout approximation only</div>
+            <div class="preview-sub">Updates as you configure - layout approximation only</div>
           </div>
         </div>
         <div class="preview-canvas-wrap">
@@ -714,7 +714,7 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════════════════════
-// DATA — SCHOOL PRESETS
+// DATA - SCHOOL PRESETS
 // ═══════════════════════════════════════════════════════════════════════════════
 const SCHOOLS = [
   { name:"Skyridge Falcons",           abbr:"SR",   p:"#BF5700", s:"#7A8B8B" },
@@ -765,55 +765,55 @@ const SCHOOLS = [
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// DATA — GARMENT PRESETS (baked-in TeamDrip style DNA)
+// DATA - GARMENT PRESETS (baked-in TeamDrip style DNA)
 // ═══════════════════════════════════════════════════════════════════════════════
 const GARMENTS = {
   hoodie: {
     label: 'Hoodie',
     garmentDesc: `premium heavyweight pullover hoodie with large kangaroo front pocket and adjustable drawstring hood, thick ribbed cuffs and hem, substantial quality athletic fleece construction`,
-    designDNA: `FRONT: The ONLY design element on the front of this hoodie is the specified logo or abbreviation/mascot text — centered on the upper chest, clean and bold. Nothing else on the front. No school name, no extra text, no secondary graphics. Just that one element. BACK: Large bold text originates on the left sleeve, sweeps in a wide continuous arc across the entire upper back, and terminates on the right sleeve — a seamless sleeve-to-sleeve typographic wrap that spans the full garment width from sleeve tip to sleeve tip. The letters are tall, bold, arched upward. Outline/stroke style preferred: hollow letters with a bold outline in the secondary color. Below the sleeve sweep, centered on the back panel, sits a second line of smaller straight lettering. Both back elements are specified in the prompt. TeamDrip quality: premium heavyweight fleece, clean seams, confident placement, every letter crisp and legible.`,
+    designDNA: `FRONT: The ONLY design element on the front of this hoodie is the specified logo or abbreviation/mascot text - centered on the upper chest, clean and bold. Nothing else on the front. No school name, no extra text, no secondary graphics. Just that one element. BACK: Large bold text originates on the left sleeve, sweeps in a wide continuous arc across the entire upper back, and terminates on the right sleeve - a seamless sleeve-to-sleeve typographic wrap that spans the full garment width from sleeve tip to sleeve tip. The letters are tall, bold, arched upward. Outline/stroke style preferred: hollow letters with a bold outline in the secondary color. Below the sleeve sweep, centered on the back panel, sits a second line of smaller straight lettering. Both back elements are specified in the prompt. TeamDrip quality: premium heavyweight fleece, clean seams, confident placement, every letter crisp and legible.`,
   },
   varsity: {
     label: 'Varsity Jacket',
     garmentDesc: `classic varsity letterman jacket with a two-tone design: solid wool body in the primary color with genuine leather sleeves in the secondary color, ribbed collar, cuffs, and waistband in contrasting color, snap-button front closure`,
-    designDNA: `Large school initial or mascot emblem on the left chest in chenille felt or embroidered patch. School name spelled out in bold twill lettering across the upper back. Optional: front left chest has a smaller secondary detail, interior satin lining in team colors visible at collar and cuff. Classic award jacket proportions — substantial, prestigious, collector's quality. Show the interior satin lining if visible.`,
+    designDNA: `Large school initial or mascot emblem on the left chest in chenille felt or embroidered patch. School name spelled out in bold twill lettering across the upper back. Optional: front left chest has a smaller secondary detail, interior satin lining in team colors visible at collar and cuff. Classic award jacket proportions - substantial, prestigious, collector's quality. Show the interior satin lining if visible.`,
   },
   crewneck: {
     label: 'Crewneck',
     garmentDesc: `classic crewneck sweatshirt with ribbed collar, ribbed cuffs, and ribbed hem, premium midweight athletic fleece, relaxed yet structured fit`,
-    designDNA: `Bold chest print featuring school name prominently with mascot graphic or abbreviation below in strong contrasting colors. Clean collegiate aesthetic — intentional, confident typography. May include a small secondary logo on the left sleeve. TeamDrip signature: high print contrast, design placement that fills the chest without overcrowding, premium ink opacity.`,
+    designDNA: `Bold chest print featuring school name prominently with mascot graphic or abbreviation below in strong contrasting colors. Clean collegiate aesthetic - intentional, confident typography. May include a small secondary logo on the left sleeve. TeamDrip signature: high print contrast, design placement that fills the chest without overcrowding, premium ink opacity.`,
   },
   puffer: {
     label: 'Puffer Jacket',
     garmentDesc: `quilted puffer jacket with full-zip front closure, horizontal channel-stitched quilted panels, school colors as primary body panels with contrasting color blocking, athletic outerwear silhouette`,
-    designDNA: `Embroidered school name or logo on the left chest, school colors used deliberately as panel sections (e.g., primary color body, secondary color chest yoke or side panels). Clean, structured sports outerwear aesthetic — like a sideline jacket for a major athletic program. TeamDrip quality: professional cut, durable-looking materials, crisp embroidery.`,
+    designDNA: `Embroidered school name or logo on the left chest, school colors used deliberately as panel sections (e.g., primary color body, secondary color chest yoke or side panels). Clean, structured sports outerwear aesthetic - like a sideline jacket for a major athletic program. TeamDrip quality: professional cut, durable-looking materials, crisp embroidery.`,
   },
 };
 
 const TEXT_STYLES = {
-  collegiate_block: `bold collegiate block letters with thick outlines and strong contrast — classic athletic lettering, the kind seen on major university apparel`,
+  collegiate_block: `bold collegiate block letters with thick outlines and strong contrast - classic athletic lettering, the kind seen on major university apparel`,
   arch_varsity:     `arched varsity lettering with tackle twill or appliqué texture, traditional award-style typography curving across the chest`,
-  modern_sans:      `clean modern sans-serif logotype with geometric precision, contemporary athletic brand aesthetic — minimal, confident`,
+  modern_sans:      `clean modern sans-serif logotype with geometric precision, contemporary athletic brand aesthetic - minimal, confident`,
   script:           `flowing athletic script font with dynamic energy, hand-lettered feel with professional polish`,
   embroidered:      `embroidered patch-style logo with visible stitch texture and defined border, elevated premium craft look`,
-  stacked:          `large stacked wordmark — the front chest text fills the chest in a strong vertical hierarchy, two bold lines of lettering stacked with the primary identifier on top, secondary below`,
+  stacked:          `large stacked wordmark - the front chest text fills the chest in a strong vertical hierarchy, two bold lines of lettering stacked with the primary identifier on top, secondary below`,
 };
 
 const SHOT_STYLES = {
   studio:     `Professional studio product photography. Clean neutral gradient background in a shade that complements the garment colors. Controlled soft-box lighting that shows garment texture and design detail clearly. Commercial apparel catalog quality.`,
-  campus:     `On-location athletic photography at this specific school. The model stands on the school's campus — in front of the football stadium exterior, on the athletic field, or on the campus quad with recognizable architecture in the background. Natural outdoor lighting. The setting reinforces the school's identity and creates an aspirational, place-specific feel.`,
-  multi_view: `A single professional product photography image composed as a triptych — three panels side by side: LEFT PANEL shows the garment's front design on a model (or flat lay) clearly showing the chest graphic; CENTER PANEL shows the garment's back on a model (or flat lay) showing the back design; RIGHT PANEL shows a close-up detail of either the main chest logo, the interior liner, or a distinctive design element. All three panels share consistent lighting, background, and color treatment. The three panels are clearly separated within the single image.`,
-  action:     `Dynamic sports editorial action photography. An athlete in energetic motion — running, jumping, or in a sports pose — wearing the garment in an athletic environment (stadium, gym, field, or court). High-energy, dramatic lighting with a sense of speed and power. Magazine-quality sports photography.`,
-  flat_lay:   `Overhead flat lay product photography. The garment is laid perfectly flat on a clean white or very light surface, carefully arranged to show the full design and construction. Overhead angle, even diffused lighting with no harsh shadows. Professional product catalog style — clean, precise, every detail visible.`,
+  campus:     `On-location athletic photography at this specific school. The model stands on the school's campus - in front of the football stadium exterior, on the athletic field, or on the campus quad with recognizable architecture in the background. Natural outdoor lighting. The setting reinforces the school's identity and creates an aspirational, place-specific feel.`,
+  multi_view: `A single professional product photography image composed as a triptych - three panels side by side: LEFT PANEL shows the garment's front design on a model (or flat lay) clearly showing the chest graphic; CENTER PANEL shows the garment's back on a model (or flat lay) showing the back design; RIGHT PANEL shows a close-up detail of either the main chest logo, the interior liner, or a distinctive design element. All three panels share consistent lighting, background, and color treatment. The three panels are clearly separated within the single image.`,
+  action:     `Dynamic sports editorial action photography. An athlete in energetic motion - running, jumping, or in a sports pose - wearing the garment in an athletic environment (stadium, gym, field, or court). High-energy, dramatic lighting with a sense of speed and power. Magazine-quality sports photography.`,
+  flat_lay:   `Overhead flat lay product photography. The garment is laid perfectly flat on a clean white or very light surface, carefully arranged to show the full design and construction. Overhead angle, even diffused lighting with no harsh shadows. Professional product catalog style - clean, precise, every detail visible.`,
 };
 
-const MODEL_QUAL = `The models are PROFESSIONAL FASHION MODELS with elite, aspirational athletic physiques — the caliber used in Nike, Jordan Brand, and Adidas flagship campaigns. Sharp facial features, strong jawlines, high cheekbones, lean muscular builds. Editorial-quality appearance. NOT regular people or generic stock photo subjects.`;
+const MODEL_QUAL = `The models are PROFESSIONAL FASHION MODELS with elite, aspirational athletic physiques - the caliber used in Nike, Jordan Brand, and Adidas flagship campaigns. Sharp facial features, strong jawlines, high cheekbones, lean muscular builds. Editorial-quality appearance. NOT regular people or generic stock photo subjects.`;
 
 const MODEL_PRESENTATIONS = {
   solo_male:   `A single male professional fashion model wearing the garment. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
   solo_female: `A single female professional fashion model wearing the garment. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
-  pair:        `Two professional fashion models wearing the garment — a male model facing directly toward the camera (chest design fully visible) and a female model at a 3/4 or full back angle (back design visible). Close together, confident poses. ${MODEL_QUAL}`,
-  pair_fm:     `Two professional fashion models wearing the garment — a female model facing directly toward the camera (chest design fully visible) and a male model at a 3/4 or full back angle (back design visible). Close together, confident poses. ${MODEL_QUAL}`,
+  pair:        `Two professional fashion models wearing the garment - a male model facing directly toward the camera (chest design fully visible) and a female model at a 3/4 or full back angle (back design visible). Close together, confident poses. ${MODEL_QUAL}`,
+  pair_fm:     `Two professional fashion models wearing the garment - a female model facing directly toward the camera (chest design fully visible) and a male model at a 3/4 or full back angle (back design visible). Close together, confident poses. ${MODEL_QUAL}`,
   group:       `Three professional fashion models in a dynamic editorial group, mixed male and female, at complementary angles showing different garment views. ${MODEL_QUAL}`,
 };
 
@@ -964,7 +964,7 @@ async function loadLogoFromUrl() {
     reader.onerror = () => { logoUrlFallback(url, btn); };
     reader.readAsDataURL(blob);
   } catch(e) {
-    // CORS or network fail — try img element fallback
+    // CORS or network fail - try img element fallback
     logoUrlFallback(url, btn);
   }
 }
@@ -1149,8 +1149,8 @@ function updateSleeveSplitPreview() {
   } else {
     el.innerHTML =
       `◄ Left sleeve: <strong style="color:var(--accent)">${s.left}</strong>` +
-      `&nbsp;&nbsp;—&nbsp;&nbsp;Back: <strong style="color:var(--text)">${s.back}</strong>` +
-      `&nbsp;&nbsp;—&nbsp;&nbsp;Right sleeve: <strong style="color:var(--accent)">${s.right}</strong> ►`;
+      `&nbsp;&nbsp;-&nbsp;&nbsp;Back: <strong style="color:var(--text)">${s.back}</strong>` +
+      `&nbsp;&nbsp;-&nbsp;&nbsp;Right sleeve: <strong style="color:var(--accent)">${s.right}</strong> ►`;
   }
   el.style.display = 'block';
 }
@@ -1198,15 +1198,17 @@ function buildPrompt() {
   p.push(`The garment is a ${g.garmentDesc}.`);
 
   // Colors
-  p.push(`PRIMARY COLOR: ${primary} — this exact hex color dominates the main body of the garment. SECONDARY/ACCENT COLOR: ${secondary} — used for contrast details, trim, logo outlines, and secondary text. These color choices are non-negotiable — match them precisely.`);
+  p.push(`PRIMARY COLOR: ${primary} - this exact hex color dominates the main body of the garment. SECONDARY/ACCENT COLOR: ${secondary} - used for contrast details, trim, logo outlines, and secondary text. These color choices are non-negotiable - match them precisely.`);
 
   // School = context only, not printed
-  p.push(`School/client context: ${school}. This name is for color and identity context ONLY — do NOT print this name anywhere on the garment.`);
+  p.push(`School/client context: ${school}. This name is for color and identity context ONLY - do NOT print this name anywhere on the garment.`);
 
-  // Front chest: typed abbreviation is source of truth — uppercased
+  // Front chest: logo composited after = AI leaves chest clean; else AI renders text
   const frontText = mascot.toUpperCase();
-  if (frontText) {
-    p.push(`FRONT CHEST: The ONLY element on the front of the garment is the text "${frontText}" in large bold collegiate lettering. Exactly this text — no substitutions, no additions, nothing else on the front.`);
+  if (logoRef && logoRef.dataUrl.startsWith('data:')) {
+    p.push(`FRONT CHEST: Leave the front chest completely clean — no text, no graphics, no design on the front chest at all. Plain garment fabric. A separate logo will be placed there.`);
+  } else if (frontText) {
+    p.push(`FRONT CHEST: The ONLY element on the front is the text "${frontText}" in large bold collegiate lettering. Exactly this — no substitutions, no additions.`);
   }
 
   // Hoodie/crewneck back text
@@ -1217,14 +1219,14 @@ function buildPrompt() {
       const split = sleeveTextSplit(sweepUpper);
       let sweepDesc;
       if (split.sc === 0) {
-        sweepDesc = `"${sweepUpper}" arches across the full upper back in very large lettering. NON-NEGOTIABLE LETTER STYLE: every letter is HOLLOW OUTLINE ONLY — no solid fill inside the letters, transparent interior, bold stroke outline in the secondary color only. Like a stencil/jersey outline font.`;
+        sweepDesc = `"${sweepUpper}" arches across the full upper back in very large lettering. NON-NEGOTIABLE LETTER STYLE: every letter is HOLLOW OUTLINE ONLY - no solid fill inside the letters, transparent interior, bold stroke outline in the secondary color only. Like a stencil/jersey outline font.`;
       } else {
-        sweepDesc = `"${sweepUpper}" is a MASSIVE continuous arch spanning the entire garment from left sleeve through the back to right sleeve. CRITICAL EXACT PLACEMENT: LEFT SLEEVE = "${split.left}" only. BACK PANEL = "${split.back}" arching with apex at top center. RIGHT SLEEVE = "${split.right}" only. Letters cross the sleeve seams seamlessly — one continuous physical sweep. Each letter is 8-10 inches tall. Identical layout to the Baylor University “SIC ‘EM BEARS” hoodie. NON-NEGOTIABLE LETTER STYLE: every letter is HOLLOW OUTLINE ONLY — no solid fill inside the letters, transparent interior, bold stroke outline in the secondary color. Any solid-filled sweep letter is wrong.`;
+        sweepDesc = `"${sweepUpper}" is a MASSIVE continuous arch spanning the entire garment from left sleeve through the back to right sleeve. CRITICAL EXACT PLACEMENT: LEFT SLEEVE = "${split.left}" only. BACK PANEL = "${split.back}" arching with apex at top center. RIGHT SLEEVE = "${split.right}" only. Letters cross the sleeve seams seamlessly - one continuous physical sweep. Each letter is 8-10 inches tall. Identical layout to the Baylor University "SIC 'EM BEARS" hoodie. NON-NEGOTIABLE LETTER STYLE: every letter is HOLLOW OUTLINE ONLY - no solid fill inside the letters, transparent interior, bold stroke outline in the secondary color. Any solid-filled sweep letter is wrong.`;
       }
       backDesc += sweepDesc + ' ';
     }
     if (backCenter) {
-      backDesc += `Below the sweep, centered on back: "${backCenter.toUpperCase()}" in small straight lettering — approximately 1/5 the size of the sweep letters. Much smaller, clean, understated. `;
+      backDesc += `Below the sweep, centered on back: "${backCenter.toUpperCase()}" in small straight lettering - approximately 1/5 the size of the sweep letters. Much smaller, clean, understated. `;
     }
     p.push(backDesc);
   }
@@ -1235,14 +1237,15 @@ function buildPrompt() {
   // TeamDrip design DNA
   p.push(`Design philosophy and construction detail: ${g.designDNA}`);
 
-  // Logo = style reference only (AI cannot reproduce exact logos reliably)
-  if (logoRef) {
-    p.push(`A logo reference image is provided for style guidance. Use it to understand the school’s graphic identity and color treatment. Render the front chest text "${frontText || mascot}" in that same graphic style — do not attempt to copy the logo exactly.`);
+  // Logo: base64 = composited after generation (no AI prompt needed)
+  //        plain URL = use as style reference only
+  if (logoRef && !logoRef.dataUrl.startsWith('data:')) {
+    p.push(`A logo reference is provided for style guidance only.`);
   }
 
   // Style references
   if (allRefs.length > 0) {
-    p.push(`STYLE REFERENCE: The provided reference image(s) show the exact TeamDrip house style for this garment type. Mirror the design layout, print placement, proportions, color application, and overall quality standard shown in those references. This is the target aesthetic — reproduce this specific design language, just with the new school's name, colors, and identity.`);
+    p.push(`STYLE REFERENCE: The provided reference image(s) show the exact TeamDrip house style for this garment type. Mirror the design layout, print placement, proportions, color application, and overall quality standard shown in those references. This is the target aesthetic - reproduce this specific design language, just with the new school's name, colors, and identity.`);
   }
 
   // Shot style
@@ -1252,7 +1255,7 @@ function buildPrompt() {
   if (!isFlat) {
     p.push(MODEL_PRESENTATIONS[selectedModel]);
     if (diverse) {
-      p.push(`Diversity: varied ethnicities and body types among the models. Inclusive and aspirational — still all professional fashion models.`);
+      p.push(`Diversity: varied ethnicities and body types among the models. Inclusive and aspirational - still all professional fashion models.`);
     }
   }
 
@@ -1260,7 +1263,7 @@ function buildPrompt() {
   if (extra) p.push(`Additional customization requested: ${extra}.`);
 
   // Quality bar
-  p.push(`Final quality standard: photorealistic, high-resolution, professional commercial apparel photography. Elite professional fashion models — Nike/Jordan Brand caliber. Back sweep letters MUST be hollow outline only with zero solid fill (non-negotiable). Every design element crisp and legible. No blurry text, no muddy colors, no amateur output.`);
+  p.push(`Final quality standard: photorealistic, high-resolution, professional commercial apparel photography. Elite professional fashion models - Nike/Jordan Brand caliber. Back sweep letters MUST be hollow outline only with zero solid fill (non-negotiable). Every design element crisp and legible. No blurry text, no muddy colors, no amateur output.`);
 
   return p.join(' ');
 }
@@ -1311,8 +1314,8 @@ async function generateText(apiKey, prompt, school) {
     const data = await res.json();
     const item = data.data?.[0];
     if (!item) { showError('No image returned from API.'); return null; }
-    if (item.b64_json) return makeResult(`data:image/png;base64,${item.b64_json}`, true, school);
-    if (item.url)      return makeResult(item.url, false, school);
+    if (item.b64_json) return await makeResult(`data:image/png;base64,${item.b64_json}`, true, school);
+    if (item.url)      return await makeResult(item.url, false, school);
     return null;
   } catch(e) {
     showError('Network error: ' + e.message);
@@ -1339,20 +1342,65 @@ async function generateWithRefs(apiKey, prompt, school, refImages) {
     const data = await res.json();
     const out = data.output?.find(o => o.type === 'image_generation_call');
     if (!out?.result) return await generateText(apiKey, prompt, school);
-    return makeResult(`data:image/png;base64,${out.result}`, true, school);
+    return await makeResult(`data:image/png;base64,${out.result}`, true, school);
   } catch {
     return await generateText(apiKey, prompt, school);
   }
 }
 
-function makeResult(dataUrl, isB64, school) {
+// ═══ LOGO COMPOSITING ═══ places exact logo onto generated image after AI renders garment
+async function compositeLogoOnResult(generatedDataUrl, logoDataUrl) {
+  return new Promise(async resolve => {
+    let bgSrc = generatedDataUrl;
+    if (!bgSrc.startsWith('data:')) {
+      try {
+        const res = await fetch(bgSrc);
+        const blob = await res.blob();
+        bgSrc = await new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.readAsDataURL(blob); });
+      } catch { resolve(generatedDataUrl); return; }
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024; canvas.height = 1024;
+    const ctx = canvas.getContext('2d');
+    const bgImg = new Image();
+    bgImg.onload = () => {
+      ctx.drawImage(bgImg, 0, 0, 1024, 1024);
+      const logoImg = new Image();
+      logoImg.onload = () => {
+        let cx = 512, cy = 330, size = 145;
+        if (selectedModel === 'pair')    { cx = 440; cy = 315; size = 130; }
+        if (selectedModel === 'pair_fm') { cx = 580; cy = 315; size = 130; }
+        if (selectedModel === 'group')   { cx = 370; cy = 300; size = 120; }
+        if (selectedShot  === 'flat_lay') { cx = 512; cy = 360; size = 160; }
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.22)';
+        ctx.shadowBlur = 10;
+        ctx.drawImage(logoImg, cx - size/2, cy - size/2, size, size);
+        ctx.restore();
+        resolve(canvas.toDataURL('image/png'));
+      };
+      logoImg.onerror = () => resolve(generatedDataUrl);
+      logoImg.src = logoDataUrl;
+    };
+    bgImg.onerror = () => resolve(generatedDataUrl);
+    bgImg.src = bgSrc;
+  });
+}
+
+async function makeResult(dataUrl, isB64, school) {
   const g = GARMENTS[selectedGarment];
+  let finalUrl = dataUrl;
+  let logoPlaced = false;
+  if (logoRef && logoRef.dataUrl.startsWith('data:')) {
+    finalUrl = await compositeLogoOnResult(dataUrl, logoRef.dataUrl);
+    logoPlaced = true;
+  }
   return {
     id: ++resultIdSeq,
-    dataUrl,
-    isB64,
+    dataUrl: finalUrl,
+    isB64: true,
     label: school,
-    meta: `${g.label} · ${selectedShot.replace('_',' ')} · ${selectedModel.replace('_',' ')}`,
+    meta: `${g.label} · ${selectedShot.replace('_',' ')} · ${selectedModel.replace('_',' ')}` + (logoPlaced ? ' · ✓ Logo placed' : ''),
   };
 }
 
@@ -1485,7 +1533,7 @@ function renderPreview() {
     case 'puffer':   pvDrawPuffer(ctx, c1, c2, W, H);   break;
   }
 
-  // Text overlay — front only shows mascot/abbreviation
+  // Text overlay - front only shows mascot/abbreviation
   pvDrawText(ctx, mascot, '', c1, c2, W, H);
 
   // Back text indicator below garment (hoodie/crewneck)
@@ -1494,7 +1542,7 @@ function renderPreview() {
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.font = '600 10px "Segoe UI",system-ui';
     ctx.fillStyle = pvHA(c2, 0.55);
-    ctx.fillText('⇔ BACK SWEEP: ' + backSleeve.substring(0,26) + (backSleeve.length>26?'…':''), W/2, H*0.915);
+    ctx.fillText('⇔ BACK SWEEP: ' + backSleeve.substring(0,26) + (backSleeve.length>26?'...':''), W/2, H*0.915);
     if (document.getElementById('backCenterText')?.value.trim()) {
       ctx.font = '500 9px "Segoe UI",system-ui';
       ctx.fillStyle = pvHA(c2, 0.38);
