@@ -457,6 +457,24 @@
             </div>
           </div>
         </div>
+
+        <!-- Back design fields (hoodie/crewneck) -->
+        <div id="backDesignFields" style="display:block;">
+          <div style="height:1px;background:var(--border);margin:14px 0 16px;"></div>
+          <div style="font-size:0.68rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+            <span>🔤</span> Back Design
+            <span style="font-size:0.62rem;background:var(--accent);color:#fff;padding:1px 7px;border-radius:10px;letter-spacing:0.5px;">HOODIE / CREWNECK</span>
+          </div>
+          <div class="form-group">
+            <label>Back Sweep Text <span style="font-weight:400;opacity:0.6">left sleeve → arches across full back → right sleeve</span></label>
+            <input type="text" id="backSleeveText" placeholder="e.g. WOLVERINES or FALCONS" oninput="schedulePreview()" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Back Center Text <span style="font-weight:400;opacity:0.6">centered on back, directly below sweep</span></label>
+            <input type="text" id="backCenterText" placeholder="e.g. UTAH VALLEY UNIVERSITY" oninput="schedulePreview()" />
+          </div>
+        </div>
+
       </div>
 
       <!-- ② GARMENT TYPE -->
@@ -500,22 +518,6 @@
           <div class="chip" data-value="script" onclick="selectTextChip(this)">Script</div>
           <div class="chip" data-value="embroidered" onclick="selectTextChip(this)">Embroidered Patch</div>
           <div class="chip" data-value="stacked" onclick="selectTextChip(this)">Stacked Wordmark</div>
-        </div>
-      </div>
-
-      <!-- ④ BACK DESIGN (Hoodie / Crewneck) -->
-      <div class="panel" id="backDesignPanel" style="display:none;">
-        <div class="panel-title"><span class="panel-title-icon">🔤</span> Back Design <span class="panel-title-badge">HOODIE / CREWNECK</span></div>
-        <div class="flash-banner info show" style="margin-bottom:14px;">
-          Sleeve-to-sleeve wrap text sweeps from left sleeve across the full back to the right sleeve. Center text sits below it.
-        </div>
-        <div class="form-group">
-          <label>Back Sweep Text <span style="font-weight:400;opacity:0.6">left sleeve → arches across full back → right sleeve</span></label>
-          <input type="text" id="backSleeveText" placeholder="e.g. WOLVERINES or FALCONS" oninput="schedulePreview()" />
-        </div>
-        <div class="form-group">
-          <label>Back Center Text <span style="font-weight:400;opacity:0.6">centered on back, directly below sleeve text</span></label>
-          <input type="text" id="backCenterText" placeholder="e.g. EST. 2005  ·  LEHI UTAH" oninput="schedulePreview()" />
         </div>
       </div>
 
@@ -975,9 +977,9 @@ function selectGarment(card) {
   selectedGarment = card.dataset.value;
   refreshSavedRefUI();
   schedulePreview();
-  // Show back design panel for hoodie/crewneck only
-  const bp = document.getElementById('backDesignPanel');
-  if (bp) bp.style.display = (selectedGarment === 'hoodie' || selectedGarment === 'crewneck') ? 'block' : 'none';
+  // Show back design fields for hoodie/crewneck only
+  const bf = document.getElementById('backDesignFields');
+  if (bf) bf.style.display = (selectedGarment === 'hoodie' || selectedGarment === 'crewneck') ? 'block' : 'none';
 }
 function selectTextChip(chip) {
   document.querySelectorAll('#textStyleChips .chip').forEach(c => c.classList.remove('selected'));
