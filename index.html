@@ -21,71 +21,146 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; min-height: 100vh; }
 
+    /* NAV */
     nav {
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 28px; border-bottom: 1px solid var(--border);
       background: var(--surface); position: sticky; top: 0; z-index: 100;
     }
-    .logo { display: flex; align-items: center; gap: 10px; }
-    .logo-text { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.5px; }
-    .logo-text span { color: var(--accent); }
     .nav-right { display: flex; align-items: center; gap: 10px; }
     .api-pill {
       display: flex; align-items: center; gap: 7px; font-size: 0.78rem;
-      color: var(--text2); cursor: pointer; padding: 6px 12px;
+      color: var(--text2); cursor: pointer; padding: 6px 14px;
       border: 1px solid var(--border); border-radius: 20px; transition: all 0.2s;
     }
     .api-pill:hover { border-color: var(--accent); color: var(--text); }
     .dot { width: 7px; height: 7px; border-radius: 50%; background: #444; flex-shrink: 0; }
     .dot.active { background: var(--success); box-shadow: 0 0 5px var(--success); }
 
-    .container { max-width: 1240px; margin: 0 auto; padding: 28px 22px; }
-    .layout { display: grid; grid-template-columns: 380px 1fr; gap: 24px; align-items: start; }
-    @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+    /* LAYOUT */
+    .container { max-width: 1340px; margin: 0 auto; padding: 28px 22px; }
+    .layout { display: grid; grid-template-columns: 420px 1fr; gap: 24px; align-items: start; }
+    @media (max-width: 920px) { .layout { grid-template-columns: 1fr; } }
 
-    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
-    .panel + .panel { margin-top: 16px; }
+    /* PANELS */
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 14px; }
     .panel-title {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--text2); margin-bottom: 18px;
-      display: flex; align-items: center; gap: 8px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--text2); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
     }
+    .panel-title-icon { font-size: 1rem; }
     .panel-title-badge {
-      font-size: 0.65rem; background: var(--accent); color: #fff;
-      padding: 1px 6px; border-radius: 10px; letter-spacing: 0.5px;
+      font-size: 0.62rem; background: var(--accent); color: #fff;
+      padding: 1px 7px; border-radius: 10px; letter-spacing: 0.5px; margin-left: auto;
     }
+    .panel-title-badge.green { background: var(--success); color: #0a1a14; }
 
+    /* FORM */
     .form-group { margin-bottom: 14px; }
-    label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text2); margin-bottom: 5px; }
-    input[type="text"], input[type="password"], select, textarea {
+    .form-group:last-child { margin-bottom: 0; }
+    label { display: block; font-size: 0.77rem; font-weight: 600; color: var(--text2); margin-bottom: 5px; }
+    input[type="text"], input[type="password"], textarea {
       width: 100%; background: var(--surface2); border: 1px solid var(--border);
       border-radius: 8px; padding: 9px 11px; color: var(--text);
       font-size: 0.88rem; font-family: inherit; transition: border-color 0.2s; outline: none;
     }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
-    }
-    select option { background: var(--surface2); }
-    textarea { resize: vertical; min-height: 64px; }
+    input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.12); }
+    textarea { resize: vertical; min-height: 60px; }
 
-    .school-row { display: flex; gap: 8px; align-items: flex-end; }
-    .school-row .form-group { flex: 1; margin-bottom: 0; }
-    .school-preset-btn {
-      background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
-      color: var(--text2); padding: 9px 12px; font-size: 0.82rem; cursor: pointer;
-      white-space: nowrap; transition: all 0.2s; font-family: inherit;
+    /* ICON BUTTON */
+    .icon-btn {
+      flex-shrink: 0; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text2); padding: 9px 12px; font-size: 0.8rem;
+      cursor: pointer; transition: all 0.2s; font-family: inherit; white-space: nowrap; line-height: 1;
     }
-    .school-preset-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-    .color-row { display: flex; gap: 10px; }
-    .color-row .form-group { flex: 1; }
+    /* INPUT WITH BUTTON */
+    .input-with-btn { display: flex; gap: 8px; }
+    .input-with-btn input { flex: 1; }
+
+    /* COLORS */
+    .color-row { display: flex; gap: 8px; align-items: flex-end; }
+    .color-row .form-group { flex: 1; margin-bottom: 0; }
     .color-input-wrap { display: flex; gap: 7px; align-items: center; }
     input[type="color"] {
       width: 34px; height: 34px; border: 1px solid var(--border); border-radius: 6px;
       padding: 2px; cursor: pointer; background: var(--surface2); flex-shrink: 0;
     }
     .color-input-wrap input[type="text"] { flex: 1; }
+    .swap-btn {
+      width: 34px; height: 34px; flex-shrink: 0; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 8px; color: var(--text2);
+      font-size: 1rem; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .swap-btn:hover { border-color: var(--accent); color: var(--accent); }
 
+    /* SCHOOL DROPDOWN */
+    .school-wrap { position: relative; flex: 1; }
+    .school-dropdown {
+      position: absolute; top: 100%; left: 0; right: 0; z-index: 200;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5); max-height: 210px; overflow-y: auto; margin-top: 4px;
+    }
+    .school-dropdown-item {
+      padding: 8px 14px; cursor: pointer; font-size: 0.83rem;
+      display: flex; align-items: center; justify-content: space-between; transition: background 0.1s;
+    }
+    .school-dropdown-item:hover { background: var(--surface2); }
+    .swatch-row { display: flex; gap: 5px; }
+    .swatch { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.1); }
+
+    /* LOGO PANEL */
+    .logo-inline-panel {
+      display: none; margin-top: 10px; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 10px; padding: 14px;
+    }
+    .logo-inline-panel.open { display: block; }
+    .logo-inline-title { font-size: 0.72rem; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .logo-upload-zone {
+      border: 2px dashed var(--border); border-radius: 8px; padding: 12px;
+      text-align: center; cursor: pointer; transition: all 0.2s; position: relative; margin-bottom: 10px;
+    }
+    .logo-upload-zone:hover { border-color: var(--accent); background: rgba(108,99,255,0.05); }
+    .logo-upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .logo-upload-zone-text { font-size: 0.8rem; color: var(--text2); pointer-events: none; }
+    .logo-search-links { font-size: 0.72rem; color: var(--text2); margin-top: 8px; }
+    .logo-search-links a { color: var(--accent); text-decoration: none; }
+    .logo-search-links a:hover { text-decoration: underline; }
+    .logo-preview {
+      display: none; align-items: center; gap: 10px; margin-top: 10px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 10px;
+    }
+    .logo-preview.show { display: flex; }
+    .logo-preview img { width: 48px; height: 48px; object-fit: contain; border-radius: 4px; background: #fff; }
+    .logo-preview-info { flex: 1; }
+    .logo-preview-name { font-size: 0.78rem; color: var(--text); font-weight: 600; }
+    .logo-preview-sub { font-size: 0.7rem; color: var(--success); }
+    .logo-preview-remove { background: none; border: none; color: var(--text2); cursor: pointer; font-size: 1rem; padding: 4px; }
+    .logo-preview-remove:hover { color: var(--accent2); }
+
+    /* GARMENT CARDS */
+    .garment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .garment-card {
+      border: 2px solid var(--border); border-radius: 10px; padding: 14px 10px;
+      cursor: pointer; transition: all 0.15s; background: var(--surface2);
+      display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center;
+    }
+    .garment-card:hover { border-color: var(--accent); background: rgba(108,99,255,0.05); }
+    .garment-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.12); }
+    .garment-card-icon { font-size: 2rem; line-height: 1; }
+    .garment-card-name { font-size: 0.83rem; font-weight: 700; color: var(--text); }
+    .garment-card.selected .garment-card-name { color: var(--accent); }
+    .garment-card-desc { font-size: 0.68rem; color: var(--text2); line-height: 1.4; }
+    .garment-card-ref-badge {
+      font-size: 0.62rem; background: var(--success); color: #0a1a14;
+      padding: 1px 6px; border-radius: 10px; font-weight: 700; display: none;
+    }
+    .garment-card-ref-badge.show { display: inline-block; }
+
+    /* CHIPS */
     .chip-group { display: flex; flex-wrap: wrap; gap: 7px; }
     .chip {
       padding: 5px 12px; border-radius: 18px; border: 1px solid var(--border);
@@ -95,95 +170,112 @@
     .chip:hover { border-color: var(--accent); color: var(--text); }
     .chip.selected { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
 
+    /* SHOT CARDS */
+    .shot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .shot-card {
+      border: 2px solid var(--border); border-radius: 9px; padding: 11px 8px;
+      cursor: pointer; transition: all 0.15s; background: var(--surface2); text-align: center;
+    }
+    .shot-card:hover { border-color: var(--accent); }
+    .shot-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.12); }
+    .shot-card-icon { font-size: 1.5rem; margin-bottom: 4px; }
+    .shot-card-name { font-size: 0.77rem; font-weight: 700; color: var(--text); }
+    .shot-card.selected .shot-card-name { color: var(--accent); }
+    .shot-card-desc { font-size: 0.67rem; color: var(--text2); margin-top: 3px; line-height: 1.35; }
+    .shot-card.full { grid-column: span 2; display: flex; align-items: center; gap: 14px; text-align: left; padding: 11px 14px; }
+    .shot-card.full .shot-card-icon { font-size: 1.6rem; margin-bottom: 0; flex-shrink: 0; }
+    .shot-card.full .shot-card-name { font-size: 0.82rem; }
+
+    /* MODEL CARDS */
+    .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .model-card {
+      border: 2px solid var(--border); border-radius: 9px; padding: 11px 8px;
+      cursor: pointer; transition: all 0.15s; background: var(--surface2); text-align: center;
+    }
+    .model-card:hover { border-color: var(--accent); }
+    .model-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.12); }
+    .model-card-icon { font-size: 1.4rem; margin-bottom: 4px; }
+    .model-card-name { font-size: 0.77rem; font-weight: 700; color: var(--text); }
+    .model-card.selected .model-card-name { color: var(--accent); }
+    .model-card-desc { font-size: 0.67rem; color: var(--text2); margin-top: 3px; line-height: 1.35; }
+
+    /* TOGGLE */
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; }
+    .toggle-label-wrap .tl { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+    .toggle-label-wrap .ts { font-size: 0.72rem; color: var(--text2); margin-top: 2px; }
+    .toggle { position: relative; width: 42px; height: 24px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; inset: 0; background: var(--border); border-radius: 24px; cursor: pointer; transition: 0.2s; }
+    .toggle-slider:before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: 0.2s; }
+    .toggle input:checked + .toggle-slider { background: var(--accent); }
+    .toggle input:checked + .toggle-slider:before { transform: translateX(18px); }
+
+    /* REFERENCE IMAGES */
+    .ref-section-title {
+      font-size: 0.7rem; font-weight: 700; color: var(--text2);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ref-count { font-size: 0.62rem; background: var(--accent); color: #fff; padding: 1px 6px; border-radius: 10px; font-weight: 700; }
+    .ref-count.green { background: var(--success); color: #0a1a14; }
+    .ref-zone {
+      border: 2px dashed var(--border); border-radius: 10px;
+      padding: 14px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative;
+    }
+    .ref-zone:hover, .ref-zone.dragover { border-color: var(--accent); background: rgba(108,99,255,0.06); }
+    .ref-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+    .ref-zone-icon { font-size: 1.4rem; margin-bottom: 5px; pointer-events: none; }
+    .ref-zone-text { font-size: 0.8rem; color: var(--text2); pointer-events: none; line-height: 1.4; }
+    .ref-thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .ref-thumb { position: relative; width: 64px; height: 64px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .ref-thumb.saved-template { border-color: var(--success); border-width: 2px; }
+    .ref-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .ref-thumb-remove {
+      position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.75);
+      border: none; border-radius: 50%; color: #fff; width: 18px; height: 18px;
+      font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .ref-thumb-badge {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(108,99,255,0.85); font-size: 7px; color: #fff;
+      text-align: center; padding: 2px; font-weight: 700; text-transform: uppercase;
+    }
+    .ref-thumb-badge.tpl { background: rgba(56,217,169,0.9); color: #0a1a14; }
+
+    .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+    .save-tpl-btn {
+      width: 100%; padding: 9px; background: transparent; border: 1px dashed var(--success);
+      border-radius: 8px; color: var(--success); font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; margin-top: 10px; font-family: inherit; transition: all 0.2s;
+    }
+    .save-tpl-btn:hover { background: rgba(56,217,169,0.08); }
+
+    .flash-banner {
+      border-radius: 8px; padding: 8px 12px; margin-top: 8px;
+      font-size: 0.78rem; display: none; line-height: 1.4;
+    }
+    .flash-banner.show { display: block; }
+    .flash-banner.success { background: rgba(56,217,169,0.1); border: 1px solid rgba(56,217,169,0.3); color: var(--success); }
+    .flash-banner.error { background: rgba(255,101,132,0.1); border: 1px solid rgba(255,101,132,0.3); color: #ff8fa3; }
+    .flash-banner.info { background: rgba(108,99,255,0.08); border: 1px solid rgba(108,99,255,0.25); color: var(--text2); }
+
+    /* GENERATE */
     .count-row { display: flex; gap: 7px; }
     .count-btn {
       flex: 1; padding: 8px; border: 1px solid var(--border); border-radius: 8px;
-      background: transparent; color: var(--text2); font-size: 0.85rem;
+      background: transparent; color: var(--text2); font-size: 0.88rem;
       cursor: pointer; transition: all 0.15s; font-family: inherit;
     }
     .count-btn:hover { border-color: var(--accent); color: var(--text); }
     .count-btn.selected { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
-
-    .divider { height: 1px; background: var(--border); margin: 16px 0; }
-
-    /* REFERENCE IMAGES */
-    .ref-zone {
-      border: 2px dashed var(--border); border-radius: 10px;
-      padding: 16px; text-align: center; cursor: pointer; transition: all 0.2s;
-      position: relative;
-    }
-    .ref-zone:hover, .ref-zone.dragover { border-color: var(--accent); background: rgba(108,99,255,0.06); }
-    .ref-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-    .ref-zone-text { font-size: 0.82rem; color: var(--text2); pointer-events: none; }
-    .ref-zone-icon { font-size: 1.6rem; margin-bottom: 6px; pointer-events: none; }
-
-    .ref-thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-    .ref-thumb {
-      position: relative; width: 68px; height: 68px;
-      border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
-    }
-    .ref-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .ref-thumb-remove {
-      position: absolute; top: 2px; right: 2px;
-      background: rgba(0,0,0,0.75); border: none; border-radius: 50%;
-      color: #fff; width: 18px; height: 18px; font-size: 10px;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      line-height: 1;
-    }
-    .ref-thumb-badge {
-      position: absolute; bottom: 0; left: 0; right: 0;
-      background: rgba(108,99,255,0.85); font-size: 8px; color: #fff;
-      text-align: center; padding: 2px; font-weight: 700;
-    }
-
-    /* BUILT-IN STYLE REFS */
-    .style-lib { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
-    .style-card {
-      border: 2px solid var(--border); border-radius: 8px; padding: 8px;
-      cursor: pointer; transition: all 0.15s; text-align: center;
-      background: var(--surface2);
-    }
-    .style-card:hover { border-color: var(--accent); }
-    .style-card.selected { border-color: var(--accent); background: rgba(108,99,255,0.1); }
-    .style-card-icon { font-size: 1.4rem; margin-bottom: 4px; }
-    .style-card-name { font-size: 0.72rem; font-weight: 600; color: var(--text2); line-height: 1.3; }
-    .style-card.selected .style-card-name { color: var(--accent); }
-
-    /* GENERATE */
     .generate-btn {
-      width: 100%; padding: 14px; background: linear-gradient(135deg, var(--accent), #8b5cf6);
+      width: 100%; padding: 15px; background: linear-gradient(135deg, var(--accent), #8b5cf6);
       border: none; border-radius: 10px; color: #fff; font-size: 0.95rem;
-      font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 6px;
+      font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; font-family: inherit;
     }
     .generate-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(108,99,255,0.4); }
     .generate-btn:disabled { background: var(--surface2); color: var(--text2); cursor: not-allowed; transform: none; box-shadow: none; }
-    .error-banner {
-      background: rgba(255,101,132,0.1); border: 1px solid rgba(255,101,132,0.3);
-      border-radius: 8px; padding: 10px 14px; margin-bottom: 12px;
-      font-size: 0.82rem; color: #ff8fa3; display: none;
-    }
-    .error-banner.show { display: block; }
-    .info-banner {
-      background: rgba(108,99,255,0.08); border: 1px solid rgba(108,99,255,0.25);
-      border-radius: 8px; padding: 10px 14px; margin-bottom: 12px;
-      font-size: 0.8rem; color: var(--text2); line-height: 1.5;
-    }
-
-    /* SCHOOL DROPDOWN */
-    .school-dropdown {
-      position: absolute; top: 100%; left: 0; right: 0; z-index: 200;
-      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4); max-height: 220px; overflow-y: auto;
-      margin-top: 4px;
-    }
-    .school-dropdown-item {
-      padding: 9px 14px; cursor: pointer; font-size: 0.85rem;
-      display: flex; align-items: center; justify-content: space-between;
-      transition: background 0.1s;
-    }
-    .school-dropdown-item:hover { background: var(--surface2); }
-    .school-dropdown-swatch { display: flex; gap: 5px; }
-    .swatch { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.1); }
 
     /* RESULTS */
     .results-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
@@ -194,14 +286,13 @@
       border-radius: 6px; padding: 5px 11px; font-size: 0.78rem; cursor: pointer; transition: all 0.2s;
     }
     .clear-btn:hover { border-color: var(--accent2); color: var(--accent2); }
-
     .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
     .image-card {
       background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
       overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;
     }
     .image-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.4); }
-    .image-card img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; }
+    .image-card img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; background: var(--surface2); }
     .image-card-body { padding: 11px; }
     .image-card-label { font-size: 0.82rem; font-weight: 700; margin-bottom: 3px; }
     .image-card-meta { font-size: 0.73rem; color: var(--text2); margin-bottom: 9px; }
@@ -214,7 +305,6 @@
     .dl-btn:hover { border-color: var(--accent); color: var(--accent); }
     .dl-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
     .dl-btn.primary:hover { background: #5a52e0; }
-
     .loading-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
     .skeleton { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .skeleton-img { width: 100%; aspect-ratio: 1; background: linear-gradient(90deg, var(--surface2) 25%, #2a2a3a 50%, var(--surface2) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
@@ -222,29 +312,48 @@
     .skeleton-body { padding: 11px; }
     .skeleton-line { height: 9px; border-radius: 4px; background: var(--surface2); margin-bottom: 7px; }
     .skeleton-line.short { width: 55%; }
-
     .empty-state { text-align: center; padding: 56px 20px; border: 2px dashed var(--border); border-radius: var(--radius); }
     .empty-icon { font-size: 2.8rem; margin-bottom: 14px; opacity: 0.4; }
     .empty-title { font-size: 1rem; font-weight: 600; color: var(--text2); margin-bottom: 6px; }
     .empty-sub { font-size: 0.82rem; color: var(--text2); opacity: 0.65; }
 
+    /* LIVE PREVIEW */
+    .preview-panel { margin-bottom: 22px; }
+    .preview-hdr { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .preview-title-row { display: flex; align-items: center; gap: 10px; }
+    .preview-title { font-size: 1.05rem; font-weight: 700; }
+    .live-badge {
+      font-size: 0.65rem; background: rgba(56,217,169,0.12); border: 1px solid rgba(56,217,169,0.4);
+      color: var(--success); padding: 2px 9px; border-radius: 10px; font-weight: 700;
+      letter-spacing: 0.5px; animation: livePulse 2.4s ease-in-out infinite;
+    }
+    @keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:0.45; } }
+    .preview-sub { font-size: 0.75rem; color: var(--text2); margin-top: 3px; }
+    .preview-canvas-wrap {
+      position: relative; background: #0a0a0e; border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    #previewCanvas { display: block; width: 100%; height: auto; cursor: default; }
+    .preview-footer { font-size: 0.72rem; color: var(--text2); margin-top: 10px; text-align: center; }
+    .preview-footer strong { color: var(--accent); }
+
     /* MODAL */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 30px; max-width: 430px; width: 92%; }
-    .modal h2 { font-size: 1.15rem; margin-bottom: 7px; }
-    .modal p { font-size: 0.83rem; color: var(--text2); margin-bottom: 18px; line-height: 1.65; }
+    .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; max-width: 440px; width: 92%; }
+    .modal h2 { font-size: 1.1rem; margin-bottom: 8px; }
+    .modal p { font-size: 0.82rem; color: var(--text2); margin-bottom: 18px; line-height: 1.65; }
     .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
     .btn-primary { flex: 1; padding: 11px; background: var(--accent); border: none; border-radius: 8px; color: #fff; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit; }
     .btn-primary:hover { background: #5a52e0; }
     .btn-ghost { padding: 11px 16px; background: transparent; border: 1px solid var(--border); border-radius: 8px; color: var(--text2); font-size: 0.9rem; cursor: pointer; font-family: inherit; }
-    .btn-ghost:hover { border-color: var(--text2); color: var(--text); }
+    .btn-ghost:hover { border-color: var(--text); color: var(--text); }
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">
+  <div>
     <img src="logo.jpg" alt="TeamDrip" style="height:36px; width:auto; border-radius:4px; display:block;" />
   </div>
   <div class="nav-right">
@@ -259,8 +368,7 @@
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2>🔑 OpenAI API Key</h2>
-    <p>Your key is saved in <strong>your browser only</strong> — never sent anywhere except directly to OpenAI's servers.<br><br>
-    Get a key at <strong>platform.openai.com/api-keys</strong>. Load ~$10 in credits; each mockup costs ~$0.04–0.08.</p>
+    <p>Saved in your browser only — sent directly to OpenAI. Get a key at <strong>platform.openai.com/api-keys</strong>.<br>Load ~$10 in credits; each mockup costs ~$0.04–0.08.</p>
     <div class="form-group">
       <label>API Key</label>
       <input type="password" id="apiKeyInput" placeholder="sk-proj-..." autocomplete="off" />
@@ -275,164 +383,292 @@
 <div class="container">
   <div class="layout">
 
-    <!-- LEFT COLUMN -->
+    <!-- ═══════════════════════════════ LEFT COLUMN ═══════════════════════════════ -->
     <div>
 
-      <!-- SCHOOL PANEL -->
+      <!-- ① SCHOOL / ENTITY -->
       <div class="panel">
-        <div class="panel-title">School / Entity</div>
+        <div class="panel-title"><span class="panel-title-icon">🏫</span> School / Entity</div>
 
-        <div class="form-group" style="position:relative">
+        <div class="form-group">
           <label>School or Client Name</label>
-          <div class="school-row">
-            <div class="form-group" style="margin-bottom:0; position:relative; flex:1">
-              <input type="text" id="schoolName" placeholder="e.g. Skyridge Falcons" oninput="filterSchools()" onfocus="filterSchools()" onblur="hideDropdown()" onkeydown="handleSchoolKey(event)" autocomplete="off" />
+          <div class="input-with-btn">
+            <div class="school-wrap">
+              <input type="text" id="schoolName" placeholder="e.g. Skyridge Falcons"
+                oninput="filterSchools()" onfocus="filterSchools()" onblur="hideDropdown()" onkeydown="handleSchoolKey(event)" autocomplete="off" />
               <div class="school-dropdown" id="schoolDropdown" style="display:none"></div>
             </div>
-            <button class="school-preset-btn" onclick="toggleDropdown()">📚 Presets</button>
+            <button class="icon-btn" onclick="toggleDropdown()">📚 Presets</button>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Abbreviation / Mascot Text</label>
-          <input type="text" id="mascot" placeholder="e.g. SR, FALCONS, SKYRIDGE" />
+          <label>Abbreviation / Mascot Text  <span style="font-weight:400;opacity:0.6">+ optional logo</span></label>
+          <div class="input-with-btn">
+            <input type="text" id="mascot" placeholder="e.g. SR, FALCONS, SKYRIDGE" />
+            <button class="icon-btn" id="logoToggleBtn" onclick="toggleLogoPanel()">🔍 Logo</button>
+          </div>
+
+          <!-- Logo panel -->
+          <div class="logo-inline-panel" id="logoPanelInline">
+            <div class="logo-inline-title">Add School / Mascot Logo</div>
+            <div class="logo-upload-zone" title="Upload a logo file">
+              <input type="file" id="logoFileInput" accept="image/*" onchange="handleLogoUpload(event)" />
+              <div style="font-size:1.4rem; margin-bottom:5px;">⬆️</div>
+              <div class="logo-upload-zone-text">Click to upload a logo file<br><span style="font-size:0.72rem; opacity:0.65">PNG, SVG, JPG — transparent background preferred</span></div>
+            </div>
+            <div style="font-size:0.75rem; color:var(--text2); margin-bottom:6px;">Or paste a logo image URL:</div>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="logoUrlInput" placeholder="https://..." style="flex:1; font-size:0.82rem;" />
+              <button class="icon-btn" onclick="loadLogoFromUrl()">Load</button>
+            </div>
+            <div class="logo-search-links" style="margin-top:8px;">
+              💡 Find logos:
+              <a href="#" onclick="logoSearch('prepsportswear'); return false;">Prep Sportswear</a> ·
+              <a href="#" onclick="logoSearch('google'); return false;">Google Images</a>
+            </div>
+          </div>
+
+          <!-- Logo preview -->
+          <div class="logo-preview" id="logoPreview">
+            <img id="logoPreviewImg" src="" alt="Logo" />
+            <div class="logo-preview-info">
+              <div class="logo-preview-name" id="logoPreviewName">School Logo</div>
+              <div class="logo-preview-sub">✓ Will guide AI logo placement</div>
+            </div>
+            <button class="logo-preview-remove" onclick="removeLogo()" title="Remove logo">✕</button>
+          </div>
         </div>
 
-        <div style="display:flex; align-items:flex-end; gap:8px;">
-          <div class="form-group" style="flex:1; margin-bottom:0">
-            <label>Primary Color <span style="font-size:0.7rem; opacity:0.6">(base garment)</span></label>
+        <div class="color-row">
+          <div class="form-group">
+            <label>Primary Color</label>
             <div class="color-input-wrap">
               <input type="color" id="primaryColorPicker" value="#1a3a6b" oninput="syncColor('primary')" />
-              <input type="text" id="primaryColor" value="#1a3a6b" placeholder="#1a3a6b" oninput="syncPicker('primary')" />
+              <input type="text" id="primaryColor" value="#1a3a6b" oninput="syncPicker('primary')" />
             </div>
           </div>
-          <button onclick="swapColors()" title="Swap colors" style="flex-shrink:0; margin-bottom:1px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--text2); width:34px; height:34px; font-size:1rem; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">⇄</button>
-          <div class="form-group" style="flex:1; margin-bottom:0">
-            <label>Secondary Color <span style="font-size:0.7rem; opacity:0.6">(text / logo)</span></label>
+          <button class="swap-btn" onclick="swapColors()" title="Swap colors" style="margin-bottom:14px;">⇄</button>
+          <div class="form-group">
+            <label>Secondary Color</label>
             <div class="color-input-wrap">
               <input type="color" id="secondaryColorPicker" value="#c0933a" oninput="syncColor('secondary')" />
-              <input type="text" id="secondaryColor" value="#c0933a" placeholder="#c0933a" oninput="syncPicker('secondary')" />
+              <input type="text" id="secondaryColor" value="#c0933a" oninput="syncPicker('secondary')" />
             </div>
           </div>
         </div>
       </div>
 
-      <!-- GARMENT PANEL -->
+      <!-- ② GARMENT TYPE -->
       <div class="panel">
-        <div class="panel-title">Garment & Style</div>
-
-        <div class="form-group">
-          <label>Garment Type</label>
-          <div class="chip-group" id="garmentChips">
-            <div class="chip selected" data-value="hoodie" onclick="selectChip('garment',this)">Hoodie</div>
-            <div class="chip" data-value="bomber jacket" onclick="selectChip('garment',this)">Bomber Jacket</div>
-            <div class="chip" data-value="t-shirt" onclick="selectChip('garment',this)">T-Shirt</div>
-            <div class="chip" data-value="quarter-zip pullover" onclick="selectChip('garment',this)">Quarter-Zip</div>
-            <div class="chip" data-value="crewneck sweatshirt" onclick="selectChip('garment',this)">Crewneck</div>
-            <div class="chip" data-value="varsity jacket with leather sleeves" onclick="selectChip('garment',this)">Varsity Jacket</div>
-            <div class="chip" data-value="polo shirt" onclick="selectChip('garment',this)">Polo</div>
-            <div class="chip" data-value="zip-up track jacket" onclick="selectChip('garment',this)">Track Jacket</div>
+        <div class="panel-title"><span class="panel-title-icon">👕</span> Garment Type</div>
+        <div class="garment-grid" id="garmentGrid">
+          <div class="garment-card selected" data-value="hoodie" onclick="selectGarment(this)">
+            <div class="garment-card-icon">🧥</div>
+            <div class="garment-card-name">Hoodie</div>
+            <div class="garment-card-desc">Pullover with kangaroo pocket</div>
+            <div class="garment-card-ref-badge" id="refBadge_hoodie">0 refs</div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label>Text / Logo Style</label>
-          <div class="chip-group" id="styleChips">
-            <div class="chip selected" data-value="bold collegiate block letters with outline" onclick="selectChip('style',this)">Collegiate Block</div>
-            <div class="chip" data-value="arched varsity lettering with tackle twill texture" onclick="selectChip('style',this)">Arch / Varsity</div>
-            <div class="chip" data-value="clean modern sans-serif logo" onclick="selectChip('style',this)">Modern Sans</div>
-            <div class="chip" data-value="athletic script font" onclick="selectChip('style',this)">Script</div>
-            <div class="chip" data-value="embroidered patch-style logo with border" onclick="selectChip('style',this)">Embroidered Patch</div>
-            <div class="chip" data-value="large stacked wordmark" onclick="selectChip('style',this)">Stacked Wordmark</div>
+          <div class="garment-card" data-value="varsity" onclick="selectGarment(this)">
+            <div class="garment-card-icon">🎓</div>
+            <div class="garment-card-name">Varsity Jacket</div>
+            <div class="garment-card-desc">Wool body · leather sleeves</div>
+            <div class="garment-card-ref-badge" id="refBadge_varsity">0 refs</div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label>Shot Style</label>
-          <div class="chip-group" id="shotChips">
-            <div class="chip selected" data-value="worn on an athletic model, clean studio background" onclick="selectChip('shot',this)">Model Wearing</div>
-            <div class="chip" data-value="professional flat lay on white surface, overhead angle" onclick="selectChip('shot',this)">Flat Lay</div>
-            <div class="chip" data-value="hanging on a clean wall hanger, neutral background" onclick="selectChip('shot',this)">Hanging</div>
-            <div class="chip" data-value="action photo of athlete wearing it outdoors" onclick="selectChip('shot',this)">Action Shot</div>
+          <div class="garment-card" data-value="crewneck" onclick="selectGarment(this)">
+            <div class="garment-card-icon">👕</div>
+            <div class="garment-card-name">Crewneck</div>
+            <div class="garment-card-desc">Classic ribbed sweatshirt</div>
+            <div class="garment-card-ref-badge" id="refBadge_crewneck">0 refs</div>
           </div>
-        </div>
-
-        <div class="form-group">
-          <label>Extra Details <span style="color:#555; font-weight:400">(optional)</span></label>
-          <textarea id="extraDetails" placeholder="e.g. add falcon logo on sleeve, vintage washed look, dark moody background..."></textarea>
+          <div class="garment-card" data-value="puffer" onclick="selectGarment(this)">
+            <div class="garment-card-icon">🫧</div>
+            <div class="garment-card-name">Puffer Jacket</div>
+            <div class="garment-card-desc">Quilted zip-up outerwear</div>
+            <div class="garment-card-ref-badge" id="refBadge_puffer">0 refs</div>
+          </div>
         </div>
       </div>
 
-      <!-- REFERENCE IMAGES PANEL -->
+      <!-- ③ TEXT / LOGO STYLE -->
+      <div class="panel">
+        <div class="panel-title"><span class="panel-title-icon">🎨</span> Text / Logo Style</div>
+        <div class="chip-group" id="textStyleChips">
+          <div class="chip selected" data-value="collegiate_block" onclick="selectTextChip(this)">Collegiate Block</div>
+          <div class="chip" data-value="arch_varsity" onclick="selectTextChip(this)">Arch / Varsity</div>
+          <div class="chip" data-value="modern_sans" onclick="selectTextChip(this)">Modern Sans</div>
+          <div class="chip" data-value="script" onclick="selectTextChip(this)">Script</div>
+          <div class="chip" data-value="embroidered" onclick="selectTextChip(this)">Embroidered Patch</div>
+          <div class="chip" data-value="stacked" onclick="selectTextChip(this)">Stacked Wordmark</div>
+        </div>
+      </div>
+
+      <!-- ④ SHOT STYLE -->
+      <div class="panel">
+        <div class="panel-title"><span class="panel-title-icon">📸</span> Shot Style</div>
+        <div class="shot-grid">
+          <div class="shot-card selected" data-value="studio" onclick="selectShot(this)">
+            <div class="shot-card-icon">🎬</div>
+            <div class="shot-card-name">Studio</div>
+            <div class="shot-card-desc">Clean neutral background</div>
+          </div>
+          <div class="shot-card" data-value="campus" onclick="selectShot(this)">
+            <div class="shot-card-icon">🏟️</div>
+            <div class="shot-card-name">Campus / Stadium</div>
+            <div class="shot-card-desc">On-location school setting</div>
+          </div>
+          <div class="shot-card full" data-value="multi_view" onclick="selectShot(this)">
+            <div class="shot-card-icon">🔄</div>
+            <div>
+              <div class="shot-card-name">Front + Back + Detail  <span style="font-size:0.68rem; color:var(--accent); font-weight:600;">3-PANEL</span></div>
+              <div class="shot-card-desc">One image: front view · back view · liner/logo close-up</div>
+            </div>
+          </div>
+          <div class="shot-card" data-value="action" onclick="selectShot(this)">
+            <div class="shot-card-icon">⚡</div>
+            <div class="shot-card-name">Action Shot</div>
+            <div class="shot-card-desc">Dynamic athlete in motion</div>
+          </div>
+          <div class="shot-card" data-value="flat_lay" onclick="selectShot(this)">
+            <div class="shot-card-icon">📐</div>
+            <div class="shot-card-name">Flat Lay</div>
+            <div class="shot-card-desc">Overhead on clean surface</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⑤ MODEL PRESENTATION -->
+      <div class="panel" id="modelPanel">
+        <div class="panel-title"><span class="panel-title-icon">👥</span> Model Presentation</div>
+        <div class="model-grid">
+          <div class="model-card" data-value="solo_male" onclick="selectModel(this)">
+            <div class="model-card-icon">🧑</div>
+            <div class="model-card-name">Solo Male</div>
+            <div class="model-card-desc">Single male athlete, facing front</div>
+          </div>
+          <div class="model-card" data-value="solo_female" onclick="selectModel(this)">
+            <div class="model-card-icon">👩</div>
+            <div class="model-card-name">Solo Female</div>
+            <div class="model-card-desc">Single female athlete, facing front</div>
+          </div>
+          <div class="model-card selected" data-value="pair" onclick="selectModel(this)">
+            <div class="model-card-icon">👫</div>
+            <div class="model-card-name">M + F Pair</div>
+            <div class="model-card-desc">Male forward · Female back (shows both sides)</div>
+          </div>
+          <div class="model-card" data-value="group" onclick="selectModel(this)">
+            <div class="model-card-icon">👥</div>
+            <div class="model-card-name">Group (3)</div>
+            <div class="model-card-desc">Mixed cast, team energy</div>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-label-wrap">
+            <div class="tl">Auto-Diverse Cast</div>
+            <div class="ts">Varied ethnicities &amp; body types — inclusive, real</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="diverseToggle" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ⑥ STYLE REFERENCES -->
       <div class="panel">
         <div class="panel-title">
-          Style References
-          <span class="panel-title-badge">GUIDES AI</span>
+          <span class="panel-title-icon">🖼️</span> Style References
+          <span class="panel-title-badge green">TRAINS AI</span>
         </div>
 
-        <div class="info-banner">
-          Upload existing TeamDrip designs or mockups. The AI uses them as style guidance — matching your aesthetic, design layout, and quality level.
+        <div class="flash-banner info show" style="margin-bottom:14px;">
+          Upload actual TeamDrip garment photos as <strong>templates per garment type</strong>. Save them — the AI mirrors your exact design style every time. Front + back, both genders = best results.
         </div>
 
-        <div class="ref-zone" id="refZone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
-          <input type="file" accept="image/*" multiple onchange="handleFileInput(event)" />
-          <div class="ref-zone-icon">🖼️</div>
-          <div class="ref-zone-text">Drag & drop designs here<br><span style="opacity:0.6; font-size:0.75rem">or click to browse · PNG, JPG, WEBP</span></div>
-        </div>
-
-        <div class="ref-thumbs" id="refThumbs"></div>
-
-        <div style="margin-top:14px">
-          <label style="margin-bottom:10px; display:block">Built-in Style Presets</label>
-          <div class="style-lib" id="styleLib">
-            <div class="style-card" data-style="banner" onclick="toggleBuiltinStyle(this)">
-              <div class="style-card-icon">🏈</div>
-              <div class="style-card-name">Banner Hoodie</div>
-            </div>
-            <div class="style-card" data-style="varsity" onclick="toggleBuiltinStyle(this)">
-              <div class="style-card-icon">🎓</div>
-              <div class="style-card-name">Varsity Letterman</div>
-            </div>
-            <div class="style-card" data-style="premium" onclick="toggleBuiltinStyle(this)">
-              <div class="style-card-icon">⚡</div>
-              <div class="style-card-name">Premium Athletic</div>
-            </div>
-            <div class="style-card" data-style="retro" onclick="toggleBuiltinStyle(this)">
-              <div class="style-card-icon">🌀</div>
-              <div class="style-card-name">Retro / Vintage</div>
-            </div>
-            <div class="style-card" data-style="minimal" onclick="toggleBuiltinStyle(this)">
-              <div class="style-card-icon">◻️</div>
-              <div class="style-card-name">Clean Minimal</div>
-            </div>
-            <div class="style-card" data-style="bold" onclick="toggleBuiltinStyle(this)">
-              <div class="style-card-icon">💥</div>
-              <div class="style-card-name">Bold Graphic</div>
-            </div>
+        <!-- Saved garment templates -->
+        <div>
+          <div class="ref-section-title">
+            📌 Saved <span id="savedRefLabel">Hoodie</span> Templates
+            <span class="ref-count green" id="savedRefCount">0</span>
           </div>
+          <div class="ref-thumbs" id="savedRefThumbs"></div>
+          <div class="ref-zone" id="savedRefZone"
+            ondragover="handleDragOver(event,'saved')" ondragleave="handleDragLeave('saved')" ondrop="handleDrop(event,'saved')">
+            <input type="file" accept="image/*" multiple onchange="handleFileInput(event,'saved')" />
+            <div class="ref-zone-icon">📌</div>
+            <div class="ref-zone-text">Upload <span id="savedRefZoneLabel">Hoodie</span> reference images<br><span style="font-size:0.72rem; opacity:0.65">These save permanently as your template for this garment type</span></div>
+          </div>
+          <button class="save-tpl-btn" onclick="saveTemplates()">
+            💾 Save as <span id="saveTemplateLabel">Hoodie</span> Template (persists across sessions)
+          </button>
+          <div class="flash-banner success" id="saveSuccessBanner">✅ Saved! These will auto-load whenever you select this garment type.</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Session refs -->
+        <div>
+          <div class="ref-section-title">
+            🖼️ Extra Refs — This Session Only
+            <span class="ref-count" id="extraRefCount">0</span>
+          </div>
+          <div class="ref-zone" id="extraRefZone"
+            ondragover="handleDragOver(event,'extra')" ondragleave="handleDragLeave('extra')" ondrop="handleDrop(event,'extra')">
+            <input type="file" accept="image/*" multiple onchange="handleFileInput(event,'extra')" />
+            <div class="ref-zone-icon">🖼️</div>
+            <div class="ref-zone-text">Drag &amp; drop additional references<br><span style="font-size:0.72rem; opacity:0.65">PNG, JPG, WEBP — not saved between sessions</span></div>
+          </div>
+          <div class="ref-thumbs" id="extraRefThumbs"></div>
         </div>
       </div>
 
-      <!-- GENERATE PANEL -->
+      <!-- ⑦ CUSTOM DETAILS -->
       <div class="panel">
-        <div class="panel-title">Generate</div>
+        <div class="panel-title"><span class="panel-title-icon">✏️</span> Custom Details</div>
+        <div class="form-group">
+          <label>Additional Instructions <span style="font-size:0.7rem; font-weight:400; opacity:0.6">(optional)</span></label>
+          <textarea id="extraDetails" placeholder="e.g. add falcon logo on sleeve, include a 2025 year tag, dark moody background, distressed vintage look, show interior satin lining..."></textarea>
+        </div>
+      </div>
+
+      <!-- ⑧ GENERATE -->
+      <div class="panel">
+        <div class="panel-title"><span class="panel-title-icon">✦</span> Generate</div>
         <div class="form-group">
           <label>Number of Mockups</label>
-          <div class="count-row" id="countBtns">
+          <div class="count-row">
             <button class="count-btn selected" data-value="1" onclick="selectCount(this)">1</button>
             <button class="count-btn" data-value="2" onclick="selectCount(this)">2</button>
             <button class="count-btn" data-value="3" onclick="selectCount(this)">3</button>
             <button class="count-btn" data-value="4" onclick="selectCount(this)">4</button>
           </div>
         </div>
-        <div class="error-banner" id="errorBanner"></div>
-        <button class="generate-btn" id="generateBtn" onclick="generate()">✦ Generate Mockups</button>
+        <div class="flash-banner error" id="errorBanner"></div>
+        <button class="generate-btn" id="generateBtn" onclick="generate()">✦  Generate Mockups</button>
       </div>
 
     </div><!-- end left col -->
 
-    <!-- RIGHT: RESULTS -->
+    <!-- ═══════════════════════════════ RIGHT: RESULTS ═══════════════════════════════ -->
     <div>
+
+      <!-- LIVE PREVIEW CANVAS -->
+      <div class="preview-panel" id="previewPanel">
+        <div class="preview-hdr">
+          <div>
+            <div class="preview-title-row">
+              <div class="preview-title">Live Preview</div>
+              <span class="live-badge">● LIVE</span>
+            </div>
+            <div class="preview-sub">Updates as you configure — layout approximation only</div>
+          </div>
+        </div>
+        <div class="preview-canvas-wrap">
+          <canvas id="previewCanvas" width="600" height="580"></canvas>
+        </div>
+        <div class="preview-footer">⚡ This is a layout preview · Hit <strong>Generate</strong> to get the real AI-quality mockup</div>
+      </div>
+
       <div class="results-hdr">
         <div>
           <div class="results-title">Mockups</div>
@@ -445,7 +681,7 @@
       <div id="emptyState" class="empty-state">
         <div class="empty-icon">👕</div>
         <div class="empty-title">No mockups yet</div>
-        <div class="empty-sub">Fill out the form on the left and hit Generate</div>
+        <div class="empty-sub">Configure the form on the left and hit Generate</div>
       </div>
     </div>
 
@@ -453,81 +689,139 @@
 </div>
 
 <script>
-// ── SCHOOL LIBRARY ─────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// DATA — SCHOOL PRESETS
+// ═══════════════════════════════════════════════════════════════════════════════
 const SCHOOLS = [
-  // ── Utah 6A/5A HS — verified via Prep Sportswear / official sites ──────────
-  { name: "Skyridge Falcons",         abbr: "SR",   p: "#BF5700", s: "#7A8B8B" }, // burnt orange + steel gray
-  { name: "Lehi Pioneers",            abbr: "LHS",  p: "#003087", s: "#c0933a" }, // blue + gold (verify)
-  { name: "Copper Hills Grizzlies",   abbr: "CH",   p: "#002D62", s: "#355E3B" }, // navy + hunter green
-  { name: "Westlake Thunder",         abbr: "WHS",  p: "#002D62", s: "#6CACE4" }, // navy + columbia blue
-  { name: "Herriman Mustangs",        abbr: "HHS",  p: "#002D62", s: "#800000" }, // navy + maroon
-  { name: "Corner Canyon Chargers",   abbr: "CC",   p: "#002D62", s: "#A8A9AD" }, // navy + silver
-  { name: "Lone Peak Knights",        abbr: "LP",   p: "#800000", s: "#CFB53B" }, // maroon + vegas gold
-  { name: "Mountain Ridge Sentinels", abbr: "MR",   p: "#003366", s: "#cc0000" }, // verify
-  { name: "Skyline Eagles",           abbr: "SKY",  p: "#002868", s: "#BF0A30" }, // verify
-  { name: "Pleasant Grove Vikings",   abbr: "PG",   p: "#4B0082", s: "#FFD700" }, // verify
-  { name: "Timpview Thunderbirds",    abbr: "TV",   p: "#b31312", s: "#ffffff" }, // verify
-  { name: "American Fork Cavemen",    abbr: "AF",   p: "#CC0000", s: "#ffffff" }, // verify
-  { name: "Layton Lancers",           abbr: "LHS",  p: "#003087", s: "#c8993a" }, // verify
-  { name: "Bountiful Redhawks",       abbr: "BHS",  p: "#b31312", s: "#ffffff" }, // verify
-  // ── Utah Universities ──────────────────────────────────────────────────────
-  { name: "University of Utah",        abbr: "UTAH", p: "#CC0000", s: "#808080" },
-  { name: "BYU Cougars",               abbr: "BYU",  p: "#002E5D", s: "#ffffff" },
-  { name: "Utah State Aggies",         abbr: "USU",  p: "#003263", s: "#8A8D8F" },
-  { name: "Weber State Wildcats",      abbr: "WSU",  p: "#4f2682", s: "#ffffff" },
-  { name: "SUU Thunderbirds",          abbr: "SUU",  p: "#c8102e", s: "#ffffff" },
-  { name: "Utah Valley Wolverines",    abbr: "UVU",  p: "#275d38", s: "#ffffff" },
-  { name: "Utah Tech Trailblazers",    abbr: "UTT",  p: "#CC0000", s: "#002147" },
-  // ── Arizona Universities ───────────────────────────────────────────────────
-  { name: "Arizona State Sun Devils",  abbr: "ASU",  p: "#8C1D40", s: "#FFC627" },
-  { name: "University of Arizona",     abbr: "UA",   p: "#AB0520", s: "#0C234B" },
-  { name: "Northern Arizona",          abbr: "NAU",  p: "#003087", s: "#FFD700" },
-  { name: "Grand Canyon Antelopes",    abbr: "GCU",  p: "#522398", s: "#000000" },
-  // ── Nevada Universities ────────────────────────────────────────────────────
-  { name: "UNLV Runnin Rebels",        abbr: "UNLV", p: "#CF0A2C", s: "#898d8d" },
-  { name: "Nevada Wolf Pack",          abbr: "UNR",  p: "#003366", s: "#807F84" },
-  // ── Idaho Universities ─────────────────────────────────────────────────────
-  { name: "Boise State Broncos",       abbr: "BSU",  p: "#0033A0", s: "#D64309" },
-  { name: "University of Idaho",       abbr: "UI",   p: "#F1BE48", s: "#000000" },
-  { name: "Idaho State Bengals",       abbr: "ISU",  p: "#F47321", s: "#000000" },
-  // ── Colorado Universities ──────────────────────────────────────────────────
-  { name: "Colorado Buffaloes",        abbr: "CU",   p: "#CFB87C", s: "#000000" },
-  { name: "Colorado State Rams",       abbr: "CSU",  p: "#1E4D2B", s: "#C8C372" },
-  { name: "University of Denver",      abbr: "DU",   p: "#862633", s: "#C8A951" },
-  { name: "MSU Denver Roadrunners",    abbr: "MSU",  p: "#862633", s: "#C8A000" },
-  { name: "UCCS Mountain Lions",       abbr: "UCCS", p: "#C8A951", s: "#000000" },
-  // ── Big 12 Universities ────────────────────────────────────────────────────
-  { name: "Baylor Bears",              abbr: "BU",   p: "#003015", s: "#FFB81C" },
-  { name: "Cincinnati Bearcats",       abbr: "UC",   p: "#E00122", s: "#000000" },
-  { name: "Houston Cougars",           abbr: "UH",   p: "#C8102E", s: "#ffffff" },
-  { name: "Iowa State Cyclones",       abbr: "ISU",  p: "#C8102E", s: "#F1BE48" },
-  { name: "Kansas Jayhawks",           abbr: "KU",   p: "#0051A2", s: "#E8000D" },
-  { name: "Kansas State Wildcats",     abbr: "KSU",  p: "#512888", s: "#A7A9AC" },
-  { name: "Oklahoma State Cowboys",    abbr: "OSU",  p: "#FF6500", s: "#000000" },
-  { name: "TCU Horned Frogs",          abbr: "TCU",  p: "#4D1979", s: "#ffffff" },
-  { name: "Texas Tech Red Raiders",    abbr: "TTU",  p: "#CC0000", s: "#000000" },
-  { name: "UCF Knights",               abbr: "UCF",  p: "#000000", s: "#FFC904" },
-  { name: "West Virginia Mountaineers",abbr: "WVU",  p: "#002868", s: "#EAAA00" },
-  // ── Custom ─────────────────────────────────────────────────────────────────
-  { name: "TeamDrip Demo",             abbr: "TD",   p: "#6c63ff", s: "#ff6584" },
+  { name:"Skyridge Falcons",           abbr:"SR",   p:"#BF5700", s:"#7A8B8B" },
+  { name:"Lehi Pioneers",              abbr:"LHS",  p:"#003087", s:"#c0933a" },
+  { name:"Copper Hills Grizzlies",     abbr:"CH",   p:"#002D62", s:"#355E3B" },
+  { name:"Westlake Thunder",           abbr:"WHS",  p:"#002D62", s:"#6CACE4" },
+  { name:"Herriman Mustangs",          abbr:"HHS",  p:"#002D62", s:"#800000" },
+  { name:"Corner Canyon Chargers",     abbr:"CC",   p:"#002D62", s:"#A8A9AD" },
+  { name:"Lone Peak Knights",          abbr:"LP",   p:"#800000", s:"#CFB53B" },
+  { name:"Mountain Ridge Sentinels",   abbr:"MR",   p:"#003366", s:"#cc0000" },
+  { name:"Skyline Eagles",             abbr:"SKY",  p:"#002868", s:"#BF0A30" },
+  { name:"Pleasant Grove Vikings",     abbr:"PG",   p:"#4B0082", s:"#FFD700" },
+  { name:"Timpview Thunderbirds",      abbr:"TV",   p:"#b31312", s:"#ffffff" },
+  { name:"American Fork Cavemen",      abbr:"AF",   p:"#CC0000", s:"#ffffff" },
+  { name:"Layton Lancers",             abbr:"LAY",  p:"#003087", s:"#c8993a" },
+  { name:"Bountiful Redhawks",         abbr:"BHS",  p:"#b31312", s:"#ffffff" },
+  { name:"University of Utah",         abbr:"UTAH", p:"#CC0000", s:"#808080" },
+  { name:"BYU Cougars",               abbr:"BYU",  p:"#002E5D", s:"#ffffff" },
+  { name:"Utah State Aggies",          abbr:"USU",  p:"#003263", s:"#8A8D8F" },
+  { name:"Weber State Wildcats",       abbr:"WSU",  p:"#4f2682", s:"#ffffff" },
+  { name:"SUU Thunderbirds",           abbr:"SUU",  p:"#c8102e", s:"#ffffff" },
+  { name:"Utah Valley Wolverines",     abbr:"UVU",  p:"#275d38", s:"#ffffff" },
+  { name:"Utah Tech Trailblazers",     abbr:"UTT",  p:"#CC0000", s:"#002147" },
+  { name:"Arizona State Sun Devils",   abbr:"ASU",  p:"#8C1D40", s:"#FFC627" },
+  { name:"University of Arizona",      abbr:"UA",   p:"#AB0520", s:"#0C234B" },
+  { name:"Northern Arizona",           abbr:"NAU",  p:"#003087", s:"#FFD700" },
+  { name:"Grand Canyon Antelopes",     abbr:"GCU",  p:"#522398", s:"#000000" },
+  { name:"UNLV Runnin Rebels",         abbr:"UNLV", p:"#CF0A2C", s:"#898d8d" },
+  { name:"Nevada Wolf Pack",           abbr:"UNR",  p:"#003366", s:"#807F84" },
+  { name:"Boise State Broncos",        abbr:"BSU",  p:"#0033A0", s:"#D64309" },
+  { name:"University of Idaho",        abbr:"UI",   p:"#F1BE48", s:"#000000" },
+  { name:"Idaho State Bengals",        abbr:"ISU",  p:"#F47321", s:"#000000" },
+  { name:"Colorado Buffaloes",         abbr:"CU",   p:"#CFB87C", s:"#000000" },
+  { name:"Colorado State Rams",        abbr:"CSU",  p:"#1E4D2B", s:"#C8C372" },
+  { name:"University of Denver",       abbr:"DU",   p:"#862633", s:"#C8A951" },
+  { name:"Baylor Bears",               abbr:"BU",   p:"#003015", s:"#FFB81C" },
+  { name:"Cincinnati Bearcats",        abbr:"UC",   p:"#E00122", s:"#000000" },
+  { name:"Houston Cougars",            abbr:"UH",   p:"#C8102E", s:"#ffffff" },
+  { name:"Iowa State Cyclones",        abbr:"ISU",  p:"#C8102E", s:"#F1BE48" },
+  { name:"Kansas Jayhawks",            abbr:"KU",   p:"#0051A2", s:"#E8000D" },
+  { name:"Kansas State Wildcats",      abbr:"KSU",  p:"#512888", s:"#A7A9AC" },
+  { name:"Oklahoma State Cowboys",     abbr:"OSU",  p:"#FF6500", s:"#000000" },
+  { name:"TCU Horned Frogs",           abbr:"TCU",  p:"#4D1979", s:"#ffffff" },
+  { name:"Texas Tech Red Raiders",     abbr:"TTU",  p:"#CC0000", s:"#000000" },
+  { name:"UCF Knights",                abbr:"UCF",  p:"#000000", s:"#FFC904" },
+  { name:"West Virginia Mountaineers", abbr:"WVU",  p:"#002868", s:"#EAAA00" },
+  { name:"TeamDrip Demo",              abbr:"TD",   p:"#6c63ff", s:"#ff6584" },
 ];
 
-let filteredSchools = [...SCHOOLS];
-let dropdownVisible = false;
-let selectedBuiltinStyles = new Set();
-let refImages = []; // {name, dataUrl}
-let results = [];
-let selectedGarment = 'hoodie';
-let selectedStyle = 'bold collegiate block letters with outline';
-let selectedShot = 'worn on an athletic model, clean studio background';
-let selectedCount = 1;
-
-// ── INIT ───────────────────────────────────────────────────────────────────
-window.onload = () => {
-  updateApiStatus();
+// ═══════════════════════════════════════════════════════════════════════════════
+// DATA — GARMENT PRESETS (baked-in TeamDrip style DNA)
+// ═══════════════════════════════════════════════════════════════════════════════
+const GARMENTS = {
+  hoodie: {
+    label: 'Hoodie',
+    garmentDesc: `premium heavyweight pullover hoodie with large kangaroo front pocket and adjustable drawstring hood, thick ribbed cuffs and hem, substantial quality athletic fleece construction`,
+    designDNA: `Bold graphic print centered across the upper chest — school name arched in large lettering, mascot abbreviation or secondary text stacked below in a strong hierarchical layout. Hood interior lined in contrasting team color. The design should feel like a real premium athletic brand hoodie — not a cheap screen print. TeamDrip signature: clean seams, confident graphic placement, print that reads clearly from 20 feet away.`,
+  },
+  varsity: {
+    label: 'Varsity Jacket',
+    garmentDesc: `classic varsity letterman jacket with a two-tone design: solid wool body in the primary color with genuine leather sleeves in the secondary color, ribbed collar, cuffs, and waistband in contrasting color, snap-button front closure`,
+    designDNA: `Large school initial or mascot emblem on the left chest in chenille felt or embroidered patch. School name spelled out in bold twill lettering across the upper back. Optional: front left chest has a smaller secondary detail, interior satin lining in team colors visible at collar and cuff. Classic award jacket proportions — substantial, prestigious, collector's quality. Show the interior satin lining if visible.`,
+  },
+  crewneck: {
+    label: 'Crewneck',
+    garmentDesc: `classic crewneck sweatshirt with ribbed collar, ribbed cuffs, and ribbed hem, premium midweight athletic fleece, relaxed yet structured fit`,
+    designDNA: `Bold chest print featuring school name prominently with mascot graphic or abbreviation below in strong contrasting colors. Clean collegiate aesthetic — intentional, confident typography. May include a small secondary logo on the left sleeve. TeamDrip signature: high print contrast, design placement that fills the chest without overcrowding, premium ink opacity.`,
+  },
+  puffer: {
+    label: 'Puffer Jacket',
+    garmentDesc: `quilted puffer jacket with full-zip front closure, horizontal channel-stitched quilted panels, school colors as primary body panels with contrasting color blocking, athletic outerwear silhouette`,
+    designDNA: `Embroidered school name or logo on the left chest, school colors used deliberately as panel sections (e.g., primary color body, secondary color chest yoke or side panels). Clean, structured sports outerwear aesthetic — like a sideline jacket for a major athletic program. TeamDrip quality: professional cut, durable-looking materials, crisp embroidery.`,
+  },
 };
 
-// ── API KEY ────────────────────────────────────────────────────────────────
+const TEXT_STYLES = {
+  collegiate_block: `bold collegiate block letters with thick outlines and strong contrast — classic athletic lettering, the kind seen on major university apparel`,
+  arch_varsity:     `arched varsity lettering with tackle twill or appliqué texture, traditional award-style typography curving across the chest`,
+  modern_sans:      `clean modern sans-serif logotype with geometric precision, contemporary athletic brand aesthetic — minimal, confident`,
+  script:           `flowing athletic script font with dynamic energy, hand-lettered feel with professional polish`,
+  embroidered:      `embroidered patch-style logo with visible stitch texture and defined border, elevated premium craft look`,
+  stacked:          `large stacked wordmark with school name on top and mascot/abbreviation below in strong vertical hierarchy, fills the chest`,
+};
+
+const SHOT_STYLES = {
+  studio:     `Professional studio product photography. Clean neutral gradient background in a shade that complements the garment colors. Controlled soft-box lighting that shows garment texture and design detail clearly. Commercial apparel catalog quality.`,
+  campus:     `On-location athletic photography at this specific school. The model stands on the school's campus — in front of the football stadium exterior, on the athletic field, or on the campus quad with recognizable architecture in the background. Natural outdoor lighting. The setting reinforces the school's identity and creates an aspirational, place-specific feel.`,
+  multi_view: `A single professional product photography image composed as a triptych — three panels side by side: LEFT PANEL shows the garment's front design on a model (or flat lay) clearly showing the chest graphic; CENTER PANEL shows the garment's back on a model (or flat lay) showing the back design; RIGHT PANEL shows a close-up detail of either the main chest logo, the interior liner, or a distinctive design element. All three panels share consistent lighting, background, and color treatment. The three panels are clearly separated within the single image.`,
+  action:     `Dynamic sports editorial action photography. An athlete in energetic motion — running, jumping, or in a sports pose — wearing the garment in an athletic environment (stadium, gym, field, or court). High-energy, dramatic lighting with a sense of speed and power. Magazine-quality sports photography.`,
+  flat_lay:   `Overhead flat lay product photography. The garment is laid perfectly flat on a clean white or very light surface, carefully arranged to show the full design and construction. Overhead angle, even diffused lighting with no harsh shadows. Professional product catalog style — clean, precise, every detail visible.`,
+};
+
+const MODEL_PRESENTATIONS = {
+  solo_male:   `A single male athlete model wearing the garment. Confident, natural athletic stance. Positioned to face the camera squarely so the chest design is fully visible and reads clearly.`,
+  solo_female: `A single female athlete model wearing the garment. Confident, natural athletic stance. Positioned to face the camera squarely so the chest design is fully visible and reads clearly.`,
+  pair:        `Two athletic models wearing the garment together — a male model facing directly toward the camera (showing the full front design and chest graphic clearly) and a female model positioned at a 3/4 or full back angle (showing the back of the garment and any back design). Both in relaxed, confident athletic poses standing close together, natural body language. This composition deliberately shows both the front and back design in one shot, and shows how the garment fits and looks on both male and female athletes.`,
+  group:       `Three athletic models in a natural, confident group arrangement. Mixed male and female. They are positioned at complementary angles so different views of the garment are visible simultaneously. Energetic, aspirational team atmosphere — like a real athletic program photo shoot.`,
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════════
+let selectedGarment   = 'hoodie';
+let selectedTextStyle = 'collegiate_block';
+let selectedShot      = 'studio';
+let selectedModel     = 'pair';
+let selectedCount     = 1;
+let logoRef           = null;  // { name, dataUrl }
+let extraRefs         = [];    // [{ name, dataUrl }, ...]
+let garmentTemplates  = { hoodie: [], varsity: [], crewneck: [], puffer: [] };
+let results           = [];
+let resultIdSeq       = 0;
+let dropdownVisible   = false;
+let logoPanelOpen     = false;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════════
+window.onload = () => {
+  updateApiStatus();
+  loadTemplatesFromStorage();
+  refreshGarmentBadges();
+  refreshSavedRefUI();
+  document.getElementById('emptyState').style.display = 'none';
+  initPreviewListeners();
+  setTimeout(schedulePreview, 80);
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// API KEY
+// ═══════════════════════════════════════════════════════════════════════════════
 function openModal() {
   document.getElementById('apiKeyInput').value = localStorage.getItem('openai_api_key') || '';
   document.getElementById('modalOverlay').classList.add('open');
@@ -548,10 +842,10 @@ function updateApiStatus() {
   document.getElementById('apiStatusText').textContent = k ? 'API Key ✓' : 'Set API Key';
 }
 
-// ── COLORS ─────────────────────────────────────────────────────────────────
-function syncColor(w) {
-  document.getElementById(w+'Color').value = document.getElementById(w+'ColorPicker').value;
-}
+// ═══════════════════════════════════════════════════════════════════════════════
+// COLORS
+// ═══════════════════════════════════════════════════════════════════════════════
+function syncColor(w) { document.getElementById(w+'Color').value = document.getElementById(w+'ColorPicker').value; }
 function syncPicker(w) {
   const v = document.getElementById(w+'Color').value;
   if (/^#[0-9A-Fa-f]{6}$/.test(v)) document.getElementById(w+'ColorPicker').value = v;
@@ -565,14 +859,16 @@ function swapColors() {
   document.getElementById('secondaryColorPicker').value = p;
 }
 
-// ── SCHOOL DROPDOWN ────────────────────────────────────────────────────────
-function renderSchoolDropdown(list) {
+// ═══════════════════════════════════════════════════════════════════════════════
+// SCHOOL DROPDOWN
+// ═══════════════════════════════════════════════════════════════════════════════
+function renderDropdown(list) {
   const dd = document.getElementById('schoolDropdown');
   if (!list.length) { dd.style.display = 'none'; return; }
-  dd.innerHTML = list.slice(0,12).map(s => `
+  dd.innerHTML = list.slice(0,14).map(s => `
     <div class="school-dropdown-item" onmousedown="selectSchool(${SCHOOLS.indexOf(s)})">
       <span>${s.name}</span>
-      <div class="school-dropdown-swatch">
+      <div class="swatch-row">
         <div class="swatch" style="background:${s.p}"></div>
         <div class="swatch" style="background:${s.s}"></div>
       </div>
@@ -584,12 +880,12 @@ function renderSchoolDropdown(list) {
 function filterSchools() {
   const q = document.getElementById('schoolName').value.toLowerCase();
   const filtered = q ? SCHOOLS.filter(s => s.name.toLowerCase().includes(q)) : SCHOOLS;
-  if (filtered.length) renderSchoolDropdown(filtered);
-  else document.getElementById('schoolDropdown').style.display = 'none';
+  if (filtered.length) renderDropdown(filtered);
+  else { document.getElementById('schoolDropdown').style.display = 'none'; dropdownVisible = false; }
 }
 function toggleDropdown() {
-  if (dropdownVisible) { hideDropdown(); }
-  else { renderSchoolDropdown(SCHOOLS); document.getElementById('schoolDropdown').style.display = 'block'; dropdownVisible = true; }
+  if (dropdownVisible) hideDropdown();
+  else { renderDropdown(SCHOOLS); }
 }
 function hideDropdown() {
   setTimeout(() => {
@@ -597,9 +893,7 @@ function hideDropdown() {
     dropdownVisible = false;
   }, 150);
 }
-function handleSchoolKey(e) {
-  if (e.key === 'Escape') hideDropdown();
-}
+function handleSchoolKey(e) { if (e.key === 'Escape') hideDropdown(); }
 function selectSchool(idx) {
   const s = SCHOOLS[idx];
   document.getElementById('schoolName').value = s.name;
@@ -611,13 +905,71 @@ function selectSchool(idx) {
   hideDropdown();
 }
 
-// ── CHIPS ──────────────────────────────────────────────────────────────────
-function selectChip(group, el) {
-  el.parentElement.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  if (group==='garment') selectedGarment = el.dataset.value;
-  if (group==='style')   selectedStyle   = el.dataset.value;
-  if (group==='shot')    selectedShot    = el.dataset.value;
+// ═══════════════════════════════════════════════════════════════════════════════
+// LOGO PANEL
+// ═══════════════════════════════════════════════════════════════════════════════
+function toggleLogoPanel() {
+  logoPanelOpen = !logoPanelOpen;
+  document.getElementById('logoPanelInline').classList.toggle('open', logoPanelOpen);
+  document.getElementById('logoToggleBtn').textContent = logoPanelOpen ? '✕ Close' : '🔍 Logo';
+}
+function handleLogoUpload(e) {
+  const f = e.target.files[0]; if (!f) return;
+  const reader = new FileReader();
+  reader.onload = ev => { setLogo({ name: f.name, dataUrl: ev.target.result }); };
+  reader.readAsDataURL(f);
+}
+function loadLogoFromUrl() {
+  const url = document.getElementById('logoUrlInput').value.trim();
+  if (!url) return;
+  setLogo({ name: 'Pasted URL', dataUrl: url });
+}
+function setLogo(ref) {
+  logoRef = ref;
+  document.getElementById('logoPreviewImg').src = ref.dataUrl;
+  document.getElementById('logoPreviewName').textContent = ref.name;
+  document.getElementById('logoPreview').classList.add('show');
+  if (logoPanelOpen) toggleLogoPanel();
+  updatePreviewLogo(ref.dataUrl);
+}
+function removeLogo() {
+  logoRef = null;
+  document.getElementById('logoPreview').classList.remove('show');
+  document.getElementById('logoPreviewImg').src = '';
+  updatePreviewLogo(null);
+}
+function logoSearch(type) {
+  const school = document.getElementById('schoolName').value.trim() || 'school logo';
+  if (type === 'google') window.open(`https://www.google.com/search?tbm=isch&q=${encodeURIComponent(school+' official logo transparent PNG')}`, '_blank');
+  else window.open(`https://www.prepsportswear.com/search?q=${encodeURIComponent(school)}`, '_blank');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// GARMENT / SHOT / MODEL / COUNT SELECTION
+// ═══════════════════════════════════════════════════════════════════════════════
+function selectGarment(card) {
+  document.querySelectorAll('.garment-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedGarment = card.dataset.value;
+  refreshSavedRefUI();
+  schedulePreview();
+}
+function selectTextChip(chip) {
+  document.querySelectorAll('#textStyleChips .chip').forEach(c => c.classList.remove('selected'));
+  chip.classList.add('selected');
+  selectedTextStyle = chip.dataset.value;
+  schedulePreview();
+}
+function selectShot(card) {
+  document.querySelectorAll('.shot-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedShot = card.dataset.value;
+  document.getElementById('modelPanel').style.display = (selectedShot === 'flat_lay') ? 'none' : 'block';
+}
+function selectModel(card) {
+  document.querySelectorAll('.model-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedModel = card.dataset.value;
 }
 function selectCount(btn) {
   document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('selected'));
@@ -625,90 +977,168 @@ function selectCount(btn) {
   selectedCount = parseInt(btn.dataset.value);
 }
 
-// ── BUILT-IN STYLE PRESETS ─────────────────────────────────────────────────
-const STYLE_PROMPTS = {
-  banner:  "in the style of a banner athletic hoodie — large bold chest print spanning full width, subtle gradient on the letters, premium streetwear feel",
-  varsity: "in classic letterman varsity jacket style — chenille letters, ribbed collar and cuffs, two-tone color blocking like traditional award jackets",
-  premium: "premium athletic luxury feel — tonal embroidery, minimalist placement, elevated fabric texture visible, like a high-end sports brand",
-  retro:   "vintage retro athletic style — distressed print, faded worn-in look, 80s/90s collegiate aesthetic, worn texture on the graphics",
-  minimal: "ultra-clean minimal design — small chest logo only, no excess graphics, monochromatic or limited color palette, modern streetwear",
-  bold:    "bold oversized graphic — large back print or all-over design, high contrast colors, dynamic athletic energy, statement piece",
-};
-
-function toggleBuiltinStyle(card) {
-  const s = card.dataset.style;
-  if (card.classList.contains('selected')) {
-    card.classList.remove('selected');
-    selectedBuiltinStyles.delete(s);
-  } else {
-    card.classList.add('selected');
-    selectedBuiltinStyles.add(s);
-  }
+// ═══════════════════════════════════════════════════════════════════════════════
+// GARMENT TEMPLATE STORAGE
+// ═══════════════════════════════════════════════════════════════════════════════
+function loadTemplatesFromStorage() {
+  try {
+    const raw = localStorage.getItem('td_garment_templates_v2');
+    if (raw) garmentTemplates = JSON.parse(raw);
+  } catch(e) {}
+}
+function saveTemplates() {
+  try {
+    localStorage.setItem('td_garment_templates_v2', JSON.stringify(garmentTemplates));
+    const b = document.getElementById('saveSuccessBanner');
+    b.classList.add('show');
+    setTimeout(() => b.classList.remove('show'), 3500);
+  } catch(e) { alert('localStorage error: ' + e.message); }
+}
+function refreshGarmentBadges() {
+  ['hoodie','varsity','crewneck','puffer'].forEach(g => {
+    const n = (garmentTemplates[g] || []).length;
+    const badge = document.getElementById('refBadge_' + g);
+    if (badge) {
+      badge.textContent = n + ' ref' + (n!==1?'s':'');
+      badge.classList.toggle('show', n > 0);
+    }
+  });
+}
+function refreshSavedRefUI() {
+  const g = GARMENTS[selectedGarment];
+  document.getElementById('savedRefLabel').textContent    = g.label;
+  document.getElementById('savedRefZoneLabel').textContent = g.label;
+  document.getElementById('saveTemplateLabel').textContent = g.label;
+  const refs = garmentTemplates[selectedGarment] || [];
+  document.getElementById('savedRefCount').textContent = refs.length;
+  document.getElementById('savedRefThumbs').innerHTML = refs.map((img, i) => `
+    <div class="ref-thumb saved-template">
+      <img src="${img.dataUrl}" alt="${img.name}" />
+      <button class="ref-thumb-remove" onclick="removeSavedRef(${i})">✕</button>
+      <div class="ref-thumb-badge tpl">SAVED</div>
+    </div>
+  `).join('');
 }
 
-// ── REFERENCE IMAGE UPLOAD ─────────────────────────────────────────────────
-function handleDragOver(e) { e.preventDefault(); document.getElementById('refZone').classList.add('dragover'); }
-function handleDragLeave() { document.getElementById('refZone').classList.remove('dragover'); }
-function handleDrop(e) {
+function removeSavedRef(i) {
+  garmentTemplates[selectedGarment].splice(i, 1);
+  refreshSavedRefUI();
+  refreshGarmentBadges();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// FILE HANDLING
+// ═══════════════════════════════════════════════════════════════════════════════
+function handleDragOver(e, zone) {
   e.preventDefault();
-  document.getElementById('refZone').classList.remove('dragover');
-  processFiles(e.dataTransfer.files);
+  document.getElementById(zone==='saved' ? 'savedRefZone' : 'extraRefZone').classList.add('dragover');
 }
-function handleFileInput(e) { processFiles(e.target.files); }
-function processFiles(files) {
-  Array.from(files).slice(0, 4 - refImages.length).forEach(f => {
-    if (!f.type.startsWith('image/')) return;
+function handleDragLeave(zone) {
+  document.getElementById(zone==='saved' ? 'savedRefZone' : 'extraRefZone').classList.remove('dragover');
+}
+function handleDrop(e, zone) {
+  e.preventDefault();
+  document.getElementById(zone==='saved' ? 'savedRefZone' : 'extraRefZone').classList.remove('dragover');
+  processFiles(e.dataTransfer.files, zone);
+}
+function handleFileInput(e, zone) { processFiles(e.target.files, zone); }
+
+function processFiles(files, zone) {
+  const target = zone === 'saved' ? garmentTemplates[selectedGarment] : extraRefs;
+  const max = 6;
+  Array.from(files).forEach(f => {
+    if (!f.type.startsWith('image/') || target.length >= max) return;
     const reader = new FileReader();
     reader.onload = ev => {
-      refImages.push({ name: f.name, dataUrl: ev.target.result });
-      renderRefThumbs();
+      target.push({ name: f.name, dataUrl: ev.target.result });
+      if (zone === 'saved') { refreshSavedRefUI(); refreshGarmentBadges(); }
+      else renderExtraRefs();
     };
     reader.readAsDataURL(f);
   });
 }
-function renderRefThumbs() {
-  document.getElementById('refThumbs').innerHTML = refImages.map((img, i) => `
+
+function renderExtraRefs() {
+  document.getElementById('extraRefCount').textContent = extraRefs.length;
+  document.getElementById('extraRefThumbs').innerHTML = extraRefs.map((img, i) => `
     <div class="ref-thumb">
       <img src="${img.dataUrl}" alt="${img.name}" />
-      <button class="ref-thumb-remove" onclick="removeRef(${i})">✕</button>
+      <button class="ref-thumb-remove" onclick="removeExtraRef(${i})">✕</button>
       <div class="ref-thumb-badge">REF ${i+1}</div>
     </div>
   `).join('');
 }
-function removeRef(i) { refImages.splice(i,1); renderRefThumbs(); }
+function removeExtraRef(i) { extraRefs.splice(i,1); renderExtraRefs(); }
 
-// ── PROMPT BUILDER ─────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// PROMPT BUILDER
+// ═══════════════════════════════════════════════════════════════════════════════
 function buildPrompt() {
-  const school   = document.getElementById('schoolName').value.trim() || 'School Name';
-  const mascot   = document.getElementById('mascot').value.trim();
-  const primary  = document.getElementById('primaryColor').value;
-  const secondary= document.getElementById('secondaryColor').value;
-  const extra    = document.getElementById('extraDetails').value.trim();
+  const school    = document.getElementById('schoolName').value.trim() || 'the school';
+  const mascot    = document.getElementById('mascot').value.trim();
+  const primary   = document.getElementById('primaryColor').value;
+  const secondary = document.getElementById('secondaryColor').value;
+  const extra     = document.getElementById('extraDetails').value.trim();
+  const diverse   = document.getElementById('diverseToggle').checked;
+  const isFlat    = selectedShot === 'flat_lay';
 
-  let prompt = `Professional athletic apparel product photography. `;
-  prompt += `${selectedShot}. `;
-  prompt += `${selectedGarment.charAt(0).toUpperCase()+selectedGarment.slice(1)} `;
-  prompt += `in ${primary} as the primary color`;
-  if (secondary && secondary !== '#ffffff') prompt += ` with ${secondary} accent details`;
-  prompt += `. Front chest features "${school}" in ${selectedStyle}`;
-  if (mascot) prompt += `, with "${mascot}" as secondary text`;
-  prompt += `. High-quality commercial apparel photography, sharp, clean, suitable for a sales catalog or client presentation.`;
+  const g  = GARMENTS[selectedGarment];
+  const allRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs, ...(logoRef ? [logoRef] : [])];
 
-  if (selectedBuiltinStyles.size > 0) {
-    const styleDescs = [...selectedBuiltinStyles].map(s => STYLE_PROMPTS[s]).join('; ');
-    prompt += ` Style direction: ${styleDescs}.`;
+  let p = [];
+
+  p.push(`TeamDrip athletic apparel commercial photography.`);
+
+  // Garment
+  p.push(`The garment is a ${g.garmentDesc}.`);
+
+  // Colors
+  p.push(`PRIMARY COLOR: ${primary} — this exact hex color dominates the main body of the garment. SECONDARY/ACCENT COLOR: ${secondary} — used for contrast details, trim, logo outlines, and secondary text. These color choices are non-negotiable — match them precisely.`);
+
+  // Branding
+  let brand = `The garment design features "${school}" as the main school name text`;
+  if (mascot) brand += `, with "${mascot}" as the abbreviation or mascot identifier`;
+  p.push(brand + `.`);
+
+  // Typography style
+  p.push(`Typography and design treatment: ${TEXT_STYLES[selectedTextStyle]}.`);
+
+  // TeamDrip design DNA
+  p.push(`Design philosophy and construction detail: ${g.designDNA}`);
+
+  // Logo ref instruction
+  if (logoRef) {
+    p.push(`CRITICAL: The provided logo/mascot image must be reproduced faithfully on the garment. Use it as the exact graphic — do not substitute a generic mascot. Place it exactly as specified in the design description.`);
   }
 
-  if (refImages.length > 0) {
-    prompt += ` Use the provided reference image(s) as style and design layout inspiration — match the overall aesthetic, design placement, and visual quality.`;
+  // Style references
+  if (allRefs.length > 0) {
+    p.push(`STYLE REFERENCE: The provided reference image(s) show the exact TeamDrip house style for this garment type. Mirror the design layout, print placement, proportions, color application, and overall quality standard shown in those references. This is the target aesthetic — reproduce this specific design language, just with the new school's name, colors, and identity.`);
   }
 
-  if (extra) prompt += ` Additional details: ${extra}.`;
+  // Shot style
+  p.push(SHOT_STYLES[selectedShot]);
 
-  return prompt;
+  // Model presentation (not for flat lay)
+  if (!isFlat) {
+    p.push(MODEL_PRESENTATIONS[selectedModel]);
+    if (diverse) {
+      p.push(`Diversity note: the models represent diverse ethnicities and realistic athletic body types. Inclusive, aspirational imagery that reflects a real school community — not a monoculture. This should feel natural, not forced.`);
+    }
+  }
+
+  // Extra
+  if (extra) p.push(`Additional customization requested: ${extra}.`);
+
+  // Quality bar
+  p.push(`Final quality standard: photorealistic, high-resolution, professional commercial apparel photography. Every design element should be crisp and clearly legible. Suitable for a high-stakes client sales presentation or investor proposal deck. No blurry text, no muddy colors, no amateur-looking output.`);
+
+  return p.join(' ');
 }
 
-// ── GENERATE ───────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// GENERATE
+// ═══════════════════════════════════════════════════════════════════════════════
 async function generate() {
   const apiKey = localStorage.getItem('openai_api_key');
   if (!apiKey) { openModal(); return; }
@@ -717,14 +1147,15 @@ async function generate() {
 
   hideError();
   setLoading(true);
-
-  const prompt = buildPrompt();
   showSkeletons(selectedCount);
   document.getElementById('emptyState').style.display = 'none';
 
+  const prompt = buildPrompt();
+  const allRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs, ...(logoRef ? [logoRef] : [])];
+
   const jobs = Array(selectedCount).fill(null).map(() =>
-    refImages.length > 0
-      ? generateWithRefs(apiKey, prompt, school)
+    allRefs.length > 0
+      ? generateWithRefs(apiKey, prompt, school, allRefs)
       : generateText(apiKey, prompt, school)
   );
 
@@ -751,9 +1182,8 @@ async function generateText(apiKey, prompt, school) {
     const data = await res.json();
     const item = data.data?.[0];
     if (!item) { showError('No image returned from API.'); return null; }
-    if (item.b64_json) return makeResult(item.b64_json, school);
-    if (item.url)      return makeResultFromUrl(item.url, school);
-    showError('Unexpected API response format.');
+    if (item.b64_json) return makeResult(`data:image/png;base64,${item.b64_json}`, true, school);
+    if (item.url)      return makeResult(item.url, false, school);
     return null;
   } catch(e) {
     showError('Network error: ' + e.message);
@@ -761,17 +1191,12 @@ async function generateText(apiKey, prompt, school) {
   }
 }
 
-async function generateWithRefs(apiKey, prompt, school) {
-  // Use Responses API with image inputs (gpt-image-1 native multi-modal)
+async function generateWithRefs(apiKey, prompt, school, refImages) {
   try {
     const content = [
-      ...refImages.map(img => ({
-        type: 'input_image',
-        image_url: img.dataUrl,
-      })),
+      ...refImages.map(img => ({ type: 'input_image', image_url: img.dataUrl })),
       { type: 'input_text', text: prompt }
     ];
-
     const res = await fetch('https://api.openai.com/v1/responses', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
@@ -781,43 +1206,30 @@ async function generateWithRefs(apiKey, prompt, school) {
         tools: [{ type: 'image_generation', size: '1024x1024', output_format: 'b64_json' }],
       }),
     });
-
-    if (!res.ok) {
-      return await generateText(apiKey, prompt, school);
-    }
-
+    if (!res.ok) return await generateText(apiKey, prompt, school);
     const data = await res.json();
-    const imgOutput = data.output?.find(o => o.type === 'image_generation_call');
-    const b64 = imgOutput?.result;
-    if (!b64) return await generateText(apiKey, prompt, school);
-    return makeResult(b64, school);
+    const out = data.output?.find(o => o.type === 'image_generation_call');
+    if (!out?.result) return await generateText(apiKey, prompt, school);
+    return makeResult(`data:image/png;base64,${out.result}`, true, school);
   } catch {
     return await generateText(apiKey, prompt, school);
   }
 }
 
-function makeResult(b64, school) {
+function makeResult(dataUrl, isB64, school) {
+  const g = GARMENTS[selectedGarment];
   return {
-    id: Date.now() + Math.random(),
-    dataUrl: `data:image/png;base64,${b64}`,
-    isB64: true,
+    id: ++resultIdSeq,
+    dataUrl,
+    isB64,
     label: school,
-    meta: `${selectedGarment} · ${selectedStyle.split(' ').slice(0,3).join(' ')}`,
-    prompt: buildPrompt(),
-  };
-}
-function makeResultFromUrl(url, school) {
-  return {
-    id: Date.now() + Math.random(),
-    dataUrl: url,
-    isB64: false,
-    label: school,
-    meta: `${selectedGarment} · ${selectedStyle.split(' ').slice(0,3).join(' ')}`,
-    prompt: buildPrompt(),
+    meta: `${g.label} · ${selectedShot.replace('_',' ')} · ${selectedModel.replace('_',' ')}`,
   };
 }
 
-// ── UI HELPERS ─────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════════════════════
 function setLoading(v) {
   const btn = document.getElementById('generateBtn');
   btn.disabled = v;
@@ -829,16 +1241,26 @@ function showSkeletons(n) {
   g.style.display = 'grid';
 }
 function hideSkeletons() { document.getElementById('loadingGrid').style.display = 'none'; }
-function showError(msg) { const e = document.getElementById('errorBanner'); e.textContent = '⚠ '+msg; e.classList.add('show'); }
+function showError(msg) {
+  const b = document.getElementById('errorBanner');
+  b.textContent = '⚠ ' + msg; b.classList.add('show');
+}
 function hideError() { document.getElementById('errorBanner').classList.remove('show'); }
 
 function renderResults() {
-  const grid = document.getElementById('imageGrid');
-  const empty = document.getElementById('emptyState');
+  const grid    = document.getElementById('imageGrid');
+  const empty   = document.getElementById('emptyState');
+  const preview = document.getElementById('previewPanel');
   document.getElementById('resultsCount').textContent = results.length
     ? `${results.length} mockup${results.length>1?'s':''} generated`
-    : 'Fill out the form and hit Generate';
-  if (!results.length) { empty.style.display = 'block'; grid.innerHTML = ''; return; }
+    : 'Configure and hit Generate';
+  if (!results.length) {
+    if (preview) preview.style.display = 'block';
+    empty.style.display = 'none';
+    grid.innerHTML = '';
+    return;
+  }
+  if (preview) preview.style.display = 'none';
   empty.style.display = 'none';
   grid.innerHTML = results.map(r => `
     <div class="image-card">
@@ -847,42 +1269,363 @@ function renderResults() {
         <div class="image-card-label">${r.label}</div>
         <div class="image-card-meta">${r.meta}</div>
         <div class="image-card-actions">
-          <button class="dl-btn primary" onclick="dl('${r.id}')">⬇ Download</button>
-          <button class="dl-btn" onclick="useAsRef('${r.id}')">🔁 Use as Ref</button>
+          <button class="dl-btn primary" onclick="dlResult(${r.id})">⬇ Download</button>
+          <button class="dl-btn" onclick="useAsRef(${r.id})">🔁 Use as Ref</button>
         </div>
       </div>
     </div>
   `).join('');
 }
 
-async function dl(id) {
-  const r = results.find(x => x.id==id); if (!r) return;
+async function dlResult(id) {
+  const r = results.find(x => x.id === id); if (!r) return;
   const filename = `teamdrip-${r.label.replace(/\s+/g,'-').toLowerCase()}-${Date.now()}.png`;
   if (r.isB64) {
     const a = document.createElement('a');
     a.href = r.dataUrl; a.download = filename; a.click();
   } else {
-    // URL-based (dall-e-3): fetch then blob download
     try {
       const blob = await fetch(r.dataUrl).then(res => res.blob());
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob); a.download = filename; a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 10000);
-    } catch {
-      // CORS fallback: open in new tab
-      window.open(r.dataUrl, '_blank');
-    }
+    } catch { window.open(r.dataUrl, '_blank'); }
   }
 }
-
 function useAsRef(id) {
-  const r = results.find(x => x.id==id); if (!r) return;
-  if (refImages.length >= 4) { alert('Max 4 reference images. Remove one first.'); return; }
-  refImages.push({ name: r.label, dataUrl: r.dataUrl });
-  renderRefThumbs();
+  const r = results.find(x => x.id === id); if (!r) return;
+  if (extraRefs.length >= 6) { alert('Max 6 extra refs. Remove one first.'); return; }
+  extraRefs.push({ name: r.label, dataUrl: r.dataUrl });
+  renderExtraRefs();
+}
+function clearResults() { results = []; renderResults(); schedulePreview(); }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// LIVE PREVIEW ENGINE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+let _previewPending = false;
+let _previewLogoImg = null;
+
+function initPreviewListeners() {
+  ['schoolName','mascot','primaryColor','secondaryColor','primaryColorPicker','secondaryColorPicker'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', schedulePreview);
+  });
 }
 
-function clearResults() { results = []; renderResults(); }
+function schedulePreview() {
+  if (_previewPending) return;
+  _previewPending = true;
+  requestAnimationFrame(() => { renderPreview(); _previewPending = false; });
+}
+
+function updatePreviewLogo(dataUrl) {
+  if (!dataUrl) { _previewLogoImg = null; schedulePreview(); return; }
+  const img = new Image();
+  img.onload = () => { _previewLogoImg = img; schedulePreview(); };
+  img.src = dataUrl;
+}
+
+function renderPreview() {
+  const canvas = document.getElementById('previewCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const c1 = (document.getElementById('primaryColor').value || '#1a3a6b').trim();
+  const c2 = (document.getElementById('secondaryColor').value || '#c0933a').trim();
+  const school = document.getElementById('schoolName').value.trim() || 'SCHOOL NAME';
+  const mascot = document.getElementById('mascot').value.trim();
+
+  // Background
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0a0a0e';
+  ctx.fillRect(0, 0, W, H);
+  // Subtle dot grid
+  ctx.fillStyle = 'rgba(255,255,255,0.035)';
+  for (let x = 20; x < W; x += 36) for (let y = 20; y < H; y += 36) {
+    ctx.beginPath(); ctx.arc(x, y, 1, 0, Math.PI*2); ctx.fill();
+  }
+
+  // Draw garment
+  switch(selectedGarment) {
+    case 'hoodie':   pvDrawHoodie(ctx, c1, c2, W, H);   break;
+    case 'varsity':  pvDrawVarsity(ctx, c1, c2, W, H);  break;
+    case 'crewneck': pvDrawCrewneck(ctx, c1, c2, W, H); break;
+    case 'puffer':   pvDrawPuffer(ctx, c1, c2, W, H);   break;
+  }
+
+  // Text overlay
+  pvDrawText(ctx, school, mascot, c1, c2, W, H);
+
+  // Logo if loaded
+  if (_previewLogoImg && _previewLogoImg.complete) {
+    const ls = W * 0.10;
+    const lx = W * 0.5 - ls/2;
+    const ly = H * 0.27;
+    ctx.save(); ctx.globalAlpha = 0.88;
+    ctx.drawImage(_previewLogoImg, lx, ly, ls, ls);
+    ctx.restore();
+  }
+
+  // Vignette
+  const vig = ctx.createRadialGradient(W/2, H/2, W*0.28, W/2, H/2, W*0.7);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.42)');
+  ctx.fillStyle = vig; ctx.fillRect(0, 0, W, H);
+
+  // Bottom label
+  ctx.fillStyle = 'rgba(255,255,255,0.18)';
+  ctx.font = '600 11px "Segoe UI", system-ui';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+  const gLbl = GARMENTS[selectedGarment].label.toUpperCase();
+  const sLbl = selectedTextStyle.replace(/_/g,' ').toUpperCase();
+  ctx.fillText(`${gLbl}  ·  ${sLbl}  ·  PREVIEW`, W/2, H - 12);
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function pvRR(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+}
+function pvHA(hex, a) {
+  const r=parseInt((hex||'#000').slice(1,3),16)||0;
+  const g=parseInt((hex||'#000').slice(3,5),16)||0;
+  const b=parseInt((hex||'#000').slice(5,7),16)||0;
+  return `rgba(${r},${g},${b},${a})`;
+}
+function pvShadow(ctx, b, c) { ctx.shadowBlur=b; ctx.shadowColor=c; }
+function pvNoShadow(ctx) { ctx.shadowBlur=0; ctx.shadowColor='transparent'; }
+function pvFitText(ctx, text, baseFont, maxW) {
+  const m = baseFont.match(/(\d+)px/);
+  if (!m) return baseFont;
+  let sz = parseInt(m[1]);
+  ctx.font = baseFont;
+  while (ctx.measureText(text).width > maxW && sz > 11) {
+    sz -= 2;
+    ctx.font = baseFont.replace(/\d+px/, sz+'px');
+  }
+  return ctx.font;
+}
+
+// ── Garment shapes ────────────────────────────────────────────────────────────
+function pvDrawHoodie(ctx, c1, c2, W, H) {
+  const bx=W*0.17, by=H*0.19, bw=W*0.66, bh=H*0.65, slW=W*0.14, slH=H*0.38;
+  pvShadow(ctx, 32, 'rgba(0,0,0,0.65)');
+  ctx.fillStyle = c1;
+  pvRR(ctx, bx-slW+4, by+H*0.05, slW, slH, 8); ctx.fill();
+  pvRR(ctx, bx+bw-4, by+H*0.05, slW, slH, 8); ctx.fill();
+  pvRR(ctx, bx, by+H*0.05, bw, bh, 14); ctx.fill();
+  pvNoShadow(ctx);
+  // Hood
+  ctx.fillStyle = c1;
+  ctx.beginPath(); ctx.ellipse(W*0.5, by+H*0.05, bw*0.30, H*0.115, 0, Math.PI, 0); ctx.fill();
+  // Hood inner
+  ctx.fillStyle = pvHA(c2, 0.14);
+  ctx.beginPath(); ctx.ellipse(W*0.5, by+H*0.05, bw*0.19, H*0.075, 0, Math.PI, 0); ctx.fill();
+  // Pocket
+  ctx.fillStyle = pvHA(c2, 0.18);
+  pvRR(ctx, bx+bw*0.17, by+H*0.05+bh*0.73, bw*0.66, bh*0.14, 8); ctx.fill();
+  // Cuffs
+  ctx.fillStyle = pvHA(c2, 0.30);
+  pvRR(ctx, bx-slW+4, by+H*0.05+slH*0.88, slW, slH*0.12, 4); ctx.fill();
+  pvRR(ctx, bx+bw-4, by+H*0.05+slH*0.88, slW, slH*0.12, 4); ctx.fill();
+  // Hem
+  ctx.fillStyle = pvHA(c2, 0.22);
+  pvRR(ctx, bx, by+H*0.05+bh*0.94, bw, bh*0.06, 6); ctx.fill();
+  // Drawstrings
+  ctx.strokeStyle = pvHA(c2, 0.42); ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(W*0.455, by+H*0.055); ctx.lineTo(W*0.435, by+H*0.14); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W*0.545, by+H*0.055); ctx.lineTo(W*0.565, by+H*0.14); ctx.stroke();
+}
+
+function pvDrawVarsity(ctx, c1, c2, W, H) {
+  const bx=W*0.17, by=H*0.17, bw=W*0.66, bh=H*0.67, slW=W*0.14, slH=H*0.36;
+  pvShadow(ctx, 32, 'rgba(0,0,0,0.65)');
+  // Leather sleeves = c2
+  ctx.fillStyle = c2;
+  pvRR(ctx, bx-slW+4, by+H*0.04, slW, slH, 8); ctx.fill();
+  pvRR(ctx, bx+bw-4, by+H*0.04, slW, slH, 8); ctx.fill();
+  // Wool body = c1
+  ctx.fillStyle = c1;
+  pvRR(ctx, bx, by+H*0.04, bw, bh, 12); ctx.fill();
+  pvNoShadow(ctx);
+  // V-collar
+  ctx.fillStyle = c2;
+  ctx.beginPath();
+  ctx.moveTo(W*0.5-bw*0.17, by+H*0.04); ctx.lineTo(W*0.5, by+H*0.04+bh*0.12); ctx.lineTo(W*0.5+bw*0.17, by+H*0.04);
+  ctx.closePath(); ctx.fill();
+  // Hem ribbing
+  ctx.fillStyle = c2;
+  pvRR(ctx, bx, by+H*0.04+bh*0.93, bw, bh*0.07, 5); ctx.fill();
+  // Sleeve cuff c1
+  ctx.fillStyle = c1;
+  pvRR(ctx, bx-slW+4, by+H*0.04+slH*0.88, slW, slH*0.12, 4); ctx.fill();
+  pvRR(ctx, bx+bw-4, by+H*0.04+slH*0.88, slW, slH*0.12, 4); ctx.fill();
+  // Snap buttons
+  ctx.fillStyle = pvHA(c2, 0.45);
+  [0,1,2,3].forEach(i => {
+    ctx.beginPath(); ctx.arc(W*0.5, by+H*0.14+i*H*0.12, 4, 0, Math.PI*2); ctx.fill();
+  });
+}
+
+function pvDrawCrewneck(ctx, c1, c2, W, H) {
+  const bx=W*0.17, by=H*0.21, bw=W*0.66, bh=H*0.64, slW=W*0.14, slH=H*0.36;
+  pvShadow(ctx, 30, 'rgba(0,0,0,0.65)');
+  ctx.fillStyle = c1;
+  pvRR(ctx, bx-slW+4, by+H*0.05, slW, slH, 8); ctx.fill();
+  pvRR(ctx, bx+bw-4, by+H*0.05, slW, slH, 8); ctx.fill();
+  pvRR(ctx, bx, by+H*0.05, bw, bh, 12); ctx.fill();
+  pvNoShadow(ctx);
+  // Crew collar
+  ctx.fillStyle = c2;
+  ctx.beginPath(); ctx.arc(W*0.5, by+H*0.05, bw*0.135, Math.PI, 0); ctx.fill();
+  ctx.fillStyle = pvHA(c1, 0.45);
+  ctx.beginPath(); ctx.arc(W*0.5, by+H*0.05, bw*0.09, Math.PI, 0); ctx.fill();
+  // Cuffs + hem
+  ctx.fillStyle = pvHA(c2, 0.28);
+  pvRR(ctx, bx-slW+4, by+H*0.05+slH*0.88, slW, slH*0.12, 4); ctx.fill();
+  pvRR(ctx, bx+bw-4, by+H*0.05+slH*0.88, slW, slH*0.12, 4); ctx.fill();
+  pvRR(ctx, bx, by+H*0.05+bh*0.94, bw, bh*0.06, 5); ctx.fill();
+}
+
+function pvDrawPuffer(ctx, c1, c2, W, H) {
+  const bx=W*0.17, by=H*0.17, bw=W*0.66, bh=H*0.68, slW=W*0.14, slH=H*0.40;
+  pvShadow(ctx, 30, 'rgba(0,0,0,0.65)');
+  ctx.fillStyle = c1;
+  pvRR(ctx, bx-slW+4, by+H*0.04, slW, slH, 8); ctx.fill();
+  pvRR(ctx, bx+bw-4, by+H*0.04, slW, slH, 8); ctx.fill();
+  pvRR(ctx, bx, by+H*0.04, bw, bh, 12); ctx.fill();
+  pvNoShadow(ctx);
+  // Quilting lines
+  ctx.strokeStyle = pvHA(c2, 0.24); ctx.lineWidth = 1.8;
+  const qs = by+H*0.04+bh*0.08, qe = by+H*0.04+bh*0.93;
+  for (let i=0; i<=7; i++) {
+    const qy = qs + (qe-qs)*(i/7);
+    ctx.beginPath(); ctx.moveTo(bx,qy); ctx.lineTo(bx+bw,qy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(bx-slW+4,qy); ctx.lineTo(bx+2,qy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(bx+bw-2,qy); ctx.lineTo(bx+bw+slW-4,qy); ctx.stroke();
+  }
+  // Center zip
+  ctx.strokeStyle = pvHA(c2, 0.48); ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.moveTo(W*0.5, by+H*0.04); ctx.lineTo(W*0.5, by+H*0.04+bh); ctx.stroke();
+  // Stand collar
+  ctx.fillStyle = c2;
+  pvRR(ctx, bx+bw*0.34, by+H*0.04, bw*0.32, bh*0.07, 4); ctx.fill();
+  // Hem
+  ctx.fillStyle = pvHA(c2, 0.20);
+  pvRR(ctx, bx, by+H*0.04+bh*0.94, bw, bh*0.06, 5); ctx.fill();
+}
+
+// ── Text rendering ────────────────────────────────────────────────────────────
+function pvDrawText(ctx, school, mascot, c1, c2, W, H) {
+  const cx  = W * 0.5;
+  const cy1 = H * 0.445;  // school name line
+  const cy2 = H * 0.560;  // mascot line
+  const maxW = W * 0.52;
+  const textColor = c2;
+
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  switch(selectedTextStyle) {
+
+    case 'collegiate_block': {
+      pvFitText(ctx, school.toUpperCase(), 'bold 40px "Arial Black",Impact,Arial', maxW);
+      ctx.lineWidth=5; ctx.lineJoin='round';
+      ctx.strokeStyle=pvHA(c1,0.75); ctx.strokeText(school.toUpperCase(),cx,cy1);
+      ctx.fillStyle=textColor; ctx.fillText(school.toUpperCase(),cx,cy1);
+      if (mascot) {
+        pvFitText(ctx, mascot.toUpperCase(), 'bold 25px "Arial Black",Impact,Arial', maxW*0.75);
+        ctx.strokeStyle=pvHA(c1,0.7); ctx.strokeText(mascot.toUpperCase(),cx,cy2);
+        ctx.fillStyle=textColor; ctx.fillText(mascot.toUpperCase(),cx,cy2);
+      }
+      break;
+    }
+
+    case 'arch_varsity': {
+      pvArcText(ctx, school.toUpperCase(), cx, cy1+H*0.04, W*0.215, textColor, 28);
+      if (mascot) {
+        pvFitText(ctx, mascot.toUpperCase(), 'bold 24px "Arial Black",Impact,Arial', maxW*0.65);
+        ctx.fillStyle=textColor; ctx.fillText(mascot.toUpperCase(), cx, cy2+H*0.045);
+      }
+      break;
+    }
+
+    case 'modern_sans': {
+      pvFitText(ctx, school.toUpperCase(), '700 32px "Helvetica Neue",Helvetica,Arial', maxW);
+      ctx.fillStyle=textColor; ctx.fillText(school.toUpperCase(),cx,cy1);
+      if (mascot) {
+        ctx.font='400 19px "Helvetica Neue",Helvetica,Arial';
+        ctx.fillStyle=pvHA(textColor,0.65); ctx.fillText(mascot.toUpperCase(),cx,cy2);
+      }
+      break;
+    }
+
+    case 'script': {
+      pvFitText(ctx, school, 'bold italic 43px Georgia,"Times New Roman",serif', maxW);
+      ctx.shadowColor=pvHA(c1,0.65); ctx.shadowBlur=5;
+      ctx.fillStyle=textColor; ctx.fillText(school,cx,cy1);
+      ctx.shadowBlur=0;
+      if (mascot) {
+        ctx.font='italic 26px Georgia,serif';
+        ctx.fillStyle=pvHA(textColor,0.80); ctx.fillText(mascot,cx,cy2);
+      }
+      break;
+    }
+
+    case 'embroidered': {
+      pvFitText(ctx, school.toUpperCase(), 'bold 31px "Courier New",monospace', maxW);
+      // multi-offset stitch effect
+      [[1,1],[0,1],[-1,0],[1,0]].forEach(([ox,oy]) => {
+        ctx.fillStyle=pvHA(c1,0.28); ctx.fillText(school.toUpperCase(),cx+ox,cy1+oy);
+      });
+      ctx.fillStyle=textColor; ctx.fillText(school.toUpperCase(),cx,cy1);
+      if (mascot) {
+        ctx.font='bold 20px "Courier New",monospace';
+        ctx.fillStyle=textColor; ctx.fillText(mascot.toUpperCase(),cx,cy2);
+      }
+      break;
+    }
+
+    case 'stacked': {
+      pvFitText(ctx, school.toUpperCase(), 'bold 44px "Arial Black",Impact,Arial', maxW);
+      ctx.fillStyle=textColor; ctx.fillText(school.toUpperCase(),cx,cy1-H*0.025);
+      if (mascot) {
+        pvFitText(ctx, mascot.toUpperCase(), 'bold 28px "Arial Black",Impact,Arial', maxW*0.65);
+        ctx.fillStyle=pvHA(textColor,0.82); ctx.fillText(mascot.toUpperCase(),cx,cy2-H*0.01);
+      }
+      break;
+    }
+  }
+  ctx.restore();
+}
+
+function pvArcText(ctx, text, cx, cy, radius, color, fontSize) {
+  const chars = text.split('');
+  const charAng = (fontSize * 0.60) / radius;
+  const totalAng = chars.length * charAng;
+  let a = -Math.PI/2 - totalAng/2;
+  ctx.save();
+  ctx.font = `bold ${fontSize}px "Arial Black",Impact,Arial`;
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  chars.forEach((ch, i) => {
+    const ang = a + (i+0.5)*charAng;
+    ctx.save();
+    ctx.translate(cx+Math.cos(ang)*radius, cy+Math.sin(ang)*radius);
+    ctx.rotate(ang+Math.PI/2);
+    ctx.fillText(ch,0,0);
+    ctx.restore();
+  });
+  ctx.restore();
+}
 </script>
 </body>
 </html>
