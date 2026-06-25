@@ -510,7 +510,7 @@
           Sleeve-to-sleeve wrap text sweeps from left sleeve across the full back to the right sleeve. Center text sits below it.
         </div>
         <div class="form-group">
-          <label>Back Arch Text <span style="font-weight:400;opacity:0.6">large arched lettering across the full upper back</span></label>
+          <label>Back Sweep Text <span style="font-weight:400;opacity:0.6">left sleeve → arches across full back → right sleeve</span></label>
           <input type="text" id="backSleeveText" placeholder="e.g. WOLVERINES or FALCONS" oninput="schedulePreview()" />
         </div>
         <div class="form-group">
@@ -768,7 +768,7 @@ const GARMENTS = {
   hoodie: {
     label: 'Hoodie',
     garmentDesc: `premium heavyweight pullover hoodie with large kangaroo front pocket and adjustable drawstring hood, thick ribbed cuffs and hem, substantial quality athletic fleece construction`,
-    designDNA: `FRONT: The ONLY design element on the front of this hoodie is the specified logo or abbreviation/mascot text — centered on the upper chest, clean and bold. Nothing else on the front. No school name, no extra text, no secondary graphics. Just that single element. BACK: If back arch text is specified in the prompt, render it as large bold arched/curved lettering sweeping in a wide upward arc across the full width of the upper back — like a banner curving from the lower-left to the lower-right with the apex at the top center. Outline/stroke letter style preferred (hollow letters with a defined outline in the secondary color). If back center text is specified, place it in smaller straight lettering centered on the back directly below the arch, significantly smaller than the arch text. The back design is contained entirely on the back panel — it does not extend onto the sleeves. TeamDrip quality: premium heavyweight fleece, clean construction, confident placement, every element crisp and legible.`,
+    designDNA: `FRONT: The ONLY design element on the front of this hoodie is the specified logo or abbreviation/mascot text — centered on the upper chest, clean and bold. Nothing else on the front. No school name, no extra text, no secondary graphics. Just that one element. BACK: Large bold text originates on the left sleeve, sweeps in a wide continuous arc across the entire upper back, and terminates on the right sleeve — a seamless sleeve-to-sleeve typographic wrap that spans the full garment width from sleeve tip to sleeve tip. The letters are tall, bold, arched upward. Outline/stroke style preferred: hollow letters with a bold outline in the secondary color. Below the sleeve sweep, centered on the back panel, sits a second line of smaller straight lettering. Both back elements are specified in the prompt. TeamDrip quality: premium heavyweight fleece, clean seams, confident placement, every letter crisp and legible.`,
   },
   varsity: {
     label: 'Varsity Jacket',
@@ -1134,10 +1134,10 @@ function buildPrompt() {
   if ((selectedGarment === 'hoodie' || selectedGarment === 'crewneck') && (backSleeve || backCenter)) {
     let backDesc = `BACK DESIGN: `;
     if (backSleeve) {
-      backDesc += `The word/phrase "${backSleeve}" is rendered in LARGE bold arched lettering that sweeps in a wide upward arc across the entire width of the upper back — apex at the top center, ends curving down toward the sides. Outline/stroke letter style: hollow letters with a bold outline in the secondary color, no solid fill. This arch text is large, dominant, and spans the full back width. The arch is contained on the back panel only — it does not extend onto the sleeves. `;
+      backDesc += `The word/phrase "${backSleeve}" is printed in LARGE bold letters that begin on the left sleeve, sweep continuously in a wide upward arc across the full back yoke, and terminate on the right sleeve — a seamless sleeve-to-sleeve typographic wrap spanning the entire garment from sleeve tip to sleeve tip. The letters are tall, bold, and arched upward. Outline/stroke style strongly preferred: hollow letters with a bold outline in the secondary color, no solid fill. This sweep is the dominant back design element. `;
     }
     if (backCenter) {
-      backDesc += `Directly below the arch text, centered on the back, is a second line in smaller clean straight lettering reading "${backCenter}" — noticeably smaller than the arch text above it. `;
+      backDesc += `Directly below the sleeve sweep, centered on the back panel, is a second line of smaller clean straight lettering reading "${backCenter}" — noticeably smaller than the sweep text above it. `;
     }
     p.push(backDesc);
   }
@@ -1407,7 +1407,7 @@ function renderPreview() {
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.font = '600 10px "Segoe UI",system-ui';
     ctx.fillStyle = pvHA(c2, 0.55);
-    ctx.fillText('⌢ BACK ARCH: ' + backSleeve.substring(0,28) + (backSleeve.length>28?'…':''), W/2, H*0.915);
+    ctx.fillText('⇔ BACK SWEEP: ' + backSleeve.substring(0,26) + (backSleeve.length>26?'…':''), W/2, H*0.915);
     if (document.getElementById('backCenterText')?.value.trim()) {
       ctx.font = '500 9px "Segoe UI",system-ui';
       ctx.fillStyle = pvHA(c2, 0.38);
