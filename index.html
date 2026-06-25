@@ -1205,11 +1205,7 @@ function buildPrompt() {
 
   // Front chest: logo composited after = AI leaves chest clean; else AI renders text
   const frontText = mascot.toUpperCase();
-  if (logoRef && logoRef.dataUrl.startsWith('data:')) {
-    p.push(`FRONT CHEST: Leave the front chest completely clean — no text, no graphics, no design on the front chest at all. Plain garment fabric. A separate logo will be placed there.`);
-  } else if (frontText) {
-    p.push(`FRONT CHEST: The ONLY element on the front is the text "${frontText}" in large bold collegiate lettering. Exactly this — no substitutions, no additions.`);
-  }
+  const logoWillComposite = logoRef && logoRef.dataUrl.startsWith('data:');
 
   // Hoodie/crewneck back text
   if ((selectedGarment === 'hoodie' || selectedGarment === 'crewneck') && (backSleeve || backCenter)) {
@@ -1237,10 +1233,16 @@ function buildPrompt() {
   // TeamDrip design DNA
   p.push(`Design philosophy and construction detail: ${g.designDNA}`);
 
-  // Logo: base64 = composited after generation (no AI prompt needed)
-  //        plain URL = use as style reference only
+  // Front chest instruction comes AFTER designDNA so it overrides it
+  if (logoWillComposite) {
+    p.push(`OVERRIDE — FRONT CHEST RULE (supersedes all above): The front chest of this garment must be completely bare. Zero text. Zero graphics. Zero design. Plain fabric only on the entire front chest area. Do not add 'COWBOYS', the school name, any abbreviation, any graphic, or any element whatsoever to the front. The front chest is intentionally empty.`);
+  } else if (frontText) {
+    p.push(`FRONT CHEST (supersedes all above): The ONLY element on the front is "${frontText}" in large bold collegiate lettering. Nothing else — no additional text, no school name, no secondary graphic.`);
+  }
+
+  // Logo: plain URL = style ref; base64 = composited after, don’t send to AI
   if (logoRef && !logoRef.dataUrl.startsWith('data:')) {
-    p.push(`A logo reference is provided for style guidance only.`);
+    p.push(`A logo reference image is provided for style guidance only.`);
   }
 
   // Style references
@@ -1283,7 +1285,9 @@ async function generate() {
   document.getElementById('emptyState').style.display = 'none';
 
   const prompt = buildPrompt();
-  const allRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs, ...(logoRef ? [logoRef] : [])];
+  // Exclude base64 logos from API refs — they’ll be composited after generation
+  const logoForAPI = (logoRef && !logoRef.dataUrl.startsWith('data:')) ? [logoRef] : [];
+  const allRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs, ...logoForAPI];
 
   const jobs = Array(selectedCount).fill(null).map(() =>
     allRefs.length > 0
@@ -1348,9 +1352,40 @@ async function generateWithRefs(apiKey, prompt, school, refImages) {
   }
 }
 
+// Removes near-white/light background from a logo so it composites cleanly
+async function removeLogoBg(dataUrl) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = img.width; c.height = img.height;
+      const ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const imgData = ctx.getImageData(0, 0, c.width, c.height);
+      const d = imgData.data;
+      // Sample corner pixel as "background" color
+      const bgR = d[0], bgG = d[1], bgB = d[2];
+      const isLightBg = bgR > 220 && bgG > 220 && bgB > 220;
+      for (let i = 0; i < d.length; i += 4) {
+        const r = d[i], g = d[i+1], b = d[i+2];
+        if (isLightBg && r > 230 && g > 230 && b > 230) { d[i+3] = 0; continue; }
+        // Also remove pixels very similar to the corner background color
+        const diff = Math.abs(r-bgR) + Math.abs(g-bgG) + Math.abs(b-bgB);
+        if (diff < 30) d[i+3] = Math.min(d[i+3], Math.floor(diff * 8));
+      }
+      ctx.putImageData(imgData, 0, 0);
+      resolve(c.toDataURL('image/png'));
+    };
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
+  });
+}
+
 // ═══ LOGO COMPOSITING ═══ places exact logo onto generated image after AI renders garment
 async function compositeLogoOnResult(generatedDataUrl, logoDataUrl) {
   return new Promise(async resolve => {
+    // Strip background from logo for clean compositing
+    const cleanLogo = await removeLogoBg(logoDataUrl);
     let bgSrc = generatedDataUrl;
     if (!bgSrc.startsWith('data:')) {
       try {
@@ -1367,20 +1402,20 @@ async function compositeLogoOnResult(generatedDataUrl, logoDataUrl) {
       ctx.drawImage(bgImg, 0, 0, 1024, 1024);
       const logoImg = new Image();
       logoImg.onload = () => {
-        let cx = 512, cy = 330, size = 145;
-        if (selectedModel === 'pair')    { cx = 440; cy = 315; size = 130; }
-        if (selectedModel === 'pair_fm') { cx = 580; cy = 315; size = 130; }
-        if (selectedModel === 'group')   { cx = 370; cy = 300; size = 120; }
-        if (selectedShot  === 'flat_lay') { cx = 512; cy = 360; size = 160; }
+        let cx = 512, cy = 340, size = 140;
+        if (selectedModel === 'pair')    { cx = 410; cy = 330; size = 125; }
+        if (selectedModel === 'pair_fm') { cx = 600; cy = 330; size = 125; }
+        if (selectedModel === 'group')   { cx = 340; cy = 310; size = 115; }
+        if (selectedShot  === 'flat_lay') { cx = 512; cy = 370; size = 155; }
+        // Multiply blend makes the logo integrate with dark fabric
         ctx.save();
-        ctx.shadowColor = 'rgba(0,0,0,0.22)';
-        ctx.shadowBlur = 10;
+        ctx.globalAlpha = 0.92;
         ctx.drawImage(logoImg, cx - size/2, cy - size/2, size, size);
         ctx.restore();
         resolve(canvas.toDataURL('image/png'));
       };
       logoImg.onerror = () => resolve(generatedDataUrl);
-      logoImg.src = logoDataUrl;
+      logoImg.src = cleanLogo;
     };
     bgImg.onerror = () => resolve(generatedDataUrl);
     bgImg.src = bgSrc;
