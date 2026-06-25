@@ -1207,24 +1207,9 @@ function buildPrompt() {
   const frontText = mascot.toUpperCase();
   const logoWillComposite = logoRef && logoRef.dataUrl.startsWith('data:');
 
-  // Hoodie/crewneck back text
+  // Back text is drawn programmatically — tell AI to keep back completely clean
   if ((selectedGarment === 'hoodie' || selectedGarment === 'crewneck') && (backSleeve || backCenter)) {
-    let backDesc = `BACK DESIGN: `;
-    if (backSleeve) {
-      const sweepUpper = backSleeve.toUpperCase();
-      const split = sleeveTextSplit(sweepUpper);
-      let sweepDesc;
-      if (split.sc === 0) {
-        sweepDesc = `"${sweepUpper}" arches across the full upper back in very large lettering. NON-NEGOTIABLE LETTER STYLE: every letter is HOLLOW OUTLINE ONLY - no solid fill inside the letters, transparent interior, bold stroke outline in the secondary color only. Like a stencil/jersey outline font.`;
-      } else {
-        sweepDesc = `"${sweepUpper}" is a MASSIVE continuous arch spanning the entire garment from left sleeve through the back to right sleeve. CRITICAL EXACT PLACEMENT: LEFT SLEEVE = "${split.left}" only. BACK PANEL = "${split.back}" arching with apex at top center. RIGHT SLEEVE = "${split.right}" only. Letters cross the sleeve seams seamlessly - one continuous physical sweep. Each letter is 8-10 inches tall. Identical layout to the Baylor University "SIC 'EM BEARS" hoodie. NON-NEGOTIABLE LETTER STYLE: every letter is HOLLOW OUTLINE ONLY - no solid fill inside the letters, transparent interior, bold stroke outline in the secondary color. Any solid-filled sweep letter is wrong.`;
-      }
-      backDesc += sweepDesc + ' ';
-    }
-    if (backCenter) {
-      backDesc += `Below the sweep, centered on back: "${backCenter.toUpperCase()}" in small straight lettering - approximately 1/5 the size of the sweep letters. Much smaller, clean, understated. `;
-    }
-    p.push(backDesc);
+    p.push(`BACK DESIGN RULE (non-negotiable): The entire back of this garment — back panel AND both sleeves — must be completely plain bare fabric. Zero text, zero graphics, zero lettering anywhere on the back or sleeves. Leave the full back clean. Back design will be applied in post-processing.`);
   }
 
   // Typography style
@@ -1235,12 +1220,12 @@ function buildPrompt() {
 
   // Front chest instruction comes AFTER designDNA so it overrides it
   if (logoWillComposite) {
-    p.push(`OVERRIDE — FRONT CHEST RULE (supersedes all above): The front chest of this garment must be completely bare. Zero text. Zero graphics. Zero design. Plain fabric only on the entire front chest area. Do not add 'COWBOYS', the school name, any abbreviation, any graphic, or any element whatsoever to the front. The front chest is intentionally empty.`);
+    p.push(`OVERRIDE - FRONT CHEST RULE (supersedes all above): The front chest of this garment must be completely bare. Zero text. Zero graphics. Zero design. Plain fabric only on the entire front chest area. Do not add 'COWBOYS', the school name, any abbreviation, any graphic, or any element whatsoever to the front. The front chest is intentionally empty.`);
   } else if (frontText) {
-    p.push(`FRONT CHEST (supersedes all above): The ONLY element on the front is "${frontText}" in large bold collegiate lettering. Nothing else — no additional text, no school name, no secondary graphic.`);
+    p.push(`FRONT CHEST (supersedes all above): The ONLY element on the front is "${frontText}" in large bold collegiate lettering. Nothing else - no additional text, no school name, no secondary graphic.`);
   }
 
-  // Logo: plain URL = style ref; base64 = composited after, don’t send to AI
+  // Logo: plain URL = style ref; base64 = composited after, don't send to AI
   if (logoRef && !logoRef.dataUrl.startsWith('data:')) {
     p.push(`A logo reference image is provided for style guidance only.`);
   }
@@ -1285,7 +1270,7 @@ async function generate() {
   document.getElementById('emptyState').style.display = 'none';
 
   const prompt = buildPrompt();
-  // Exclude base64 logos from API refs — they’ll be composited after generation
+  // Exclude base64 logos from API refs - they'll be composited after generation
   const logoForAPI = (logoRef && !logoRef.dataUrl.startsWith('data:')) ? [logoRef] : [];
   const allRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs, ...logoForAPI];
 
@@ -1353,89 +1338,177 @@ async function generateWithRefs(apiKey, prompt, school, refImages) {
 }
 
 // Removes near-white/light background from a logo so it composites cleanly
-async function removeLogoBg(dataUrl) {
+// ═══════════════════════════════════════════════════════════════════════════════
+// PROGRAMMATIC COMPOSITING — logo + sleeve sweep arc drawn on canvas
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function loadImg(src) {
   return new Promise(resolve => {
-    const img = new Image();
-    img.onload = () => {
-      const c = document.createElement('canvas');
-      c.width = img.width; c.height = img.height;
-      const ctx = c.getContext('2d');
-      ctx.drawImage(img, 0, 0);
-      const imgData = ctx.getImageData(0, 0, c.width, c.height);
-      const d = imgData.data;
-      // Sample corner pixel as "background" color
-      const bgR = d[0], bgG = d[1], bgB = d[2];
-      const isLightBg = bgR > 220 && bgG > 220 && bgB > 220;
-      for (let i = 0; i < d.length; i += 4) {
-        const r = d[i], g = d[i+1], b = d[i+2];
-        if (isLightBg && r > 230 && g > 230 && b > 230) { d[i+3] = 0; continue; }
-        // Also remove pixels very similar to the corner background color
-        const diff = Math.abs(r-bgR) + Math.abs(g-bgG) + Math.abs(b-bgB);
-        if (diff < 30) d[i+3] = Math.min(d[i+3], Math.floor(diff * 8));
-      }
-      ctx.putImageData(imgData, 0, 0);
-      resolve(c.toDataURL('image/png'));
-    };
-    img.onerror = () => resolve(dataUrl);
-    img.src = dataUrl;
+    const i = new Image();
+    i.onload = () => resolve(i);
+    i.onerror = () => resolve(null);
+    i.src = src;
   });
 }
 
-// ═══ LOGO COMPOSITING ═══ places exact logo onto generated image after AI renders garment
-async function compositeLogoOnResult(generatedDataUrl, logoDataUrl) {
-  return new Promise(async resolve => {
-    // Strip background from logo for clean compositing
-    const cleanLogo = await removeLogoBg(logoDataUrl);
-    let bgSrc = generatedDataUrl;
-    if (!bgSrc.startsWith('data:')) {
-      try {
-        const res = await fetch(bgSrc);
-        const blob = await res.blob();
-        bgSrc = await new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.readAsDataURL(blob); });
-      } catch { resolve(generatedDataUrl); return; }
+async function toDataUrl(url) {
+  if (url.startsWith('data:')) return url;
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return await new Promise(r => { const rd = new FileReader(); rd.onload = e => r(e.target.result); rd.readAsDataURL(blob); });
+  } catch { return url; }
+}
+
+async function removeLogoBg(dataUrl) {
+  const img = await loadImg(dataUrl);
+  if (!img) return dataUrl;
+  const c = document.createElement('canvas');
+  c.width = img.width; c.height = img.height;
+  const ctx = c.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  const id = ctx.getImageData(0, 0, c.width, c.height), d = id.data;
+  const bgR = d[0], bgG = d[1], bgB = d[2];
+  const lightBg = bgR > 200 && bgG > 200 && bgB > 200;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], g = d[i+1], b = d[i+2];
+    const diff = Math.abs(r-bgR) + Math.abs(g-bgG) + Math.abs(b-bgB);
+    if (lightBg && r > 230 && g > 230 && b > 230) { d[i+3] = 0; continue; }
+    if (diff < 25) d[i+3] = Math.min(d[i+3], Math.floor(diff * 10));
+  }
+  ctx.putImageData(id, 0, 0);
+  return c.toDataURL('image/png');
+}
+
+// Bezier arc layout per shot/model type (all coords for 1024×1024 image)
+// P0=left sleeve point, P1=control/apex, P2=right sleeve point
+function getSweepLayout() {
+  const m = selectedModel, s = selectedShot;
+  if (s === 'multi_view') return { p0:[335,490], p1:[512,200], p2:[690,490], cx:512, cy:570, fs:66 };
+  if (s === 'flat_lay')   return { p0:[120,510], p1:[512,195], p2:[900,510], cx:512, cy:610, fs:82 };
+  if (m === 'pair')       return { p0:[535,495], p1:[748,205], p2:[958,495], cx:748, cy:585, fs:64 };
+  if (m === 'pair_fm')    return { p0:[65,495],  p1:[278,205], p2:[488,495], cx:278, cy:585, fs:64 };
+  if (m === 'group')      return { p0:[355,485], p1:[560,210], p2:[760,485], cx:560, cy:575, fs:60 };
+  return                         { p0:[100,495], p1:[512,205], p2:[920,495], cx:512, cy:590, fs:78 };
+}
+
+function drawSweepArc(ctx, text, layout, strokeCol) {
+  const { p0, p1, p2, fs } = layout;
+  const [p0x,p0y] = p0, [p1x,p1y] = p1, [p2x,p2y] = p2;
+  ctx.save();
+  ctx.font = `900 ${fs}px "Arial Black",Impact,Arial`;
+  ctx.lineWidth  = Math.max(3, fs * 0.09);
+  ctx.lineJoin   = 'round';
+  ctx.lineCap    = 'round';
+  ctx.strokeStyle = strokeCol;
+  // Build bezier point table
+  const N = 300, pts = [], lens = [0];
+  let total = 0;
+  for (let i = 0; i <= N; i++) {
+    const t = i/N, mt = 1-t;
+    pts.push({ x: mt*mt*p0x + 2*mt*t*p1x + t*t*p2x, y: mt*mt*p0y + 2*mt*t*p1y + t*t*p2y });
+    if (i > 0) {
+      const dx = pts[i].x-pts[i-1].x, dy = pts[i].y-pts[i-1].y;
+      total += Math.sqrt(dx*dx+dy*dy);
+      lens.push(total);
     }
-    const canvas = document.createElement('canvas');
-    canvas.width = 1024; canvas.height = 1024;
-    const ctx = canvas.getContext('2d');
-    const bgImg = new Image();
-    bgImg.onload = () => {
-      ctx.drawImage(bgImg, 0, 0, 1024, 1024);
-      const logoImg = new Image();
-      logoImg.onload = () => {
-        let cx = 512, cy = 340, size = 140;
-        if (selectedModel === 'pair')    { cx = 410; cy = 330; size = 125; }
-        if (selectedModel === 'pair_fm') { cx = 600; cy = 330; size = 125; }
-        if (selectedModel === 'group')   { cx = 340; cy = 310; size = 115; }
-        if (selectedShot  === 'flat_lay') { cx = 512; cy = 370; size = 155; }
-        // Multiply blend makes the logo integrate with dark fabric
-        ctx.save();
-        ctx.globalAlpha = 0.92;
-        ctx.drawImage(logoImg, cx - size/2, cy - size/2, size, size);
-        ctx.restore();
-        resolve(canvas.toDataURL('image/png'));
-      };
-      logoImg.onerror = () => resolve(generatedDataUrl);
-      logoImg.src = cleanLogo;
+  }
+  // Measure each character
+  const chars = [...text];
+  const widths = chars.map(c => ctx.measureText(c).width);
+  const tw = widths.reduce((a,b)=>a+b,0);
+  // Center on arc
+  let dist = Math.max(0, (total - tw) / 2);
+  function posAt(d) {
+    let lo = 0, hi = lens.length-1;
+    while (lo < hi-1) { const m2=(lo+hi)>>1; if(lens[m2]<=d) lo=m2; else hi=m2; }
+    const frac = lens[lo+1]>lens[lo] ? (d-lens[lo])/(lens[lo+1]-lens[lo]) : 0;
+    return {
+      x: pts[lo].x + frac*(pts[lo+1].x-pts[lo].x),
+      y: pts[lo].y + frac*(pts[lo+1].y-pts[lo].y),
+      a: Math.atan2(pts[lo+1].y-pts[lo].y, pts[lo+1].x-pts[lo].x)
     };
-    bgImg.onerror = () => resolve(generatedDataUrl);
-    bgImg.src = bgSrc;
+  }
+  chars.forEach((ch, i) => {
+    const p = posAt(dist + widths[i]/2);
+    ctx.save();
+    ctx.translate(p.x, p.y); ctx.rotate(p.a);
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.strokeText(ch, 0, 0); // OUTLINE ONLY — no fillText
+    ctx.restore();
+    dist += widths[i];
   });
+  ctx.restore();
+}
+
+function drawCenterBack(ctx, text, layout, strokeCol) {
+  const { cx, cy, fs } = layout;
+  ctx.save();
+  ctx.font = `600 ${Math.round(fs*0.26)}px "Helvetica Neue",Arial,sans-serif`;
+  ctx.fillStyle   = strokeCol;
+  ctx.textAlign   = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText(text.toUpperCase(), cx, cy);
+  ctx.restore();
+}
+
+async function applyCompositing(dataUrl) {
+  const needsLogo  = logoRef && logoRef.dataUrl.startsWith('data:');
+  const backSweep  = document.getElementById('backSleeveText')?.value.trim() || '';
+  const backCenter = document.getElementById('backCenterText')?.value.trim()  || '';
+  const needsBack  = (selectedGarment==='hoodie'||selectedGarment==='crewneck') && (backSweep||backCenter);
+  if (!needsLogo && !needsBack) return dataUrl;
+
+  const bgSrc = await toDataUrl(dataUrl);
+  const bgImg = await loadImg(bgSrc);
+  if (!bgImg) return dataUrl;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 1024; canvas.height = 1024;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(bgImg, 0, 0, 1024, 1024);
+
+  // 1. Back design (drawn before logo so logo sits on top)
+  if (needsBack) {
+    const secondary = document.getElementById('secondaryColor').value;
+    const layout = getSweepLayout();
+    if (backSweep)  drawSweepArc(ctx,  backSweep.toUpperCase(),  layout, secondary);
+    if (backCenter) drawCenterBack(ctx, backCenter, layout, secondary);
+  }
+
+  // 2. Logo composite
+  if (needsLogo) {
+    const cleanLogo = await removeLogoBg(logoRef.dataUrl);
+    const logoImg   = await loadImg(cleanLogo);
+    if (logoImg) {
+      let lx=512, ly=340, ls=140;
+      if (selectedModel==='pair')     { lx=410; ly=330; ls=125; }
+      if (selectedModel==='pair_fm')  { lx=610; ly=330; ls=125; }
+      if (selectedModel==='group')    { lx=340; ly=310; ls=115; }
+      if (selectedShot ==='flat_lay') { lx=512; ly=370; ls=155; }
+      ctx.save(); ctx.globalAlpha=0.93;
+      ctx.drawImage(logoImg, lx-ls/2, ly-ls/2, ls, ls);
+      ctx.restore();
+    }
+  }
+
+  return canvas.toDataURL('image/png');
 }
 
 async function makeResult(dataUrl, isB64, school) {
   const g = GARMENTS[selectedGarment];
-  let finalUrl = dataUrl;
-  let logoPlaced = false;
-  if (logoRef && logoRef.dataUrl.startsWith('data:')) {
-    finalUrl = await compositeLogoOnResult(dataUrl, logoRef.dataUrl);
-    logoPlaced = true;
-  }
+  const needsLogo = logoRef && logoRef.dataUrl.startsWith('data:');
+  const backSweep = document.getElementById('backSleeveText')?.value.trim() || '';
+  const backCenter = document.getElementById('backCenterText')?.value.trim() || '';
+  const needsBack = (selectedGarment==='hoodie'||selectedGarment==='crewneck') && (backSweep||backCenter);
+  const finalUrl = await applyCompositing(dataUrl);
   return {
     id: ++resultIdSeq,
     dataUrl: finalUrl,
     isB64: true,
     label: school,
-    meta: `${g.label} · ${selectedShot.replace('_',' ')} · ${selectedModel.replace('_',' ')}` + (logoPlaced ? ' · ✓ Logo placed' : ''),
+    meta: `${g.label} · ${selectedShot.replace('_',' ')} · ${selectedModel.replace('_',' ')}` +
+          (needsLogo ? ' · ✓ Logo' : '') + (needsBack ? ' · ✓ Sweep' : ''),
   };
 }
 
