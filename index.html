@@ -391,7 +391,7 @@
         <div class="panel-title"><span class="panel-title-icon">🏫</span> School / Entity</div>
 
         <div class="form-group">
-          <label>School or Client Name</label>
+          <label>School / Client Name <span style="font-weight:400;opacity:0.55;font-size:0.72rem;">— color &amp; context only · not printed on garment</span></label>
           <div class="input-with-btn">
             <div class="school-wrap">
               <input type="text" id="schoolName" placeholder="e.g. Skyridge Falcons"
@@ -403,7 +403,7 @@
         </div>
 
         <div class="form-group">
-          <label>Abbreviation / Mascot Text  <span style="font-weight:400;opacity:0.6">+ optional logo</span></label>
+          <label>Front Chest Text / Abbreviation <span style="font-weight:400;opacity:0.6">+ optional logo · <strong style="color:var(--success)">this prints on the garment</strong></span></label>
           <div class="input-with-btn">
             <input type="text" id="mascot" placeholder="e.g. SR, FALCONS, SKYRIDGE" />
             <button class="icon-btn" id="logoToggleBtn" onclick="toggleLogoPanel()">🔍 Logo</button>
@@ -503,7 +503,23 @@
         </div>
       </div>
 
-      <!-- ④ SHOT STYLE -->
+      <!-- ④ BACK DESIGN (Hoodie / Crewneck) -->
+      <div class="panel" id="backDesignPanel" style="display:none;">
+        <div class="panel-title"><span class="panel-title-icon">🔤</span> Back Design <span class="panel-title-badge">HOODIE / CREWNECK</span></div>
+        <div class="flash-banner info show" style="margin-bottom:14px;">
+          Sleeve-to-sleeve wrap text sweeps from left sleeve across the full back to the right sleeve. Center text sits below it.
+        </div>
+        <div class="form-group">
+          <label>Sleeve-to-Sleeve Text <span style="font-weight:400;opacity:0.6">wraps left sleeve → back → right sleeve</span></label>
+          <input type="text" id="backSleeveText" placeholder="e.g. SKYRIDGE · FALCONS · SKYRIDGE" oninput="schedulePreview()" />
+        </div>
+        <div class="form-group">
+          <label>Back Center Text <span style="font-weight:400;opacity:0.6">centered on back, directly below sleeve text</span></label>
+          <input type="text" id="backCenterText" placeholder="e.g. EST. 2005  ·  LEHI UTAH" oninput="schedulePreview()" />
+        </div>
+      </div>
+
+      <!-- ⑤ SHOT STYLE -->
       <div class="panel">
         <div class="panel-title"><span class="panel-title-icon">📸</span> Shot Style</div>
         <div class="shot-grid">
@@ -555,6 +571,11 @@
             <div class="model-card-icon">👫</div>
             <div class="model-card-name">M + F Pair</div>
             <div class="model-card-desc">Male forward · Female back (shows both sides)</div>
+          </div>
+          <div class="model-card" data-value="pair_fm" onclick="selectModel(this)">
+            <div class="model-card-icon">👩‍🦱</div>
+            <div class="model-card-name">F + M Pair</div>
+            <div class="model-card-desc">Female forward · Male back (shows both sides)</div>
           </div>
           <div class="model-card" data-value="group" onclick="selectModel(this)">
             <div class="model-card-icon">👥</div>
@@ -747,7 +768,7 @@ const GARMENTS = {
   hoodie: {
     label: 'Hoodie',
     garmentDesc: `premium heavyweight pullover hoodie with large kangaroo front pocket and adjustable drawstring hood, thick ribbed cuffs and hem, substantial quality athletic fleece construction`,
-    designDNA: `Bold graphic print centered across the upper chest — school name arched in large lettering, mascot abbreviation or secondary text stacked below in a strong hierarchical layout. Hood interior lined in contrasting team color. The design should feel like a real premium athletic brand hoodie — not a cheap screen print. TeamDrip signature: clean seams, confident graphic placement, print that reads clearly from 20 feet away.`,
+    designDNA: `FRONT: The ONLY design element on the front of this hoodie is the specified logo or abbreviation/mascot text — centered on the upper chest, bold and clean. No school name, no secondary text, nothing else on the front. Just that single graphic element. Hood interior lined in contrasting team color. BACK: The signature TeamDrip back design features large bold lettering that originates on the left sleeve, sweeps continuously across the full back yoke in a single horizontal band, and terminates on the right sleeve — a seamless sleeve-to-sleeve typographic wrap. A second line of text runs centered across the back directly below the sleeve text. These back design elements are specified in the prompt. TeamDrip quality: premium heavyweight fleece, clean seams, confident placement, every letter crisp from distance.`,
   },
   varsity: {
     label: 'Varsity Jacket',
@@ -772,7 +793,7 @@ const TEXT_STYLES = {
   modern_sans:      `clean modern sans-serif logotype with geometric precision, contemporary athletic brand aesthetic — minimal, confident`,
   script:           `flowing athletic script font with dynamic energy, hand-lettered feel with professional polish`,
   embroidered:      `embroidered patch-style logo with visible stitch texture and defined border, elevated premium craft look`,
-  stacked:          `large stacked wordmark with school name on top and mascot/abbreviation below in strong vertical hierarchy, fills the chest`,
+  stacked:          `large stacked wordmark — the front chest text fills the chest in a strong vertical hierarchy, two bold lines of lettering stacked with the primary identifier on top, secondary below`,
 };
 
 const SHOT_STYLES = {
@@ -786,7 +807,8 @@ const SHOT_STYLES = {
 const MODEL_PRESENTATIONS = {
   solo_male:   `A single male athlete model wearing the garment. Confident, natural athletic stance. Positioned to face the camera squarely so the chest design is fully visible and reads clearly.`,
   solo_female: `A single female athlete model wearing the garment. Confident, natural athletic stance. Positioned to face the camera squarely so the chest design is fully visible and reads clearly.`,
-  pair:        `Two athletic models wearing the garment together — a male model facing directly toward the camera (showing the full front design and chest graphic clearly) and a female model positioned at a 3/4 or full back angle (showing the back of the garment and any back design). Both in relaxed, confident athletic poses standing close together, natural body language. This composition deliberately shows both the front and back design in one shot, and shows how the garment fits and looks on both male and female athletes.`,
+  pair:        `Two athletic models wearing the garment together — a male model facing directly toward the camera (showing the full front design and chest graphic clearly) and a female model positioned at a 3/4 or full back angle (showing the back of the garment and any back design). Both in relaxed, confident athletic poses standing close together, natural body language. This composition deliberately shows both the front and back design in one shot.`,
+  pair_fm:     `Two athletic models wearing the garment together — a female model facing directly toward the camera (showing the full front design and chest graphic clearly) and a male model positioned at a 3/4 or full back angle (showing the back of the garment and any back design). Both in relaxed, confident athletic poses standing close together, natural body language. This composition deliberately shows both the front and back design in one shot.`,
   group:       `Three athletic models in a natural, confident group arrangement. Mixed male and female. They are positioned at complementary angles so different views of the garment are visible simultaneously. Energetic, aspirational team atmosphere — like a real athletic program photo shoot.`,
 };
 
@@ -953,6 +975,9 @@ function selectGarment(card) {
   selectedGarment = card.dataset.value;
   refreshSavedRefUI();
   schedulePreview();
+  // Show back design panel for hoodie/crewneck only
+  const bp = document.getElementById('backDesignPanel');
+  if (bp) bp.style.display = (selectedGarment === 'hoodie' || selectedGarment === 'crewneck') ? 'block' : 'none';
 }
 function selectTextChip(chip) {
   document.querySelectorAll('#textStyleChips .chip').forEach(c => c.classList.remove('selected'));
@@ -1081,6 +1106,8 @@ function buildPrompt() {
   const extra     = document.getElementById('extraDetails').value.trim();
   const diverse   = document.getElementById('diverseToggle').checked;
   const isFlat    = selectedShot === 'flat_lay';
+  const backSleeve = document.getElementById('backSleeveText')?.value.trim() || '';
+  const backCenter = document.getElementById('backCenterText')?.value.trim() || '';
 
   const g  = GARMENTS[selectedGarment];
   const allRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs, ...(logoRef ? [logoRef] : [])];
@@ -1095,20 +1122,35 @@ function buildPrompt() {
   // Colors
   p.push(`PRIMARY COLOR: ${primary} — this exact hex color dominates the main body of the garment. SECONDARY/ACCENT COLOR: ${secondary} — used for contrast details, trim, logo outlines, and secondary text. These color choices are non-negotiable — match them precisely.`);
 
-  // Branding
-  let brand = `The garment design features "${school}" as the main school name text`;
-  if (mascot) brand += `, with "${mascot}" as the abbreviation or mascot identifier`;
-  p.push(brand + `.`);
+  // School = context only, not printed
+  p.push(`School/client context: ${school}. This name is for color and identity context ONLY — do NOT print this name anywhere on the garment.`);
+
+  // Front chest: mascot/abbreviation only
+  if (mascot) {
+    p.push(`FRONT CHEST: The ONLY text or graphic on the front of the garment is "${mascot}". Nothing else appears on the front — no school name, no secondary text, just this single element centered on the chest.`);
+  }
+
+  // Hoodie/crewneck back text
+  if ((selectedGarment === 'hoodie' || selectedGarment === 'crewneck') && (backSleeve || backCenter)) {
+    let backDesc = `BACK DESIGN: `;
+    if (backSleeve) {
+      backDesc += `The text "${backSleeve}" is printed in large bold letters that wrap continuously starting on the left sleeve, sweeping across the full width of the back yoke, and terminating on the right sleeve — a seamless sleeve-to-sleeve typographic band visible from behind. `;
+    }
+    if (backCenter) {
+      backDesc += `Directly below the sleeve-to-sleeve text, centered across the back, is a second line reading "${backCenter}". `;
+    }
+    p.push(backDesc);
+  }
 
   // Typography style
-  p.push(`Typography and design treatment: ${TEXT_STYLES[selectedTextStyle]}.`);
+  p.push(`Typography and design treatment for the front: ${TEXT_STYLES[selectedTextStyle]}.`);
 
   // TeamDrip design DNA
   p.push(`Design philosophy and construction detail: ${g.designDNA}`);
 
   // Logo ref instruction
   if (logoRef) {
-    p.push(`CRITICAL: The provided logo/mascot image must be reproduced faithfully on the garment. Use it as the exact graphic — do not substitute a generic mascot. Place it exactly as specified in the design description.`);
+    p.push(`CRITICAL: The provided logo/mascot image must be reproduced faithfully on the garment front. Use it as the exact graphic — do not substitute a generic mascot. It is the ONLY design element on the front.`);
   }
 
   // Style references
@@ -1308,7 +1350,7 @@ let _previewPending = false;
 let _previewLogoImg = null;
 
 function initPreviewListeners() {
-  ['schoolName','mascot','primaryColor','secondaryColor','primaryColorPicker','secondaryColorPicker'].forEach(id => {
+  ['schoolName','mascot','primaryColor','secondaryColor','primaryColorPicker','secondaryColorPicker','backSleeveText','backCenterText'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', schedulePreview);
   });
@@ -1335,8 +1377,8 @@ function renderPreview() {
 
   const c1 = (document.getElementById('primaryColor').value || '#1a3a6b').trim();
   const c2 = (document.getElementById('secondaryColor').value || '#c0933a').trim();
-  const school = document.getElementById('schoolName').value.trim() || 'SCHOOL NAME';
-  const mascot = document.getElementById('mascot').value.trim();
+  const mascot = document.getElementById('mascot').value.trim() || 'ABBR';
+  const backSleeve = document.getElementById('backSleeveText')?.value.trim() || '';
 
   // Background
   ctx.clearRect(0, 0, W, H);
@@ -1356,8 +1398,18 @@ function renderPreview() {
     case 'puffer':   pvDrawPuffer(ctx, c1, c2, W, H);   break;
   }
 
-  // Text overlay
-  pvDrawText(ctx, school, mascot, c1, c2, W, H);
+  // Text overlay — front only shows mascot/abbreviation
+  pvDrawText(ctx, mascot, '', c1, c2, W, H);
+
+  // Back text indicator below garment (hoodie/crewneck)
+  if ((selectedGarment === 'hoodie' || selectedGarment === 'crewneck') && backSleeve) {
+    ctx.save();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = '600 10px "Segoe UI",system-ui';
+    ctx.fillStyle = pvHA(c2, 0.55);
+    ctx.fillText('↔ BACK: ' + backSleeve.substring(0,32) + (backSleeve.length>32?'…':''), W/2, H*0.93);
+    ctx.restore();
+  }
 
   // Logo if loaded
   if (_previewLogoImg && _previewLogoImg.complete) {
