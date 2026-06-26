@@ -736,14 +736,14 @@ const SCHOOLS = [
   { name:"American Fork Cavemen",      abbr:"AF",   p:"#CC0000", s:"#ffffff", espnId:null },
   { name:"Layton Lancers",             abbr:"LAY",  p:"#003087", s:"#c8993a", espnId:null },
   { name:"Bountiful Redhawks",         abbr:"BHS",  p:"#b31312", s:"#ffffff", espnId:null },
-  { name:"University of Utah",         abbr:"UTAH", p:"#CC0000", s:"#808080", espnId:254 },
-  { name:"BYU Cougars",               abbr:"BYU",  p:"#002E5D", s:"#ffffff", espnId:252 },
-  { name:"Utah State Aggies",          abbr:"USU",  p:"#003263", s:"#8A8D8F", espnId:328 },
-  { name:"Weber State Wildcats",       abbr:"WSU",  p:"#4f2682", s:"#ffffff", espnId:338 },
-  { name:"SUU Thunderbirds",           abbr:"SUU",  p:"#c8102e", s:"#ffffff", espnId:323 },
-  { name:"Utah Valley Wolverines",     abbr:"UVU",  p:"#275d38", s:"#ffffff", espnId:3670 },
-  { name:"Utah Tech Trailblazers",     abbr:"UTT",  p:"#CC0000", s:"#002147", espnId:326 },
-  { name:"Arizona State Sun Devils",   abbr:"ASU",  p:"#8C1D40", s:"#FFC627", espnId:9 },
+  { name:"University of Utah",         abbr:"U",    p:"#CC0000", s:"#ffffff", espnId:254,  sweep:"UTAH UTES",   center:"University of Utah" },
+  { name:"BYU Cougars",               abbr:"BYU",  p:"#002E5D", s:"#ffffff", espnId:252,  sweep:"COUGARS",     center:"BYU" },
+  { name:"Utah State Aggies",          abbr:"USU",  p:"#003263", s:"#8A8D8F", espnId:328,  sweep:"AGGIES",      center:"Utah State University" },
+  { name:"Weber State Wildcats",       abbr:"WSU",  p:"#4f2682", s:"#ffffff", espnId:338,  sweep:"WILDCATS",    center:"Weber State University" },
+  { name:"SUU Thunderbirds",           abbr:"SUU",  p:"#c8102e", s:"#ffffff", espnId:323,  sweep:"THUNDERBIRDS",center:"Southern Utah University" },
+  { name:"Utah Valley Wolverines",     abbr:"UVU",  p:"#275d38", s:"#ffffff", espnId:3670, sweep:"WOLVERINES",  center:"Utah Valley University" },
+  { name:"Utah Tech Trailblazers",     abbr:"UTT",  p:"#CC0000", s:"#002147", espnId:326,  sweep:"TRAILBLAZERS",center:"Utah Tech University" },
+  { name:"Arizona State Sun Devils",   abbr:"ASU",  p:"#8C1D40", s:"#FFC627", espnId:9,    sweep:"SUN DEVILS",  center:"Arizona State University" },
   { name:"University of Arizona",      abbr:"UA",   p:"#AB0520", s:"#0C234B", espnId:12 },
   { name:"Northern Arizona",           abbr:"NAU",  p:"#003087", s:"#FFD700", espnId:2464 },
   { name:"Grand Canyon Antelopes",     abbr:"GCU",  p:"#522398", s:"#000000", espnId:2253 },
@@ -752,16 +752,16 @@ const SCHOOLS = [
   { name:"Boise State Broncos",        abbr:"BSU",  p:"#0033A0", s:"#D64309", espnId:68 },
   { name:"University of Idaho",        abbr:"UI",   p:"#F1BE48", s:"#000000", espnId:70 },
   { name:"Idaho State Bengals",        abbr:"ISU",  p:"#F47321", s:"#000000", espnId:71 },
-  { name:"Colorado Buffaloes",         abbr:"CU",   p:"#CFB87C", s:"#000000", espnId:38 },
-  { name:"Colorado State Rams",        abbr:"CSU",  p:"#1E4D2B", s:"#C8C372", espnId:36 },
-  { name:"University of Denver",       abbr:"DU",   p:"#862633", s:"#C8A951", espnId:2172 },
-  { name:"Baylor Bears",               abbr:"BU",   p:"#003015", s:"#FFB81C", espnId:239 },
-  { name:"Cincinnati Bearcats",        abbr:"UC",   p:"#E00122", s:"#000000", espnId:2132 },
-  { name:"Houston Cougars",            abbr:"UH",   p:"#C8102E", s:"#ffffff", espnId:248 },
-  { name:"Iowa State Cyclones",        abbr:"ISU",  p:"#C8102E", s:"#F1BE48", espnId:66 },
-  { name:"Kansas Jayhawks",            abbr:"KU",   p:"#0051A2", s:"#E8000D", espnId:2305 },
-  { name:"Kansas State Wildcats",      abbr:"KSU",  p:"#512888", s:"#A7A9AC", espnId:2306 },
-  { name:"Oklahoma State Cowboys",     abbr:"OSU",  p:"#FF6500", s:"#000000", espnId:197 },
+  { name:"Colorado Buffaloes",         abbr:"CU",   p:"#CFB87C", s:"#000000", espnId:38,   sweep:"BUFFALOES",   center:"University of Colorado" },
+  { name:"Colorado State Rams",        abbr:"CSU",  p:"#1E4D2B", s:"#C8C372", espnId:36,   sweep:"RAMS",        center:"Colorado State University" },
+  { name:"University of Denver",       abbr:"DU",   p:"#862633", s:"#C8A951", espnId:2172, sweep:"PIONEERS",    center:"University of Denver" },
+  { name:"Baylor Bears",               abbr:"BU",   p:"#003015", s:"#FFB81C", espnId:239,  sweep:"BEARS",       center:"Baylor University" },
+  { name:"Cincinnati Bearcats",        abbr:"UC",   p:"#E00122", s:"#000000", espnId:2132, sweep:"BEARCATS",    center:"University of Cincinnati" },
+  { name:"Houston Cougars",            abbr:"UH",   p:"#C8102E", s:"#ffffff", espnId:248,  sweep:"COUGARS",     center:"University of Houston" },
+  { name:"Iowa State Cyclones",        abbr:"ISU",  p:"#C8102E", s:"#F1BE48", espnId:66,   sweep:"CYCLONES",    center:"Iowa State University" },
+  { name:"Kansas Jayhawks",            abbr:"KU",   p:"#0051A2", s:"#E8000D", espnId:2305, sweep:"JAYHAWKS",    center:"University of Kansas" },
+  { name:"Kansas State Wildcats",      abbr:"KSU",  p:"#512888", s:"#A7A9AC", espnId:2306, sweep:"WILDCATS",    center:"Kansas State University" },
+  { name:"Oklahoma State Cowboys",     abbr:"OSU",  p:"#FF6500", s:"#000000", espnId:197,  sweep:"COWBOYS",     center:"Oklahoma State" },
   { name:"TCU Horned Frogs",           abbr:"TCU",  p:"#4D1979", s:"#ffffff", espnId:2628 },
   { name:"Texas Tech Red Raiders",     abbr:"TTU",  p:"#CC0000", s:"#000000", espnId:2641 },
   { name:"UCF Knights",                abbr:"UCF",  p:"#000000", s:"#FFC904", espnId:2116 },
@@ -949,6 +949,8 @@ function selectSchool(idx) {
   document.getElementById('primaryColorPicker').value = s.p;
   document.getElementById('secondaryColor').value = s.s;
   document.getElementById('secondaryColorPicker').value = s.s;
+  if (s.sweep && document.getElementById('backSleeveText')) document.getElementById('backSleeveText').value = s.sweep;
+  if (s.center && document.getElementById('backCenterText')) document.getElementById('backCenterText').value = s.center;
   hideDropdown();
   // Auto-load ESPN logo if available
   if (s.espnId) {
