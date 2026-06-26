@@ -367,15 +367,20 @@
 <!-- API KEY MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <h2>🔑 OpenAI API Key</h2>
-    <p>Saved in your browser only - sent directly to OpenAI. Get a key at <strong>platform.openai.com/api-keys</strong>.<br>Load ~$10 in credits; each mockup costs ~$0.04-0.08.</p>
+    <h2>🔑 API Keys</h2>
+    <p>Saved in your browser only — sent directly to the provider. <strong>Google (Gemini)</strong> produces the best results for this use case.</p>
     <div class="form-group">
-      <label>API Key</label>
+      <label>Google AI API Key <span style="background:var(--success);color:#0a1a14;font-size:0.65rem;padding:1px 6px;border-radius:8px;font-weight:700;margin-left:4px;">RECOMMENDED</span></label>
+      <input type="password" id="googleKeyInput" placeholder="AIza..." autocomplete="off" />
+      <div style="font-size:0.71rem;color:var(--text2);margin-top:4px;">Get a free key at <strong>aistudio.google.com</strong> → Get API Key</div>
+    </div>
+    <div class="form-group" style="margin-top:12px;">
+      <label>OpenAI API Key <span style="font-size:0.68rem;font-weight:400;opacity:0.6;">(fallback if no Google key)</span></label>
       <input type="password" id="apiKeyInput" placeholder="sk-proj-..." autocomplete="off" />
     </div>
     <div class="modal-actions">
       <button class="btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn-primary" onclick="saveApiKey()">Save Key</button>
+      <button class="btn-primary" onclick="saveApiKey()">Save Keys</button>
     </div>
   </div>
 </div>
@@ -717,51 +722,51 @@
 // DATA - SCHOOL PRESETS
 // ═══════════════════════════════════════════════════════════════════════════════
 const SCHOOLS = [
-  { name:"Skyridge Falcons",           abbr:"SR",   p:"#BF5700", s:"#7A8B8B" },
-  { name:"Lehi Pioneers",              abbr:"LHS",  p:"#003087", s:"#c0933a" },
-  { name:"Copper Hills Grizzlies",     abbr:"CH",   p:"#002D62", s:"#355E3B" },
-  { name:"Westlake Thunder",           abbr:"WHS",  p:"#002D62", s:"#6CACE4" },
-  { name:"Herriman Mustangs",          abbr:"HHS",  p:"#002D62", s:"#800000" },
-  { name:"Corner Canyon Chargers",     abbr:"CC",   p:"#002D62", s:"#A8A9AD" },
-  { name:"Lone Peak Knights",          abbr:"LP",   p:"#800000", s:"#CFB53B" },
-  { name:"Mountain Ridge Sentinels",   abbr:"MR",   p:"#003366", s:"#cc0000" },
-  { name:"Skyline Eagles",             abbr:"SKY",  p:"#002868", s:"#BF0A30" },
-  { name:"Pleasant Grove Vikings",     abbr:"PG",   p:"#4B0082", s:"#FFD700" },
-  { name:"Timpview Thunderbirds",      abbr:"TV",   p:"#b31312", s:"#ffffff" },
-  { name:"American Fork Cavemen",      abbr:"AF",   p:"#CC0000", s:"#ffffff" },
-  { name:"Layton Lancers",             abbr:"LAY",  p:"#003087", s:"#c8993a" },
-  { name:"Bountiful Redhawks",         abbr:"BHS",  p:"#b31312", s:"#ffffff" },
-  { name:"University of Utah",         abbr:"UTAH", p:"#CC0000", s:"#808080" },
-  { name:"BYU Cougars",               abbr:"BYU",  p:"#002E5D", s:"#ffffff" },
-  { name:"Utah State Aggies",          abbr:"USU",  p:"#003263", s:"#8A8D8F" },
-  { name:"Weber State Wildcats",       abbr:"WSU",  p:"#4f2682", s:"#ffffff" },
-  { name:"SUU Thunderbirds",           abbr:"SUU",  p:"#c8102e", s:"#ffffff" },
-  { name:"Utah Valley Wolverines",     abbr:"UVU",  p:"#275d38", s:"#ffffff" },
-  { name:"Utah Tech Trailblazers",     abbr:"UTT",  p:"#CC0000", s:"#002147" },
-  { name:"Arizona State Sun Devils",   abbr:"ASU",  p:"#8C1D40", s:"#FFC627" },
-  { name:"University of Arizona",      abbr:"UA",   p:"#AB0520", s:"#0C234B" },
-  { name:"Northern Arizona",           abbr:"NAU",  p:"#003087", s:"#FFD700" },
-  { name:"Grand Canyon Antelopes",     abbr:"GCU",  p:"#522398", s:"#000000" },
-  { name:"UNLV Runnin Rebels",         abbr:"UNLV", p:"#CF0A2C", s:"#898d8d" },
-  { name:"Nevada Wolf Pack",           abbr:"UNR",  p:"#003366", s:"#807F84" },
-  { name:"Boise State Broncos",        abbr:"BSU",  p:"#0033A0", s:"#D64309" },
-  { name:"University of Idaho",        abbr:"UI",   p:"#F1BE48", s:"#000000" },
-  { name:"Idaho State Bengals",        abbr:"ISU",  p:"#F47321", s:"#000000" },
-  { name:"Colorado Buffaloes",         abbr:"CU",   p:"#CFB87C", s:"#000000" },
-  { name:"Colorado State Rams",        abbr:"CSU",  p:"#1E4D2B", s:"#C8C372" },
-  { name:"University of Denver",       abbr:"DU",   p:"#862633", s:"#C8A951" },
-  { name:"Baylor Bears",               abbr:"BU",   p:"#003015", s:"#FFB81C" },
-  { name:"Cincinnati Bearcats",        abbr:"UC",   p:"#E00122", s:"#000000" },
-  { name:"Houston Cougars",            abbr:"UH",   p:"#C8102E", s:"#ffffff" },
-  { name:"Iowa State Cyclones",        abbr:"ISU",  p:"#C8102E", s:"#F1BE48" },
-  { name:"Kansas Jayhawks",            abbr:"KU",   p:"#0051A2", s:"#E8000D" },
-  { name:"Kansas State Wildcats",      abbr:"KSU",  p:"#512888", s:"#A7A9AC" },
-  { name:"Oklahoma State Cowboys",     abbr:"OSU",  p:"#FF6500", s:"#000000" },
-  { name:"TCU Horned Frogs",           abbr:"TCU",  p:"#4D1979", s:"#ffffff" },
-  { name:"Texas Tech Red Raiders",     abbr:"TTU",  p:"#CC0000", s:"#000000" },
-  { name:"UCF Knights",                abbr:"UCF",  p:"#000000", s:"#FFC904" },
-  { name:"West Virginia Mountaineers", abbr:"WVU",  p:"#002868", s:"#EAAA00" },
-  { name:"TeamDrip Demo",              abbr:"TD",   p:"#6c63ff", s:"#ff6584" },
+  { name:"Skyridge Falcons",           abbr:"SR",   p:"#BF5700", s:"#7A8B8B", espnId:null },
+  { name:"Lehi Pioneers",              abbr:"LHS",  p:"#003087", s:"#c0933a", espnId:null },
+  { name:"Copper Hills Grizzlies",     abbr:"CH",   p:"#002D62", s:"#355E3B", espnId:null },
+  { name:"Westlake Thunder",           abbr:"WHS",  p:"#002D62", s:"#6CACE4", espnId:null },
+  { name:"Herriman Mustangs",          abbr:"HHS",  p:"#002D62", s:"#800000", espnId:null },
+  { name:"Corner Canyon Chargers",     abbr:"CC",   p:"#002D62", s:"#A8A9AD", espnId:null },
+  { name:"Lone Peak Knights",          abbr:"LP",   p:"#800000", s:"#CFB53B", espnId:null },
+  { name:"Mountain Ridge Sentinels",   abbr:"MR",   p:"#003366", s:"#cc0000", espnId:null },
+  { name:"Skyline Eagles",             abbr:"SKY",  p:"#002868", s:"#BF0A30", espnId:null },
+  { name:"Pleasant Grove Vikings",     abbr:"PG",   p:"#4B0082", s:"#FFD700", espnId:null },
+  { name:"Timpview Thunderbirds",      abbr:"TV",   p:"#b31312", s:"#ffffff", espnId:null },
+  { name:"American Fork Cavemen",      abbr:"AF",   p:"#CC0000", s:"#ffffff", espnId:null },
+  { name:"Layton Lancers",             abbr:"LAY",  p:"#003087", s:"#c8993a", espnId:null },
+  { name:"Bountiful Redhawks",         abbr:"BHS",  p:"#b31312", s:"#ffffff", espnId:null },
+  { name:"University of Utah",         abbr:"UTAH", p:"#CC0000", s:"#808080", espnId:254 },
+  { name:"BYU Cougars",               abbr:"BYU",  p:"#002E5D", s:"#ffffff", espnId:252 },
+  { name:"Utah State Aggies",          abbr:"USU",  p:"#003263", s:"#8A8D8F", espnId:328 },
+  { name:"Weber State Wildcats",       abbr:"WSU",  p:"#4f2682", s:"#ffffff", espnId:338 },
+  { name:"SUU Thunderbirds",           abbr:"SUU",  p:"#c8102e", s:"#ffffff", espnId:323 },
+  { name:"Utah Valley Wolverines",     abbr:"UVU",  p:"#275d38", s:"#ffffff", espnId:3670 },
+  { name:"Utah Tech Trailblazers",     abbr:"UTT",  p:"#CC0000", s:"#002147", espnId:326 },
+  { name:"Arizona State Sun Devils",   abbr:"ASU",  p:"#8C1D40", s:"#FFC627", espnId:9 },
+  { name:"University of Arizona",      abbr:"UA",   p:"#AB0520", s:"#0C234B", espnId:12 },
+  { name:"Northern Arizona",           abbr:"NAU",  p:"#003087", s:"#FFD700", espnId:2464 },
+  { name:"Grand Canyon Antelopes",     abbr:"GCU",  p:"#522398", s:"#000000", espnId:2253 },
+  { name:"UNLV Runnin Rebels",         abbr:"UNLV", p:"#CF0A2C", s:"#898d8d", espnId:2439 },
+  { name:"Nevada Wolf Pack",           abbr:"UNR",  p:"#003366", s:"#807F84", espnId:2440 },
+  { name:"Boise State Broncos",        abbr:"BSU",  p:"#0033A0", s:"#D64309", espnId:68 },
+  { name:"University of Idaho",        abbr:"UI",   p:"#F1BE48", s:"#000000", espnId:70 },
+  { name:"Idaho State Bengals",        abbr:"ISU",  p:"#F47321", s:"#000000", espnId:71 },
+  { name:"Colorado Buffaloes",         abbr:"CU",   p:"#CFB87C", s:"#000000", espnId:38 },
+  { name:"Colorado State Rams",        abbr:"CSU",  p:"#1E4D2B", s:"#C8C372", espnId:36 },
+  { name:"University of Denver",       abbr:"DU",   p:"#862633", s:"#C8A951", espnId:2172 },
+  { name:"Baylor Bears",               abbr:"BU",   p:"#003015", s:"#FFB81C", espnId:239 },
+  { name:"Cincinnati Bearcats",        abbr:"UC",   p:"#E00122", s:"#000000", espnId:2132 },
+  { name:"Houston Cougars",            abbr:"UH",   p:"#C8102E", s:"#ffffff", espnId:248 },
+  { name:"Iowa State Cyclones",        abbr:"ISU",  p:"#C8102E", s:"#F1BE48", espnId:66 },
+  { name:"Kansas Jayhawks",            abbr:"KU",   p:"#0051A2", s:"#E8000D", espnId:2305 },
+  { name:"Kansas State Wildcats",      abbr:"KSU",  p:"#512888", s:"#A7A9AC", espnId:2306 },
+  { name:"Oklahoma State Cowboys",     abbr:"OSU",  p:"#FF6500", s:"#000000", espnId:197 },
+  { name:"TCU Horned Frogs",           abbr:"TCU",  p:"#4D1979", s:"#ffffff", espnId:2628 },
+  { name:"Texas Tech Red Raiders",     abbr:"TTU",  p:"#CC0000", s:"#000000", espnId:2641 },
+  { name:"UCF Knights",                abbr:"UCF",  p:"#000000", s:"#FFC904", espnId:2116 },
+  { name:"West Virginia Mountaineers", abbr:"WVU",  p:"#002868", s:"#EAAA00", espnId:277 },
+  { name:"TeamDrip Demo",              abbr:"TD",   p:"#6c63ff", s:"#ff6584", espnId:null },
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -770,8 +775,8 @@ const SCHOOLS = [
 const GARMENTS = {
   hoodie: {
     label: 'Hoodie',
-    garmentDesc: `premium heavyweight pullover hoodie with large kangaroo front pocket and adjustable drawstring hood, thick ribbed cuffs and hem, substantial quality athletic fleece construction`,
-    designDNA: `FRONT: The ONLY design element on the front of this hoodie is the specified logo or abbreviation/mascot text - centered on the upper chest, clean and bold. Nothing else on the front. No school name, no extra text, no secondary graphics. Just that one element. BACK: Large bold text originates on the left sleeve, sweeps in a wide continuous arc across the entire upper back, and terminates on the right sleeve - a seamless sleeve-to-sleeve typographic wrap that spans the full garment width from sleeve tip to sleeve tip. The letters are tall, bold, arched upward. Outline/stroke style preferred: hollow letters with a bold outline in the secondary color. Below the sleeve sweep, centered on the back panel, sits a second line of smaller straight lettering. Both back elements are specified in the prompt. TeamDrip quality: premium heavyweight fleece, clean seams, confident placement, every letter crisp and legible.`,
+    garmentDesc: `premium heavyweight pullover hoodie with large kangaroo front pocket and clean hood (no visible drawstrings or laces), thick ribbed cuffs and hem, substantial quality athletic fleece construction`,
+    designDNA: `FRONT CHEST ONLY: The single design element on the front of this hoodie is the specified logo or abbreviation/mascot text — centered on the upper chest, large and bold. Nothing else on the front. No school name, no extra text, no secondary graphics. One element, front chest only. THE BACK AND BOTH SLEEVES ARE 100% BARE BLANK FABRIC — no text, no graphics, no lettering, nothing whatsoever. The entire back surface is intentionally plain. NO DRAWSTRINGS OR LACES — the hood has no visible strings hanging from it. TeamDrip quality: premium heavyweight fleece, clean seams, confident front placement, every front letter crisp and legible.`,
   },
   varsity: {
     label: 'Varsity Jacket',
@@ -781,7 +786,7 @@ const GARMENTS = {
   crewneck: {
     label: 'Crewneck',
     garmentDesc: `classic crewneck sweatshirt with ribbed collar, ribbed cuffs, and ribbed hem, premium midweight athletic fleece, relaxed yet structured fit`,
-    designDNA: `Bold chest print featuring school name prominently with mascot graphic or abbreviation below in strong contrasting colors. Clean collegiate aesthetic - intentional, confident typography. May include a small secondary logo on the left sleeve. TeamDrip signature: high print contrast, design placement that fills the chest without overcrowding, premium ink opacity.`,
+    designDNA: `FRONT CHEST ONLY: Bold chest print with the specified abbreviation or mascot text, strong contrasting colors. Clean collegiate aesthetic — intentional, confident typography. THE BACK AND BOTH SLEEVES ARE 100% BARE BLANK FABRIC — no text, no graphics, no lettering, nothing. TeamDrip signature: high print contrast, premium ink opacity.`,
   },
   puffer: {
     label: 'Puffer Jacket',
@@ -811,9 +816,10 @@ const MODEL_QUAL = `The models are PROFESSIONAL FASHION MODELS with elite, aspir
 
 const MODEL_PRESENTATIONS = {
   solo_male:   `A single male professional fashion model wearing the garment. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
-  solo_female: `A single female professional fashion model wearing the garment. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
-  pair:        `Two professional fashion models wearing the garment - a male model facing directly toward the camera (chest design fully visible) and a female model at a 3/4 or full back angle (back design visible). Close together, confident poses. ${MODEL_QUAL}`,
-  pair_fm:     `Two professional fashion models wearing the garment - a female model facing directly toward the camera (chest design fully visible) and a male model at a 3/4 or full back angle (back design visible). Close together, confident poses. ${MODEL_QUAL}`,
+  solo_female: `A single female professional fashion model wearing the garment, hair styled in a casual messy bun. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
+  pair:        `Two professional fashion models wearing the garment, side by side. COMPOSITION: The MALE model is on the LEFT SIDE of the frame, body slightly angled, facing toward the camera showing the garment front. The FEMALE model is on the RIGHT SIDE of the frame, facing away at a 3/4 back angle showing the garment back. The female model has her hair styled in a casual messy bun. Close together, confident athletic poses. ${MODEL_QUAL}`,
+  pair_fm:     `Two professional fashion models wearing the garment, side by side. COMPOSITION: The FEMALE model is on the LEFT SIDE of the frame, body slightly angled, facing toward the camera showing the garment front. The MALE model is on the RIGHT SIDE of the frame, facing away at a 3/4 back angle showing the garment back. The female model has her hair styled in a casual messy bun. Close together, confident athletic poses. ${MODEL_QUAL}`,
+
   group:       `Three professional fashion models in a dynamic editorial group, mixed male and female, at complementary angles showing different garment views. ${MODEL_QUAL}`,
 };
 
@@ -832,11 +838,12 @@ let results           = [];
 let resultIdSeq       = 0;
 let dropdownVisible   = false;
 let logoPanelOpen     = false;
+let hoodyStyleRef     = null; // TeamDrip UVU Wolverines style reference — auto-loaded, guides AI output style
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════════════════════════
-window.onload = () => {
+window.onload = async () => {
   updateApiStatus();
   loadTemplatesFromStorage();
   refreshGarmentBadges();
@@ -844,6 +851,14 @@ window.onload = () => {
   document.getElementById('emptyState').style.display = 'none';
   initPreviewListeners();
   setTimeout(schedulePreview, 80);
+  // Auto-load TeamDrip UVU Wolverines as built-in hoodie style reference
+  try {
+    const r = await fetch('uvu-reference.jpg');
+    const b = await r.blob();
+    const rd = new FileReader();
+    rd.onload = e => { hoodyStyleRef = { dataUrl: e.target.result }; console.log('[TeamDrip] UVU style reference loaded'); };
+    rd.readAsDataURL(b);
+  } catch(e) { console.warn('[TeamDrip] Could not load UVU style reference:', e.message); }
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -851,22 +866,27 @@ window.onload = () => {
 // ═══════════════════════════════════════════════════════════════════════════════
 function openModal() {
   document.getElementById('apiKeyInput').value = localStorage.getItem('openai_api_key') || '';
+  document.getElementById('googleKeyInput').value = localStorage.getItem('google_api_key') || '';
   document.getElementById('modalOverlay').classList.add('open');
 }
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
 function saveApiKey() {
-  const k = document.getElementById('apiKeyInput').value.trim();
-  if (!k) return;
-  localStorage.setItem('openai_api_key', k);
+  const oai = document.getElementById('apiKeyInput').value.trim();
+  const goo = document.getElementById('googleKeyInput').value.trim();
+  if (oai) localStorage.setItem('openai_api_key', oai);
+  if (goo) localStorage.setItem('google_api_key', goo);
   closeModal(); updateApiStatus();
 }
 document.getElementById('modalOverlay').addEventListener('click', e => {
   if (e.target === document.getElementById('modalOverlay')) closeModal();
 });
+function getGoogleKey() { return localStorage.getItem('google_api_key') || ''; }
+function getOpenAIKey() { return localStorage.getItem('openai_api_key') || ''; }
 function updateApiStatus() {
-  const k = localStorage.getItem('openai_api_key');
-  document.getElementById('apiDot').classList.toggle('active', !!k);
-  document.getElementById('apiStatusText').textContent = k ? 'API Key ✓' : 'Set API Key';
+  const hasKey = getGoogleKey() || getOpenAIKey();
+  const label = getGoogleKey() ? 'Gemini ✓' : (getOpenAIKey() ? 'OpenAI ✓' : 'Set API Key');
+  document.getElementById('apiDot').classList.toggle('active', !!hasKey);
+  document.getElementById('apiStatusText').textContent = label;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -930,6 +950,22 @@ function selectSchool(idx) {
   document.getElementById('secondaryColor').value = s.s;
   document.getElementById('secondaryColorPicker').value = s.s;
   hideDropdown();
+  // Auto-load ESPN logo if available
+  if (s.espnId) {
+    const url = `https://a.espncdn.com/i/teamlogos/ncaa/500/${s.espnId}.png`;
+    loadLogoFromEspn(url, s.name);
+  }
+}
+
+async function loadLogoFromEspn(url, schoolName) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const blob = await res.blob();
+    const reader = new FileReader();
+    reader.onload = e => { setLogo({ name: schoolName + ' Logo', dataUrl: e.target.result }); };
+    reader.readAsDataURL(blob);
+  } catch(e) { /* silently skip if CORS or network fail */ }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1174,111 +1210,201 @@ function sleeveTextSplit(text) {
   };
 }
 
-// PROMPT BUILDER
+// PROMPT BUILDER — Reference-guided: describe the design, let AI + references execute
 // ═══════════════════════════════════════════════════════════════════════════════
 function buildPrompt() {
-  const school    = document.getElementById('schoolName').value.trim() || 'the school';
-  const mascot    = document.getElementById('mascot').value.trim();
-  const primary   = document.getElementById('primaryColor').value;
-  const secondary = document.getElementById('secondaryColor').value;
-  const extra     = document.getElementById('extraDetails').value.trim();
-  const diverse   = document.getElementById('diverseToggle').checked;
-  const isFlat    = selectedShot === 'flat_lay';
-  const backSleeve = document.getElementById('backSleeveText')?.value.trim() || '';
+  const school     = document.getElementById('schoolName').value.trim() || 'the school';
+  const mascot     = document.getElementById('mascot').value.trim();
+  const primary    = document.getElementById('primaryColor').value;
+  const secondary  = document.getElementById('secondaryColor').value;
+  const extra      = document.getElementById('extraDetails').value.trim();
+  const diverse    = document.getElementById('diverseToggle').checked;
+  const isFlat     = selectedShot === 'flat_lay';
+  const backSweep  = document.getElementById('backSleeveText')?.value.trim() || '';
   const backCenter = document.getElementById('backCenterText')?.value.trim() || '';
 
-  const g  = GARMENTS[selectedGarment];
-  const allRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs, ...(logoRef ? [logoRef] : [])];
+  const g = GARMENTS[selectedGarment];
+  const hasRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs].length > 0;
+  const logoWillComposite = logoRef && logoRef.dataUrl.startsWith('data:');
+  const isHoodBack = (selectedModel === 'pair' || selectedModel === 'pair_fm' || selectedModel === 'solo_female' || selectedModel === 'pair_fm');
 
   let p = [];
 
-  p.push(`TeamDrip athletic apparel commercial photography.`);
-
-  // Garment
-  p.push(`The garment is a ${g.garmentDesc}.`);
-
-  // Colors
-  p.push(`PRIMARY COLOR: ${primary} - this exact hex color dominates the main body of the garment. SECONDARY/ACCENT COLOR: ${secondary} - used for contrast details, trim, logo outlines, and secondary text. These color choices are non-negotiable - match them precisely.`);
-
-  // School = context only, not printed
-  p.push(`School/client context: ${school}. This name is for color and identity context ONLY - do NOT print this name anywhere on the garment.`);
-
-  // Front chest: logo composited after = AI leaves chest clean; else AI renders text
-  const frontText = mascot.toUpperCase();
-  const logoWillComposite = logoRef && logoRef.dataUrl.startsWith('data:');
-
-  // Back text is drawn programmatically — tell AI to keep back completely clean
-  if ((selectedGarment === 'hoodie' || selectedGarment === 'crewneck') && (backSleeve || backCenter)) {
-    p.push(`BACK DESIGN RULE (non-negotiable): The entire back of this garment — back panel AND both sleeves — must be completely plain bare fabric. Zero text, zero graphics, zero lettering anywhere on the back or sleeves. Leave the full back clean. Back design will be applied in post-processing.`);
+  // Scene first
+  p.push(`Professional TeamDrip athletic apparel commercial photography.`);
+  // For campus shots, inject the actual school name so AI uses the real stadium/campus
+  let shotDesc = SHOT_STYLES[selectedShot];
+  if (selectedShot === 'campus' && school && school !== 'the school') {
+    shotDesc = `On-location athletic photography at ${school}'s actual campus. The models are photographed in front of ${school}'s real football stadium exterior or on their athletic campus grounds — recognizable architecture and landmarks specific to ${school}'s campus. Natural outdoor daylight. The background should clearly evoke ${school}'s specific campus identity, not a generic stadium.`;
   }
-
-  // Typography style
-  p.push(`Typography and design treatment for the front: ${TEXT_STYLES[selectedTextStyle]}.`);
-
-  // TeamDrip design DNA
-  p.push(`Design philosophy and construction detail: ${g.designDNA}`);
-
-  // Front chest instruction comes AFTER designDNA so it overrides it
-  if (logoWillComposite) {
-    p.push(`OVERRIDE - FRONT CHEST RULE (supersedes all above): The front chest of this garment must be completely bare. Zero text. Zero graphics. Zero design. Plain fabric only on the entire front chest area. Do not add 'COWBOYS', the school name, any abbreviation, any graphic, or any element whatsoever to the front. The front chest is intentionally empty.`);
-  } else if (frontText) {
-    p.push(`FRONT CHEST (supersedes all above): The ONLY element on the front is "${frontText}" in large bold collegiate lettering. Nothing else - no additional text, no school name, no secondary graphic.`);
-  }
-
-  // Logo: plain URL = style ref; base64 = composited after, don't send to AI
-  if (logoRef && !logoRef.dataUrl.startsWith('data:')) {
-    p.push(`A logo reference image is provided for style guidance only.`);
-  }
-
-  // Style references
-  if (allRefs.length > 0) {
-    p.push(`STYLE REFERENCE: The provided reference image(s) show the exact TeamDrip house style for this garment type. Mirror the design layout, print placement, proportions, color application, and overall quality standard shown in those references. This is the target aesthetic - reproduce this specific design language, just with the new school's name, colors, and identity.`);
-  }
-
-  // Shot style
-  p.push(SHOT_STYLES[selectedShot]);
-
-  // Model presentation (not for flat lay)
+  p.push(shotDesc);
   if (!isFlat) {
     p.push(MODEL_PRESENTATIONS[selectedModel]);
-    if (diverse) {
-      p.push(`Diversity: varied ethnicities and body types among the models. Inclusive and aspirational - still all professional fashion models.`);
-    }
+    if (diverse) p.push(`Diverse cast: varied ethnicities and body types, still professional fashion model quality.`);
   }
 
-  // Extra
-  if (extra) p.push(`Additional customization requested: ${extra}.`);
+  // Garment — COMPLETELY BLANK, hood flat so back is visible
+  const hoodNote = (selectedGarment === 'hoodie') ? ' The hood lies completely flat against the back — not standing up or protruding — so the entire back surface of the hoodie is unobstructed and fully visible.' : '';
+  p.push(`Garment: ${g.garmentDesc}. Main body color: ${primary}.${hoodNote}`);
 
-  // Quality bar
-  p.push(`Final quality standard: photorealistic, high-resolution, professional commercial apparel photography. Elite professional fashion models - Nike/Jordan Brand caliber. Back sweep letters MUST be hollow outline only with zero solid fill (non-negotiable). Every design element crisp and legible. No blurry text, no muddy colors, no amateur output.`);
+  // Pass 1 is intentionally blank — ALL design added in Pass 2 edit with style reference
+  p.push(`IMPORTANT: The entire hoodie is COMPLETELY BLANK — no text, no graphics, no lettering, no logos, no design elements of any kind on any part of the fabric. Front, back, and sleeves are all 100% plain solid fabric. This is a blank canvas for design.`);
+
+  // Style
+  p.push(`Quality: photorealistic, high-resolution, professional commercial apparel photography. Nike/Jordan Brand model caliber. The garment fabric should show realistic texture, weight, and drape.`);
+
+  if (extra) p.push(`Scene notes: ${extra}.`);
 
   return p.join(' ');
+}
+
+// Edit prompt — describes only the text/design elements to add to a blank hoodie
+// ═══════════════════════════════════════════════════════════════════════════════
+function buildEditPrompt() {
+  const mascot     = document.getElementById('mascot').value.trim();
+  const secondary  = document.getElementById('secondaryColor').value;
+  const backSweep  = document.getElementById('backSleeveText')?.value.trim() || '';
+  const backCenter = document.getElementById('backCenterText')?.value.trim() || '';
+  const logoWillComposite = logoRef && logoRef.dataUrl.startsWith('data:');
+  const hasBack = (selectedGarment === 'hoodie' || selectedGarment === 'crewneck') && backSweep;
+
+  // Style reference instruction — references image 1 = UVU style ref (when present), then base hoodie
+  const hasStyleRef = !!(hoodyStyleRef && hoodyStyleRef.dataUrl);
+  const hasLogo = logoRef && logoRef.dataUrl && logoRef.dataUrl.startsWith('data:');
+  const styleRefNote = hasStyleRef
+    ? `STYLE GUIDE: The first image is a TeamDrip reference showing the exact design language to match — tonal outline lettering (hollow letter centers, ${secondary} stroke only, the dark fabric shows through), large collegiate block typography, letters that look naturally printed on athletic fleece. Match this style exactly.
+
+`
+    : '';
+
+  let parts = [`${styleRefNote}Add ONLY these design elements to the hoodie — change absolutely nothing else (models, poses, lighting, background, garment shape, fabric color):`];
+  let idx = 1;
+
+  // Logo instruction: canvas composites the exact logo, so only ask AI to add text crest if no logo ref
+  if (!logoWillComposite && !hasLogo && mascot) {
+    parts.push(`${idx++}. On the model facing the camera (front view): Add "${mascot.toUpperCase()}" in small collegiate letters CENTERED on the upper chest, right below the neckline — very high on the chest, close to the collar. Small crest size. ${secondary} outline only, hollow letters, fabric shows through letter centers.`);
+  }
+
+  if (hasBack) {
+    // Seam-safe split — manufacturing rule: no letter may cross the sleeve-to-back seam
+    const sweepUpper = backSweep.toUpperCase();
+    const split = sleeveTextSplit(sweepUpper);
+    let backText;
+    if (split.sc > 0) {
+      backText = `${idx++}. On the model facing away (back view): Lower her hood flat against her back. Add the sweep text in THREE seam-safe sections. CRITICAL MANUFACTURING CONSTRAINT: no single letter may cross the seam where the sleeve joins the back panel — each letter must be 100% on one fabric panel only.
+   LEFT SLEEVE only: "${split.left}" — these letters sit entirely on the left sleeve panel, not crossing the seam into the back.
+   BACK PANEL only: "${split.back}" — these letters arch across the back panel only, not touching either sleeve.
+   RIGHT SLEEVE only: "${split.right}" — these letters sit entirely on the right sleeve panel, not crossing into the back.
+   The three sections together form one continuous visual arch, but no letter bleeds across any seam. ${secondary} outline/hollow style throughout.`;
+    } else {
+      backText = `${idx++}. On the model facing away (back view): Lower her hood flat against her back. Add "${sweepUpper}" arched across the back panel only — does not extend onto the sleeves. ${secondary} outline/hollow style.`;
+    }
+    if (backCenter) backText += `\nBelow the arch, centered on the back panel: "${backCenter.toUpperCase()}" in smaller collegiate letters, solid ${secondary}.`;
+    parts.push(backText);
+  }
+
+  parts.push(`Text style: screen-printed outline lettering, fabric-integrated. Letters follow the natural contour of the fabric surface. ${secondary} stroke/outline only — hollow centers, no color fill inside the letters. The result must look like a real manufactured TeamDrip garment, not a digital overlay.`);
+
+  return parts.join('\n\n');
+}
+
+// Calls OpenAI image edit API to add text to an existing image
+// ═══════════════════════════════════════════════════════════════════════════════
+async function callEditAPI(apiKey, dataUrl, editPrompt) {
+  try {
+    // Convert data URL to PNG blob
+    const base64 = dataUrl.split(',')[1];
+    if (!base64) return dataUrl;
+    const byteStr = atob(base64);
+    const arr = new Uint8Array(byteStr.length);
+    for (let i = 0; i < byteStr.length; i++) arr[i] = byteStr.charCodeAt(i);
+    const blob = new Blob([arr], { type: 'image/png' });
+
+    const formData = new FormData();
+    formData.append('image', blob, 'hoodie.png');
+    formData.append('prompt', editPrompt);
+    formData.append('model', 'gpt-image-1');
+    formData.append('size', '1024x1024');
+
+    const res = await fetch('https://api.openai.com/v1/images/edits', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${apiKey}` },
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.warn('Edit API failed:', err?.error?.message || res.status, '— using canvas fallback');
+      return dataUrl; // fallback: original blank hoodie
+    }
+
+    const data = await res.json();
+    const item = data.data?.[0];
+    if (item?.b64_json) return `data:image/png;base64,${item.b64_json}`;
+    if (item?.url) return item.url;
+    return dataUrl;
+  } catch(e) {
+    console.warn('Edit API error:', e.message, '— using canvas fallback');
+    return dataUrl;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // GENERATE
 // ═══════════════════════════════════════════════════════════════════════════════
 async function generate() {
-  const apiKey = localStorage.getItem('openai_api_key');
-  if (!apiKey) { openModal(); return; }
+  const googleKey = getGoogleKey();
+  const apiKey    = getOpenAIKey();
+  if (!googleKey && !apiKey) { openModal(); return; }
   const school = document.getElementById('schoolName').value.trim();
   if (!school) { showError('Enter a school or entity name first.'); return; }
 
   hideError();
-  setLoading(true);
+  setLoading(true, 'Generating base...');
   showSkeletons(selectedCount);
   document.getElementById('emptyState').style.display = 'none';
 
-  const prompt = buildPrompt();
-  // Exclude base64 logos from API refs - they'll be composited after generation
-  const logoForAPI = (logoRef && !logoRef.dataUrl.startsWith('data:')) ? [logoRef] : [];
-  const allRefs = [...(garmentTemplates[selectedGarment] || []), ...extraRefs, ...logoForAPI];
+  const blankPrompt = buildPrompt();  // Pass 1: blank hoodie
+  const editPrompt  = buildEditPrompt(); // Pass 2: text to add
+  const mascot      = document.getElementById('mascot').value.trim();
+  const backSweep   = document.getElementById('backSleeveText')?.value.trim() || '';
+  const logoWC      = logoRef && logoRef.dataUrl.startsWith('data:');
+  const needsEdit   = (!logoWC && mascot) || backSweep || (logoRef && logoRef.dataUrl && logoRef.dataUrl.startsWith('data:'));
 
-  const jobs = Array(selectedCount).fill(null).map(() =>
-    allRefs.length > 0
-      ? generateWithRefs(apiKey, prompt, school, allRefs)
-      : generateText(apiKey, prompt, school)
-  );
+  // Style reference — UVU is the hoodie/crewneck style anchor
+  const styleRef = (selectedGarment === 'hoodie' || selectedGarment === 'crewneck')
+    ? (hoodyStyleRef?.dataUrl || null)
+    : null;
+
+  // All jobs run in parallel (each job = two API calls sequentially)
+  const jobs = Array(selectedCount).fill(null).map(async () => {
+    try {
+      // Pass 1 — blank hoodie base
+      let rawUrl;
+      if (googleKey) {
+        rawUrl = await geminiGenerate(googleKey, blankPrompt, styleRef).catch(e => { showError(e.message); return null; });
+      } else {
+        rawUrl = await getRawImageUrl(apiKey, blankPrompt);
+      }
+      if (!rawUrl) return null;
+
+      // Pass 2 — add design with style reference guiding the output
+      if (needsEdit && rawUrl.startsWith('data:')) {
+        setLoading(true, 'Adding design...');
+        if (googleKey) {
+          const logoForEdit = (logoRef && logoRef.dataUrl && logoRef.dataUrl.startsWith('data:')) ? logoRef.dataUrl : null;
+          rawUrl = await geminiEdit(googleKey, rawUrl, editPrompt, logoForEdit, styleRef);
+        } else {
+          rawUrl = await callEditAPI(apiKey, rawUrl, editPrompt);
+        }
+      }
+
+      return await makeResult(rawUrl, true, school);
+    } catch(e) {
+      showError('Error: ' + e.message);
+      return null;
+    }
+  });
 
   const newResults = (await Promise.all(jobs)).filter(Boolean);
   results = [...newResults, ...results];
@@ -1288,12 +1414,84 @@ async function generate() {
   setLoading(false);
 }
 
-async function generateText(apiKey, prompt, school) {
+// ═══════════════════════════════════════════════════════════════════════════════
+// GOOGLE GEMINI API — preferred provider for image generation + editing
+// ═══════════════════════════════════════════════════════════════════════════════
+
+async function geminiGenerate(googleKey, prompt, styleRefDataUrl) {
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent`;
+  // Include style reference image first (if available), then text prompt
+  const parts = [];
+  if (styleRefDataUrl && styleRefDataUrl.startsWith('data:')) {
+    const mime = styleRefDataUrl.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
+    parts.push({ inlineData: { mimeType: mime, data: styleRefDataUrl.split(',')[1] } });
+  }
+  parts.push({ text: prompt });
+  const body = {
+    contents: [{ parts }],
+    generationConfig: { responseModalities: ['TEXT', 'IMAGE'] },
+  };
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': googleKey },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const e = await res.json();
+    throw new Error(e?.error?.message || `Gemini API error ${res.status}`);
+  }
+  const data = await res.json();
+  const part = data.candidates?.[0]?.content?.parts?.find(p => p.inlineData?.mimeType?.startsWith('image/'));
+  if (!part) throw new Error('No image in Gemini response');
+  return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+}
+
+// styleRefDataUrl = UVU style reference; logoDataUrl = school logo (optional)
+async function geminiEdit(googleKey, imageDataUrl, editPrompt, logoDataUrl, styleRefDataUrl) {
+  const mimeType = imageDataUrl.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
+  const base64   = imageDataUrl.split(',')[1];
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent`;
+
+  // Parts order: [style ref (if any), base hoodie, logo (if any), edit instructions]
+  const parts = [];
+  if (styleRefDataUrl && styleRefDataUrl.startsWith('data:')) {
+    const sm = styleRefDataUrl.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
+    parts.push({ inlineData: { mimeType: sm, data: styleRefDataUrl.split(',')[1] } });
+  }
+  parts.push({ inlineData: { mimeType, data: base64 } });
+  if (logoDataUrl && logoDataUrl.startsWith('data:')) {
+    const logoMime = logoDataUrl.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
+    parts.push({ inlineData: { mimeType: logoMime, data: logoDataUrl.split(',')[1] } });
+  }
+  parts.push({ text: editPrompt });
+
+  const body = {
+    contents: [{ parts }],
+    generationConfig: { responseModalities: ['TEXT', 'IMAGE'] },
+  };
+  const res = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-goog-api-key': googleKey },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    const e = await res.json().catch(() => ({}));
+    console.warn('Gemini edit failed:', e?.error?.message || res.status);
+    return imageDataUrl;
+  }
+  const data = await res.json();
+  const part = data.candidates?.[0]?.content?.parts?.find(p => p.inlineData?.mimeType?.startsWith('image/'));
+  if (!part) return imageDataUrl;
+  return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+}
+
+// Returns raw data URL (no makeResult) — used by two-pass generate()
+async function getRawImageUrl(apiKey, prompt) {
   try {
     const res = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'gpt-image-1', prompt, n: 1, size: '1024x1024' }),
+      body: JSON.stringify({ model: 'gpt-image-1', prompt, n: 1, size: '1024x1024', output_format: 'png' }),
     });
     if (!res.ok) {
       const e = await res.json();
@@ -1303,13 +1501,20 @@ async function generateText(apiKey, prompt, school) {
     const data = await res.json();
     const item = data.data?.[0];
     if (!item) { showError('No image returned from API.'); return null; }
-    if (item.b64_json) return await makeResult(`data:image/png;base64,${item.b64_json}`, true, school);
-    if (item.url)      return await makeResult(item.url, false, school);
+    if (item.b64_json) return `data:image/png;base64,${item.b64_json}`;
+    if (item.url)      return item.url;
     return null;
   } catch(e) {
     showError('Network error: ' + e.message);
     return null;
   }
+}
+
+// Legacy wrapper — kept for generateWithRefs fallback
+async function generateText(apiKey, prompt, school) {
+  const rawUrl = await getRawImageUrl(apiKey, prompt);
+  if (!rawUrl) return null;
+  return await makeResult(rawUrl, rawUrl.startsWith('data:'), school);
 }
 
 async function generateWithRefs(apiKey, prompt, school, refImages) {
@@ -1385,11 +1590,11 @@ async function removeLogoBg(dataUrl) {
 function getSweepLayout() {
   const m = selectedModel, s = selectedShot;
   if (s === 'multi_view') return { p0:[335,490], p1:[512,200], p2:[690,490], cx:512, cy:570, fs:66 };
-  if (s === 'flat_lay')   return { p0:[120,510], p1:[512,195], p2:[900,510], cx:512, cy:610, fs:82 };
-  if (m === 'pair')       return { p0:[535,495], p1:[748,205], p2:[958,495], cx:748, cy:585, fs:64 };
-  if (m === 'pair_fm')    return { p0:[65,495],  p1:[278,205], p2:[488,495], cx:278, cy:585, fs:64 };
-  if (m === 'group')      return { p0:[355,485], p1:[560,210], p2:[760,485], cx:560, cy:575, fs:60 };
-  return                         { p0:[100,495], p1:[512,205], p2:[920,495], cx:512, cy:590, fs:78 };
+  if (s === 'flat_lay')   return { p0:[120,490], p1:[512,380], p2:[900,490], cx:512, cy:590, fs:82 };
+  if (m === 'pair')       return { p0:[574,533], p1:[748,461], p2:[912,533], cx:737, cy:584, fs:64 };  // calibrated from real output
+  if (m === 'pair_fm')    return { p0:[65,495],  p1:[278,380], p2:[488,495], cx:278, cy:560, fs:64 };
+  if (m === 'group')      return { p0:[355,490], p1:[560,390], p2:[760,490], cx:560, cy:560, fs:60 };
+  return                         { p0:[100,495], p1:[512,380], p2:[920,495], cx:512, cy:575, fs:78 };  // solo
 }
 
 function drawSweepArc(ctx, text, layout, strokeCol) {
@@ -1444,20 +1649,56 @@ function drawSweepArc(ctx, text, layout, strokeCol) {
 function drawCenterBack(ctx, text, layout, strokeCol) {
   const { cx, cy, fs } = layout;
   ctx.save();
-  ctx.font = `600 ${Math.round(fs*0.26)}px "Helvetica Neue",Arial,sans-serif`;
-  ctx.fillStyle   = strokeCol;
-  ctx.textAlign   = 'center';
+  const fontSize = Math.round(fs * 0.52);
+  ctx.font = `900 ${fontSize}px "Arial Black",Impact,Arial,sans-serif`;
+  ctx.textAlign    = 'center';
   ctx.textBaseline = 'top';
+  // Outline first for legibility
+  ctx.lineWidth    = Math.max(2, fontSize * 0.09);
+  ctx.lineJoin     = 'round';
+  ctx.strokeStyle  = 'rgba(0,0,0,0.45)';
+  ctx.strokeText(text.toUpperCase(), cx, cy);
+  ctx.fillStyle    = strokeCol;
   ctx.fillText(text.toUpperCase(), cx, cy);
   ctx.restore();
 }
 
+// Front chest layout coords per model type (1024×1024 image space)
+function getFrontLayout() {
+  const m = selectedModel, s = selectedShot;
+  if (s === 'flat_lay')                          return { cx:512, cy:395, maxW:290, fs:110 };
+  if (m === 'pair' || m === 'pair_fm')           return { cx:379, cy:461, maxW:215, fs:85  };  // calibrated from real output
+  if (m === 'solo_male' || m === 'solo_female')  return { cx:510, cy:455, maxW:290, fs:110 };
+  if (m === 'group')                             return { cx:330, cy:450, maxW:205, fs:80  };
+  return                                                { cx:510, cy:455, maxW:290, fs:110 };
+}
+
+// Draws front chest text as outline-only (tonal, embedded look)
+function drawFrontChestText(ctx, text, layout, strokeColor) {
+  if (!text) return;
+  const { cx, cy, maxW, fs } = layout;
+  ctx.save();
+  ctx.textAlign    = 'center';
+  ctx.textBaseline = 'middle';
+  let fontSize = fs;
+  ctx.font = `900 ${fontSize}px "Arial Black",Impact,Arial`;
+  while (ctx.measureText(text).width > maxW && fontSize > 22) {
+    fontSize -= 3;
+    ctx.font = `900 ${fontSize}px "Arial Black",Impact,Arial`;
+  }
+  ctx.lineWidth   = Math.max(3, fontSize * 0.09);
+  ctx.lineJoin    = 'round';
+  ctx.lineCap     = 'round';
+  ctx.strokeStyle = strokeColor;
+  ctx.globalAlpha = 0.88;
+  ctx.strokeText(text, cx, cy); // outline only — tonal embedded look matching TeamDrip style
+  ctx.restore();
+}
+
+// Canvas compositing — logos only. AI handles all text guided by reference images.
 async function applyCompositing(dataUrl) {
-  const needsLogo  = logoRef && logoRef.dataUrl.startsWith('data:');
-  const backSweep  = document.getElementById('backSleeveText')?.value.trim() || '';
-  const backCenter = document.getElementById('backCenterText')?.value.trim()  || '';
-  const needsBack  = (selectedGarment==='hoodie'||selectedGarment==='crewneck') && (backSweep||backCenter);
-  if (!needsLogo && !needsBack) return dataUrl;
+  const needsLogo = logoRef && logoRef.dataUrl.startsWith('data:');
+  if (!needsLogo) return dataUrl;
 
   const bgSrc = await toDataUrl(dataUrl);
   const bgImg = await loadImg(bgSrc);
@@ -1468,57 +1709,47 @@ async function applyCompositing(dataUrl) {
   const ctx = canvas.getContext('2d');
   ctx.drawImage(bgImg, 0, 0, 1024, 1024);
 
-  // 1. Back design (drawn before logo so logo sits on top)
-  if (needsBack) {
-    const secondary = document.getElementById('secondaryColor').value;
-    const layout = getSweepLayout();
-    if (backSweep)  drawSweepArc(ctx,  backSweep.toUpperCase(),  layout, secondary);
-    if (backCenter) drawCenterBack(ctx, backCenter, layout, secondary);
-  }
-
-  // 2. Logo composite
-  if (needsLogo) {
-    const cleanLogo = await removeLogoBg(logoRef.dataUrl);
-    const logoImg   = await loadImg(cleanLogo);
-    if (logoImg) {
-      let lx=512, ly=340, ls=140;
-      if (selectedModel==='pair')     { lx=410; ly=330; ls=125; }
-      if (selectedModel==='pair_fm')  { lx=610; ly=330; ls=125; }
-      if (selectedModel==='group')    { lx=340; ly=310; ls=115; }
-      if (selectedShot ==='flat_lay') { lx=512; ly=370; ls=155; }
-      ctx.save(); ctx.globalAlpha=0.93;
-      ctx.drawImage(logoImg, lx-ls/2, ly-ls/2, ls, ls);
-      ctx.restore();
-    }
+  const cleanLogo = await removeLogoBg(logoRef.dataUrl);
+  const logoImg   = await loadImg(cleanLogo);
+  if (logoImg) {
+    let lx=512, ly=460, ls=195;
+    if (selectedModel==='pair')     { lx=245; ly=450; ls=185; }
+    if (selectedModel==='pair_fm')  { lx=245; ly=450; ls=185; }
+    if (selectedModel==='group')    { lx=315; ly=445; ls=165; }
+    if (selectedShot ==='flat_lay') { lx=512; ly=405; ls=190; }
+    ctx.save(); ctx.globalAlpha = 0.93;
+    ctx.drawImage(logoImg, lx-ls/2, ly-ls/2, ls, ls);
+    ctx.restore();
   }
 
   return canvas.toDataURL('image/png');
 }
 
+
 async function makeResult(dataUrl, isB64, school) {
   const g = GARMENTS[selectedGarment];
   const needsLogo = logoRef && logoRef.dataUrl.startsWith('data:');
   const backSweep = document.getElementById('backSleeveText')?.value.trim() || '';
-  const backCenter = document.getElementById('backCenterText')?.value.trim() || '';
-  const needsBack = (selectedGarment==='hoodie'||selectedGarment==='crewneck') && (backSweep||backCenter);
-  const finalUrl = await applyCompositing(dataUrl);
+  const hasBack   = (selectedGarment==='hoodie'||selectedGarment==='crewneck') && !!backSweep;
+  const finalUrl  = await applyCompositing(dataUrl);
   return {
     id: ++resultIdSeq,
     dataUrl: finalUrl,
     isB64: true,
     label: school,
     meta: `${g.label} · ${selectedShot.replace('_',' ')} · ${selectedModel.replace('_',' ')}` +
-          (needsLogo ? ' · ✓ Logo' : '') + (needsBack ? ' · ✓ Sweep' : ''),
+          (needsLogo ? ' · ✓ Logo' : '') +
+          (hasBack   ? ' · ✓ Sweep' : ''),
   };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // UI HELPERS
 // ═══════════════════════════════════════════════════════════════════════════════
-function setLoading(v) {
+function setLoading(v, label) {
   const btn = document.getElementById('generateBtn');
   btn.disabled = v;
-  btn.textContent = v ? '⏳  Generating...' : '✦  Generate Mockups';
+  btn.textContent = v ? `⏳  ${label || 'Generating...'}` : '✦  Generate Mockups';
 }
 function showSkeletons(n) {
   const g = document.getElementById('loadingGrid');
@@ -1737,10 +1968,7 @@ function pvDrawHoodie(ctx, c1, c2, W, H) {
   // Hem
   ctx.fillStyle = pvHA(c2, 0.22);
   pvRR(ctx, bx, by+H*0.05+bh*0.94, bw, bh*0.06, 6); ctx.fill();
-  // Drawstrings
-  ctx.strokeStyle = pvHA(c2, 0.42); ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(W*0.455, by+H*0.055); ctx.lineTo(W*0.435, by+H*0.14); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(W*0.545, by+H*0.055); ctx.lineTo(W*0.565, by+H*0.14); ctx.stroke();
+  // No drawstrings — TeamDrip hoodies have clean hoods with no visible laces
 }
 
 function pvDrawVarsity(ctx, c1, c2, W, H) {
