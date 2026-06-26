@@ -817,7 +817,7 @@ const MODEL_QUAL = `The models are PROFESSIONAL FASHION MODELS with elite, aspir
 const MODEL_PRESENTATIONS = {
   solo_male:   `A single male professional fashion model wearing the garment. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
   solo_female: `A single female professional fashion model wearing the garment, hair styled in a casual messy bun. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
-  pair:        `Two young athletic adult models with toned, athletic builds. Relaxed, natural, confident posture. COMPOSITION: The FEMALE model is on the LEFT SIDE of the frame, body turned completely away from camera showing the garment back, head turned left over her shoulder so her face is visible in 3/4 profile, relaxed expression, loose messy blonde bun. NO drawstrings visible on either hoodie. The MALE model is on the RIGHT SIDE of the frame, relaxed slightly angled stance facing toward the camera showing the garment front, short hair, confident casual expression. ${MODEL_QUAL}`,
+  pair:        `Two young athletic adult models with toned, athletic builds. Relaxed, natural, confident posture. STRICT COMPOSITION RULE — do not deviate: LEFT SIDE OF FRAME = FEMALE model, body turned completely away from camera so the BACK of the hoodie faces the viewer, head turned left over her shoulder showing her face in 3/4 profile, loose messy blonde bun, hood flat and smooth against her back. RIGHT SIDE OF FRAME = MALE model, body facing toward the camera so the FRONT of the hoodie faces the viewer, relaxed slightly angled stance, short hair, confident casual expression. NO drawstrings visible on either hoodie. ${MODEL_QUAL}`,
   pair_fm:     `Two professional fashion models wearing the garment, side by side. COMPOSITION: The FEMALE model is on the LEFT SIDE of the frame, body slightly angled, facing toward the camera showing the garment front. The MALE model is on the RIGHT SIDE of the frame, facing away at a 3/4 back angle showing the garment back. The female model has her hair styled in a casual messy bun. Close together, confident athletic poses. ${MODEL_QUAL}`,
 
   group:       `Three professional fashion models in a dynamic editorial group, mixed male and female, at complementary angles showing different garment views. ${MODEL_QUAL}`,
@@ -1279,12 +1279,14 @@ function buildEditPrompt() {
 `
     : '';
 
-  let parts = [`${styleRefNote}Add ONLY these design elements to the hoodie — change absolutely nothing else (models, poses, lighting, background, garment shape, fabric color):`];
+  let parts = [`${styleRefNote}Add ONLY these design elements to the hoodie — change absolutely nothing else (models, poses, lighting, background, garment shape, fabric color). CRITICAL: the model on the LEFT is facing AWAY from camera (showing the BACK of the hoodie). The model on the RIGHT is facing toward the camera (showing the FRONT of the hoodie). Do not swap them.`];
   let idx = 1;
 
-  // Logo instruction: canvas composites the exact logo, so only ask AI to add text crest if no logo ref
-  if (!logoWillComposite && !hasLogo && mascot) {
-    parts.push(`${idx++}. On the model facing the camera (front view): Add "${mascot.toUpperCase()}" crest DEAD CENTER on the chest — perfectly centered left-to-right on the chest, NOT on the left side — directly in the middle of chest below neckline. Hockey puck size only, small. ${secondary} outline/hollow letters.`);
+  // Front is always clean except for the small crest — explicitly state this
+  if (logoWillComposite || hasLogo) {
+    parts.push(`The model facing the camera (FRONT view, RIGHT side of frame): The front of the hoodie has ONE small crest logo centered on the chest — NO text, NO arch, NO sweep lettering on the front whatsoever. Only the small centered logo.`);
+  } else if (mascot) {
+    parts.push(`${idx++}. On the model facing the camera (front view, RIGHT side of frame): Add "${mascot.toUpperCase()}" crest DEAD CENTER on the chest — perfectly centered left-to-right, NOT on the left side — directly in the middle of chest below neckline. Hockey puck size only, small. ${secondary} outline/hollow letters. NOTHING else on the front.`);
   }
 
   if (hasBack) {
@@ -1725,11 +1727,11 @@ async function applyCompositing(dataUrl) {
     const cleanLogo = await removeLogoBg(logoRef.dataUrl);
     const logoImg   = await loadImg(cleanLogo);
     if (logoImg) {
-      let lx=512, ly=460, ls=195;
-      if (selectedModel==='pair')     { lx=245; ly=450; ls=185; }
-      if (selectedModel==='pair_fm')  { lx=245; ly=450; ls=185; }
-      if (selectedModel==='group')    { lx=315; ly=445; ls=165; }
-      if (selectedShot ==='flat_lay') { lx=512; ly=405; ls=190; }
+      let lx=512, ly=450, ls=85;  // hockey puck size — small crest, not a full chest graphic
+      if (selectedModel==='pair')     { lx=700; ly=450; ls=80; }  // male is RIGHT side of frame
+      if (selectedModel==='pair_fm')  { lx=245; ly=450; ls=80; }
+      if (selectedModel==='group')    { lx=315; ly=445; ls=80; }
+      if (selectedShot ==='flat_lay') { lx=512; ly=405; ls=110; }
       ctx.save(); ctx.globalAlpha = 0.93;
       ctx.drawImage(logoImg, lx-ls/2, ly-ls/2, ls, ls);
       ctx.restore();
