@@ -805,7 +805,7 @@ const TEXT_STYLES = {
 };
 
 const SHOT_STYLES = {
-  studio:     `Professional studio product photography. Clean neutral gradient background in a shade that complements the garment colors. Controlled soft-box lighting that shows garment texture and design detail clearly. Commercial apparel catalog quality.`,
+  studio:     `Professional athletic apparel studio photograph. Neutral warm gray seamless paper studio backdrop. Soft professional studio lighting with slight warmth. Commercial athletic apparel photography. Sharp focus. Clean minimal aesthetic.`,
   campus:     `On-location athletic photography at this specific school. The model stands on the school's campus - in front of the football stadium exterior, on the athletic field, or on the campus quad with recognizable architecture in the background. Natural outdoor lighting. The setting reinforces the school's identity and creates an aspirational, place-specific feel.`,
   multi_view: `A single professional product photography image composed as a triptych - three panels side by side: LEFT PANEL shows the garment's front design on a model (or flat lay) clearly showing the chest graphic; CENTER PANEL shows the garment's back on a model (or flat lay) showing the back design; RIGHT PANEL shows a close-up detail of either the main chest logo, the interior liner, or a distinctive design element. All three panels share consistent lighting, background, and color treatment. The three panels are clearly separated within the single image.`,
   action:     `Dynamic sports editorial action photography. An athlete in energetic motion - running, jumping, or in a sports pose - wearing the garment in an athletic environment (stadium, gym, field, or court). High-energy, dramatic lighting with a sense of speed and power. Magazine-quality sports photography.`,
@@ -817,7 +817,7 @@ const MODEL_QUAL = `The models are PROFESSIONAL FASHION MODELS with elite, aspir
 const MODEL_PRESENTATIONS = {
   solo_male:   `A single male professional fashion model wearing the garment. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
   solo_female: `A single female professional fashion model wearing the garment, hair styled in a casual messy bun. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
-  pair:        `Two professional fashion models wearing the garment, side by side. COMPOSITION: The MALE model is on the LEFT SIDE of the frame, body slightly angled, facing toward the camera showing the garment front. The FEMALE model is on the RIGHT SIDE of the frame, facing away at a 3/4 back angle showing the garment back. The female model has her hair styled in a casual messy bun. Close together, confident athletic poses. ${MODEL_QUAL}`,
+  pair:        `Two young athletic adult models with toned, athletic builds. Relaxed, natural, confident posture. COMPOSITION: The FEMALE model is on the LEFT SIDE of the frame, body turned completely away from camera showing the garment back, head turned left over her shoulder so her face is visible in 3/4 profile, relaxed expression, loose messy blonde bun. NO drawstrings visible on either hoodie. The MALE model is on the RIGHT SIDE of the frame, relaxed slightly angled stance facing toward the camera showing the garment front, short hair, confident casual expression. ${MODEL_QUAL}`,
   pair_fm:     `Two professional fashion models wearing the garment, side by side. COMPOSITION: The FEMALE model is on the LEFT SIDE of the frame, body slightly angled, facing toward the camera showing the garment front. The MALE model is on the RIGHT SIDE of the frame, facing away at a 3/4 back angle showing the garment back. The female model has her hair styled in a casual messy bun. Close together, confident athletic poses. ${MODEL_QUAL}`,
 
   group:       `Three professional fashion models in a dynamic editorial group, mixed male and female, at complementary angles showing different garment views. ${MODEL_QUAL}`,
@@ -1282,7 +1282,7 @@ function buildEditPrompt() {
 
   // Logo instruction: canvas composites the exact logo, so only ask AI to add text crest if no logo ref
   if (!logoWillComposite && !hasLogo && mascot) {
-    parts.push(`${idx++}. On the model facing the camera (front view): Add "${mascot.toUpperCase()}" in small collegiate letters CENTERED on the upper chest, right below the neckline — very high on the chest, close to the collar. Small crest size. ${secondary} outline only, hollow letters, fabric shows through letter centers.`);
+    parts.push(`${idx++}. On the model facing the camera (front view): Add "${mascot.toUpperCase()}" crest DEAD CENTER on the chest — perfectly centered left-to-right on the chest, NOT on the left side — directly in the middle of chest below neckline. Hockey puck size only, small. ${secondary} outline/hollow letters.`);
   }
 
   if (hasBack) {
@@ -1297,9 +1297,13 @@ function buildEditPrompt() {
    RIGHT SLEEVE only: "${split.right}" — these letters sit entirely on the right sleeve panel, not crossing into the back.
    The three sections together form one continuous visual arch, but no letter bleeds across any seam. ${secondary} outline/hollow style throughout.`;
     } else {
-      backText = `${idx++}. On the model facing away (back view): Lower her hood flat against her back. Add "${sweepUpper}" arched across the back panel only — does not extend onto the sleeves. ${secondary} outline/hollow style.`;
+      backText = `${idx++}. On the model facing away (back view): Hood flat and smooth against her back — no visible seams or panel lines. Add "${sweepUpper}" as a massive bold collegiate arch that EXTENDS ALL THE WAY across BOTH SLEEVES — first letter begins on the left sleeve, arch crosses entire back, last letter ends on the right sleeve cuff. Sleeve tip to sleeve tip, not confined to the back panel only. ${secondary} outline/hollow style.`;
     }
-    if (backCenter) backText += `\nBelow the arch, centered on the back panel: "${backCenter.toUpperCase()}" in smaller collegiate letters, solid ${secondary}.`;
+    // Secondary text — Helvetica Neue Regular, solid fill (also in AI prompt for best results)
+    if (document.getElementById('backCenterText')?.value.trim()) {
+      const bc = document.getElementById('backCenterText').value.trim().toUpperCase();
+      backText += `\nImmediately below the arch with a small comfortable gap: "${bc}" centered on the back panel in clean Helvetica Neue Regular — thin, clean, modern sans-serif, uniform letter weight, no serifs, no bold. Solid ${secondary} filled letters, NOT outline. Small understated size (one-third height of arch letters).`;
+    }
     parts.push(backText);
   }
 
@@ -1601,7 +1605,7 @@ function drawSweepArc(ctx, text, layout, strokeCol) {
   const { p0, p1, p2, fs } = layout;
   const [p0x,p0y] = p0, [p1x,p1y] = p1, [p2x,p2y] = p2;
   ctx.save();
-  ctx.font = `900 ${fs}px "Arial Black",Impact,Arial`;
+  ctx.font = `700 ${fs}px "Helvetica Neue",Helvetica,Arial`;
   ctx.lineWidth  = Math.max(3, fs * 0.09);
   ctx.lineJoin   = 'round';
   ctx.lineCap    = 'round';
@@ -1650,7 +1654,7 @@ function drawCenterBack(ctx, text, layout, strokeCol) {
   const { cx, cy, fs } = layout;
   ctx.save();
   const fontSize = Math.round(fs * 0.52);
-  ctx.font = `900 ${fontSize}px "Arial Black",Impact,Arial,sans-serif`;
+  ctx.font = `400 ${fontSize}px "Helvetica Neue",Helvetica,Arial,sans-serif`;
   ctx.textAlign    = 'center';
   ctx.textBaseline = 'top';
   // Outline first for legibility
@@ -1697,8 +1701,13 @@ function drawFrontChestText(ctx, text, layout, strokeColor) {
 
 // Canvas compositing — logos only. AI handles all text guided by reference images.
 async function applyCompositing(dataUrl) {
-  const needsLogo = logoRef && logoRef.dataUrl.startsWith('data:');
-  if (!needsLogo) return dataUrl;
+  const needsLogo    = logoRef && logoRef.dataUrl.startsWith('data:');
+  const backCenter   = document.getElementById('backCenterText')?.value.trim() || '';
+  const primaryCol   = document.getElementById('primaryColor')?.value || '#ffffff';
+  const backSweep    = document.getElementById('backSleeveText')?.value.trim() || '';
+  const hasBack      = (selectedGarment==='hoodie'||selectedGarment==='crewneck') && !!backSweep;
+  const needsCanvas  = needsLogo || (hasBack && !!backCenter);
+  if (!needsCanvas) return dataUrl;
 
   const bgSrc = await toDataUrl(dataUrl);
   const bgImg = await loadImg(bgSrc);
@@ -1709,17 +1718,26 @@ async function applyCompositing(dataUrl) {
   const ctx = canvas.getContext('2d');
   ctx.drawImage(bgImg, 0, 0, 1024, 1024);
 
-  const cleanLogo = await removeLogoBg(logoRef.dataUrl);
-  const logoImg   = await loadImg(cleanLogo);
-  if (logoImg) {
-    let lx=512, ly=460, ls=195;
-    if (selectedModel==='pair')     { lx=245; ly=450; ls=185; }
-    if (selectedModel==='pair_fm')  { lx=245; ly=450; ls=185; }
-    if (selectedModel==='group')    { lx=315; ly=445; ls=165; }
-    if (selectedShot ==='flat_lay') { lx=512; ly=405; ls=190; }
-    ctx.save(); ctx.globalAlpha = 0.93;
-    ctx.drawImage(logoImg, lx-ls/2, ly-ls/2, ls, ls);
-    ctx.restore();
+  // Logo compositing
+  if (needsLogo) {
+    const cleanLogo = await removeLogoBg(logoRef.dataUrl);
+    const logoImg   = await loadImg(cleanLogo);
+    if (logoImg) {
+      let lx=512, ly=460, ls=195;
+      if (selectedModel==='pair')     { lx=245; ly=450; ls=185; }
+      if (selectedModel==='pair_fm')  { lx=245; ly=450; ls=185; }
+      if (selectedModel==='group')    { lx=315; ly=445; ls=165; }
+      if (selectedShot ==='flat_lay') { lx=512; ly=405; ls=190; }
+      ctx.save(); ctx.globalAlpha = 0.93;
+      ctx.drawImage(logoImg, lx-ls/2, ly-ls/2, ls, ls);
+      ctx.restore();
+    }
+  }
+
+  // Secondary back text — Helvetica Neue Regular, solid fill (programmatic, never AI-generated)
+  if (hasBack && backCenter) {
+    const layout = getSweepLayout();
+    drawCenterBack(ctx, backCenter.toUpperCase(), layout, primaryCol);
   }
 
   return canvas.toDataURL('image/png');
