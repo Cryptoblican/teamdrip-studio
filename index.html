@@ -1310,6 +1310,8 @@ function buildEditPrompt() {
     parts.push(backText);
   }
 
+  parts.push(`STRICT PROHIBITION: Do NOT add any text, lettering, school name, city name, state name, mascot name, or any other wording to the hoodie beyond the exact elements listed above. No jersey numbers. No additional graphics. Nothing else. The design is complete as listed.`);
+
   parts.push(`Text style: screen-printed outline lettering, fabric-integrated. Letters follow the natural contour of the fabric surface. ${secondary} stroke/outline only — hollow centers, no color fill inside the letters. The result must look like a real manufactured TeamDrip garment, not a digital overlay.`);
 
   return parts.join('\n\n');
@@ -1606,7 +1608,7 @@ function getSweepLayout() {
   const m = selectedModel, s = selectedShot;
   if (s === 'multi_view') return { p0:[335,490], p1:[512,200], p2:[690,490], cx:512, cy:570, fs:66 };
   if (s === 'flat_lay')   return { p0:[120,490], p1:[512,380], p2:[900,490], cx:512, cy:590, fs:82 };
-  if (m === 'pair')       return { p0:[574,533], p1:[748,461], p2:[912,533], cx:270, cy:510, fs:64 };  // cx=270 = female's back center (left half); old cx=737 was landing on male's front
+  if (m === 'pair')       return { p0:[574,533], p1:[748,461], p2:[912,533], cx:270, cy:580, fs:64 };  // cx=270 = female's back center; cy=580 = below sweep arch
   if (m === 'pair_fm')    return { p0:[65,495],  p1:[278,380], p2:[488,495], cx:278, cy:560, fs:64 };
   if (m === 'group')      return { p0:[355,490], p1:[560,390], p2:[760,490], cx:560, cy:560, fs:60 };
   return                         { p0:[100,495], p1:[512,380], p2:[920,495], cx:512, cy:575, fs:78 };  // solo
@@ -1715,6 +1717,7 @@ async function applyCompositing(dataUrl) {
   const needsLogo    = logoRef && logoRef.dataUrl.startsWith('data:');
   const backCenter   = document.getElementById('backCenterText')?.value.trim() || '';
   const primaryCol   = document.getElementById('primaryColor')?.value || '#ffffff';
+  const secondaryCol = document.getElementById('secondaryColor')?.value || '#ffffff';
   const backSweep    = document.getElementById('backSleeveText')?.value.trim() || '';
   const hasBack      = (selectedGarment==='hoodie'||selectedGarment==='crewneck') && !!backSweep;
   const needsCanvas  = needsLogo || (hasBack && !!backCenter);
@@ -1748,7 +1751,7 @@ async function applyCompositing(dataUrl) {
   // Secondary back text — Helvetica Neue Regular, solid fill (programmatic, never AI-generated)
   if (hasBack && backCenter) {
     const layout = getSweepLayout();
-    drawCenterBack(ctx, backCenter.toUpperCase(), layout, primaryCol);
+    drawCenterBack(ctx, backCenter.toUpperCase(), layout, secondaryCol);
   }
 
   return canvas.toDataURL('image/png');
