@@ -1608,7 +1608,7 @@ function getSweepLayout() {
   const m = selectedModel, s = selectedShot;
   if (s === 'multi_view') return { p0:[335,490], p1:[512,200], p2:[690,490], cx:512, cy:570, fs:66 };
   if (s === 'flat_lay')   return { p0:[120,490], p1:[512,380], p2:[900,490], cx:512, cy:590, fs:82 };
-  if (m === 'pair')       return { p0:[574,533], p1:[748,461], p2:[912,533], cx:270, cy:580, fs:64 };  // cx=270 = female's back center; cy=580 = below sweep arch
+  if (m === 'pair')       return { p0:[574,533], p1:[748,461], p2:[912,533], cx:270, cy:625, fs:64 };  // cx=270 = female's back center; cy=625 = well below sweep arch
   if (m === 'pair_fm')    return { p0:[65,495],  p1:[278,380], p2:[488,495], cx:278, cy:560, fs:64 };
   if (m === 'group')      return { p0:[355,490], p1:[560,390], p2:[760,490], cx:560, cy:560, fs:60 };
   return                         { p0:[100,495], p1:[512,380], p2:[920,495], cx:512, cy:575, fs:78 };  // solo
@@ -1665,18 +1665,42 @@ function drawSweepArc(ctx, text, layout, strokeCol) {
 
 function drawCenterBack(ctx, text, layout, strokeCol) {
   const { cx, cy, fs } = layout;
+  const maxW = 260; // max pixel width for center-back text on female's back panel
   ctx.save();
-  const fontSize = Math.round(fs * 0.52);
-  ctx.font = `400 ${fontSize}px "Helvetica Neue",Helvetica,Arial,sans-serif`;
   ctx.textAlign    = 'center';
   ctx.textBaseline = 'top';
-  // Outline first for legibility
-  ctx.lineWidth    = Math.max(2, fontSize * 0.09);
   ctx.lineJoin     = 'round';
-  ctx.strokeStyle  = 'rgba(0,0,0,0.45)';
-  ctx.strokeText(text.toUpperCase(), cx, cy);
-  ctx.fillStyle    = strokeCol;
-  ctx.fillText(text.toUpperCase(), cx, cy);
+
+  // Step 1: auto-shrink font until text fits maxW or hits floor
+  let fontSize = Math.round(fs * 0.52);
+  ctx.font = `400 ${fontSize}px "Helvetica Neue",Helvetica,Arial,sans-serif`;
+  while (ctx.measureText(text.toUpperCase()).width > maxW && fontSize > 16) {
+    fontSize -= 2;
+    ctx.font = `400 ${fontSize}px "Helvetica Neue",Helvetica,Arial,sans-serif`;
+  }
+
+  // Step 2: if still too wide, word-wrap to two lines
+  let lines = [text.toUpperCase()];
+  if (ctx.measureText(text.toUpperCase()).width > maxW) {
+    const words = text.toUpperCase().split(' ');
+    const mid   = Math.ceil(words.length / 2);
+    lines = [words.slice(0, mid).join(' '), words.slice(mid).join(' ')];
+    // bump back up for two-line layout
+    fontSize = Math.round(fs * 0.46);
+    ctx.font = `400 ${fontSize}px "Helvetica Neue",Helvetica,Arial,sans-serif`;
+  }
+
+  ctx.lineWidth = Math.max(2, fontSize * 0.09);
+  const lineH   = fontSize + 5;
+
+  lines.forEach((line, i) => {
+    const yPos = cy + i * lineH;
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+    ctx.strokeText(line, cx, yPos);
+    ctx.fillStyle   = strokeCol;
+    ctx.fillText(line, cx, yPos);
+  });
+
   ctx.restore();
 }
 
@@ -1738,7 +1762,7 @@ async function applyCompositing(dataUrl) {
     const logoImg   = await loadImg(cleanLogo);
     if (logoImg) {
       let lx=512, ly=450, ls=85;  // hockey puck size — small crest, not a full chest graphic
-      if (selectedModel==='pair')     { lx=700; ly=385; ls=100; }  // male is RIGHT side of frame; ly=385 = upper chest, ls=100 for proper crest size
+      if (selectedModel==='pair')     { lx=670; ly=385; ls=100; }  // male is RIGHT side of frame; lx=670 calibrated to male chest center in AI pair outputs
       if (selectedModel==='pair_fm')  { lx=245; ly=450; ls=80; }
       if (selectedModel==='group')    { lx=315; ly=445; ls=80; }
       if (selectedShot ==='flat_lay') { lx=512; ly=405; ls=110; }
