@@ -817,7 +817,7 @@ const MODEL_QUAL = `The models are PROFESSIONAL FASHION MODELS with elite, aspir
 const MODEL_PRESENTATIONS = {
   solo_male:   `A single male professional fashion model wearing the garment. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
   solo_female: `A single female professional fashion model wearing the garment, hair styled in a casual messy bun. Confident, powerful athletic stance facing the camera squarely so the chest design is fully visible. ${MODEL_QUAL}`,
-  pair:        `Two young athletic adult models with toned, athletic builds. Relaxed, natural, confident posture. STRICT COMPOSITION RULE — do not deviate: LEFT SIDE OF FRAME = FEMALE model, body turned completely away from camera so the BACK of the hoodie faces the viewer, head turned left over her shoulder showing her face in 3/4 profile, loose messy blonde bun, hood flat and smooth against her back. RIGHT SIDE OF FRAME = MALE model, body facing toward the camera so the FRONT of the hoodie faces the viewer, relaxed slightly angled stance, short hair, confident casual expression. NO drawstrings visible on either hoodie. ${MODEL_QUAL}`,
+  pair:        `Two young athletic adult models with toned, athletic builds. STRICT COMPOSITION — DO NOT DEVIATE FOR ANY REASON: LEFT SIDE OF FRAME = FEMALE model, body rotated completely away from camera (180° — full back facing viewer), head turned back over left shoulder in 3/4 profile, loose messy bun, hood lying completely flat against her back. RIGHT SIDE OF FRAME = MALE model, body facing DIRECTLY toward the camera — chest SQUARE to the lens, both arms relaxed at sides, standing upright — so the FULL FRONT of the hoodie is visible to the viewer. Short hair, confident direct gaze. The male MUST face the camera head-on; any back-angle on the male is a composition failure. NO drawstrings visible on either hoodie. ${MODEL_QUAL}`,
   pair_fm:     `Two professional fashion models wearing the garment, side by side. COMPOSITION: The FEMALE model is on the LEFT SIDE of the frame, body slightly angled, facing toward the camera showing the garment front. The MALE model is on the RIGHT SIDE of the frame, facing away at a 3/4 back angle showing the garment back. The female model has her hair styled in a casual messy bun. Close together, confident athletic poses. ${MODEL_QUAL}`,
 
   group:       `Three professional fashion models in a dynamic editorial group, mixed male and female, at complementary angles showing different garment views. ${MODEL_QUAL}`,
@@ -1279,7 +1279,7 @@ function buildEditPrompt() {
 `
     : '';
 
-  let parts = [`${styleRefNote}Add ONLY these design elements to the hoodie — change absolutely nothing else (models, poses, lighting, background, garment shape, fabric color). CRITICAL: the model on the LEFT is facing AWAY from camera (showing the BACK of the hoodie). The model on the RIGHT is facing toward the camera (showing the FRONT of the hoodie). Do not swap them.`];
+  let parts = [`${styleRefNote}Add ONLY these design elements to the hoodie — change absolutely nothing else (models, poses, lighting, background, garment shape, fabric color). CRITICAL COMPOSITION LOCK: the model on the LEFT is facing AWAY from the camera (showing the BACK of the hoodie). The model on the RIGHT is facing DIRECTLY toward the camera, chest square to the lens (showing the FULL FRONT of the hoodie). Do not swap them. Do not rotate the male away from camera. The front design must be fully visible on the right-side model.`];
   let idx = 1;
 
   // Front is always clean except for the small crest — explicitly state this
@@ -1385,14 +1385,22 @@ async function generate() {
     : null;
 
   // All jobs run in parallel (each job = two API calls sequentially)
-  const jobs = Array(selectedCount).fill(null).map(async () => {
+  const VARIATION_HINTS = [
+    '',
+    ' Generate with slightly different lighting (cooler, more dramatic side lighting) and a marginally different camera angle (slightly lower, looking up at models). Both models have slightly more intense expressions.',
+    ' Generate with warmer golden-hour studio lighting, camera at eye level, models in a slightly closer crop. The female model has a stronger over-shoulder look.',
+    ' Generate with high-contrast editorial lighting (one strong key light), camera slightly elevated looking down. More dynamic energy in the poses while maintaining the strict front/back composition.',
+  ];
+  const jobs = Array(selectedCount).fill(null).map(async (_, jobIdx) => {
     try {
+      const variationHint = VARIATION_HINTS[jobIdx % VARIATION_HINTS.length];
+      const jobBlankPrompt = blankPrompt + variationHint;
       // Pass 1 — blank hoodie base
       let rawUrl;
       if (googleKey) {
-        rawUrl = await geminiGenerate(googleKey, blankPrompt, styleRef).catch(e => { showError(e.message); return null; });
+        rawUrl = await geminiGenerate(googleKey, jobBlankPrompt, styleRef).catch(e => { showError(e.message); return null; });
       } else {
-        rawUrl = await getRawImageUrl(apiKey, blankPrompt);
+        rawUrl = await getRawImageUrl(apiKey, jobBlankPrompt);
       }
       if (!rawUrl) return null;
 
