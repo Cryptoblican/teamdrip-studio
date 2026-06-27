@@ -1782,11 +1782,43 @@ async function applyCompositing(dataUrl) {
     }
   }
 
-  // Secondary back text — scale layout coords to actual image dims
+  // Secondary back text — DYNAMIC positioning: scan the left half of the canvas for
+  // gold arch pixels, find where the arch actually ends, then draw text 50px below it.
+  // This adapts to different arch sizes/positions across AI generations.
   if (hasBack && backCenter) {
     const layout = getSweepLayout();
-    const scaledLayout = { cx: layout.cx * sx, cy: layout.cy * sy, fs: layout.fs * Math.min(sx, sy) };
-    drawCenterBack(ctx, backCenter.toUpperCase(), scaledLayout, secondaryCol);
+    const leftW   = Math.floor(IW * 0.52); // scan left ~52% (female's side)
+    const imgData = ctx.getImageData(0, 0, leftW, IH).data;
+    let minGX = leftW, maxGX = 0, maxGY = 0, goldCount = 0;
+    for (let y = Math.floor(IH * 0.1); y < Math.floor(IH * 0.95); y++) {
+      for (let x = 5; x < leftW - 5; x++) {
+        const i = (y * leftW + x) * 4;
+        const r = imgData[i], g = imgData[i+1], b = imgData[i+2];
+        // Gold/yellow-gold pixels: high R, moderate G, low B, not skin tone
+        if (r > 150 && r < 240 && g > 120 && g < 215 && b > 70 && b < 160
+            && r - b > 40 && g - b > 20 && b < g * 0.78) {
+          goldCount++;
+          if (x < minGX) minGX = x;
+          if (x > maxGX) maxGX = x;
+          if (y > maxGY) maxGY = y;
+        }
+      }
+    }
+    console.log(`[TeamDrip] arch detection: ${goldCount} gold px, X ${minGX}–${maxGX}, bottomY ${maxGY}`);
+    let textCX, textCY;
+    if (goldCount > 300 && maxGY > IH * 0.2) {
+      // Good arch detected — place text centered under it, 50px below
+      textCX = (minGX + maxGX) / 2;
+      textCY = maxGY + 50;
+      console.log(`[TeamDrip] dynamic text position: cx=${textCX.toFixed(0)} cy=${textCY.toFixed(0)}`);
+    } else {
+      // Fallback to scaled static coords
+      textCX = layout.cx * sx;
+      textCY = layout.cy * sy;
+      console.log(`[TeamDrip] fallback static position: cx=${textCX.toFixed(0)} cy=${textCY.toFixed(0)}`);
+    }
+    const fs = layout.fs * Math.min(sx, sy);
+    drawCenterBack(ctx, backCenter.toUpperCase(), { cx: textCX, cy: textCY, fs }, secondaryCol);
   }
 
   return canvas.toDataURL('image/png');
