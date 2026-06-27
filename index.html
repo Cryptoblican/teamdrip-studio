@@ -1437,7 +1437,7 @@ async function geminiGenerate(googleKey, prompt, styleRefDataUrl) {
   parts.push({ text: prompt });
   const body = {
     contents: [{ parts }],
-    generationConfig: { responseModalities: ['TEXT', 'IMAGE'], aspectRatio: '1:1' },
+    generationConfig: { responseModalities: ['TEXT', 'IMAGE'], imageConfig: { aspectRatio: '1:1' } },
   };
   const res = await fetch(endpoint, {
     method: 'POST',
@@ -1475,7 +1475,7 @@ async function geminiEdit(googleKey, imageDataUrl, editPrompt, logoDataUrl, styl
 
   const body = {
     contents: [{ parts }],
-    generationConfig: { responseModalities: ['TEXT', 'IMAGE'] },
+    generationConfig: { responseModalities: ['TEXT', 'IMAGE'], imageConfig: { aspectRatio: '1:1' } },
   };
   const res = await fetch(endpoint, {
     method: 'POST',
