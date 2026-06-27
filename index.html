@@ -1304,11 +1304,9 @@ function buildEditPrompt() {
     } else {
       backText = `${idx++}. On the model facing away (back view): Hood flat and smooth against her back — no visible seams or panel lines. Add "${sweepUpper}" as a massive bold collegiate arch that EXTENDS ALL THE WAY across BOTH SLEEVES — first letter begins on the left sleeve, arch crosses entire back, last letter ends on the right sleeve cuff. Sleeve tip to sleeve tip, not confined to the back panel only. ${secondary} outline/hollow style.`;
     }
-    // Secondary text — Helvetica Neue Regular, solid fill (also in AI prompt for best results)
-    if (document.getElementById('backCenterText')?.value.trim()) {
-      const bc = document.getElementById('backCenterText').value.trim().toUpperCase();
-      backText += `\nImmediately below the arch with a small comfortable gap: "${bc}" centered on the back panel in clean Helvetica Neue Regular — thin, clean, modern sans-serif, uniform letter weight, no serifs, no bold. Solid ${secondary} filled letters, NOT outline. Small understated size (one-third height of arch letters).`;
-    }
+    // NOTE: center back text (e.g. "UNIVERSITY OF COLORADO") is intentionally omitted from the AI prompt.
+    // It is drawn exclusively by the canvas compositing step (applyCompositing → drawCenterBack).
+    // Keeping it here caused the AI to double-draw it, sometimes landing on the wrong model.
     parts.push(backText);
   }
 
@@ -1388,9 +1386,9 @@ async function generate() {
   // All jobs run in parallel (each job = two API calls sequentially)
   const VARIATION_HINTS = [
     '',
-    ' Generate with slightly different lighting (cooler, more dramatic side lighting) and a marginally different camera angle (slightly lower, looking up at models). Both models have slightly more intense expressions.',
-    ' Generate with warmer golden-hour studio lighting, camera at eye level, models in a slightly closer crop. The female model has a stronger over-shoulder look.',
-    ' Generate with high-contrast editorial lighting (one strong key light), camera slightly elevated looking down. More dynamic energy in the poses while maintaining the strict front/back composition.',
+    ' LIGHTING VARIATION ONLY — keep identical composition, framing, poses, and camera angle: use slightly cooler, more dramatic side lighting with deeper shadows.',
+    ' LIGHTING VARIATION ONLY — keep identical composition, framing, poses, and camera angle: use warmer, softer golden-hour studio lighting.',
+    ' LIGHTING VARIATION ONLY — keep identical composition, framing, poses, and camera angle: use high-contrast single key light from camera-left, strong shadow on opposite side.',
   ];
   const jobs = Array(selectedCount).fill(null).map(async (_, jobIdx) => {
     try {
