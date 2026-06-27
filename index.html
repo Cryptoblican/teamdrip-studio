@@ -292,7 +292,7 @@
       overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;
     }
     .image-card:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.4); }
-    .image-card img { width: 100%; display: block; aspect-ratio: 1; object-fit: cover; background: var(--surface2); }
+    .image-card img { width: 100%; display: block; aspect-ratio: 1 / 1; object-fit: contain; background: #111; }
     .image-card-body { padding: 11px; }
     .image-card-label { font-size: 0.82rem; font-weight: 700; margin-bottom: 3px; }
     .image-card-meta { font-size: 0.73rem; color: var(--text2); margin-bottom: 9px; }
@@ -805,7 +805,7 @@ const TEXT_STYLES = {
 };
 
 const SHOT_STYLES = {
-  studio:     `Professional athletic apparel studio photograph. Neutral warm gray seamless paper studio backdrop. Soft professional studio lighting with slight warmth. Commercial athletic apparel photography. Sharp focus. Clean minimal aesthetic.`,
+  studio:     `Professional athletic apparel studio photograph. BACKGROUND: neutral warm gray seamless paper studio backdrop ONLY — no outdoor scenery, no buildings, no campus, no stadium, no windows, no environment. Pure studio setting with soft professional lighting and slight warmth. Commercial athletic apparel photography. Sharp focus. Clean minimal aesthetic.`,
   campus:     `On-location athletic photography at this specific school. The model stands on the school's campus - in front of the football stadium exterior, on the athletic field, or on the campus quad with recognizable architecture in the background. Natural outdoor lighting. The setting reinforces the school's identity and creates an aspirational, place-specific feel.`,
   multi_view: `A single professional product photography image composed as a triptych - three panels side by side: LEFT PANEL shows the garment's front design on a model (or flat lay) clearly showing the chest graphic; CENTER PANEL shows the garment's back on a model (or flat lay) showing the back design; RIGHT PANEL shows a close-up detail of either the main chest logo, the interior liner, or a distinctive design element. All three panels share consistent lighting, background, and color treatment. The three panels are clearly separated within the single image.`,
   action:     `Dynamic sports editorial action photography. An athlete in energetic motion - running, jumping, or in a sports pose - wearing the garment in an athletic environment (stadium, gym, field, or court). High-energy, dramatic lighting with a sense of speed and power. Magazine-quality sports photography.`,
@@ -1427,7 +1427,7 @@ async function generate() {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 async function geminiGenerate(googleKey, prompt, styleRefDataUrl) {
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent`;
   // Include style reference image first (if available), then text prompt
   const parts = [];
   if (styleRefDataUrl && styleRefDataUrl.startsWith('data:')) {
@@ -1437,7 +1437,7 @@ async function geminiGenerate(googleKey, prompt, styleRefDataUrl) {
   parts.push({ text: prompt });
   const body = {
     contents: [{ parts }],
-    generationConfig: { responseModalities: ['TEXT', 'IMAGE'] },
+    generationConfig: { responseModalities: ['TEXT', 'IMAGE'], aspectRatio: '1:1' },
   };
   const res = await fetch(endpoint, {
     method: 'POST',
@@ -1458,7 +1458,7 @@ async function geminiGenerate(googleKey, prompt, styleRefDataUrl) {
 async function geminiEdit(googleKey, imageDataUrl, editPrompt, logoDataUrl, styleRefDataUrl) {
   const mimeType = imageDataUrl.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
   const base64   = imageDataUrl.split(',')[1];
-  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent`;
+  const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent`;
 
   // Parts order: [style ref (if any), base hoodie, logo (if any), edit instructions]
   const parts = [];
