@@ -1608,7 +1608,7 @@ function getSweepLayout() {
   const m = selectedModel, s = selectedShot;
   if (s === 'multi_view') return { p0:[335,490], p1:[512,200], p2:[690,490], cx:512, cy:570, fs:66 };
   if (s === 'flat_lay')   return { p0:[120,490], p1:[512,380], p2:[900,490], cx:512, cy:590, fs:82 };
-  if (m === 'pair')       return { p0:[574,533], p1:[748,461], p2:[912,533], cx:270, cy:625, fs:64 };  // cx=270 = female's back center; cy=625 = well below sweep arch
+  if (m === 'pair')       return { p0:[574,533], p1:[748,461], p2:[912,533], cx:340, cy:585, fs:64 };  // cx=340 calibrated from actual image (arch apex at canvas x≈339); cy=585 = ~40px below arch bottom
   if (m === 'pair_fm')    return { p0:[65,495],  p1:[278,380], p2:[488,495], cx:278, cy:560, fs:64 };
   if (m === 'group')      return { p0:[355,490], p1:[560,390], p2:[760,490], cx:560, cy:560, fs:60 };
   return                         { p0:[100,495], p1:[512,380], p2:[920,495], cx:512, cy:575, fs:78 };  // solo
@@ -1665,7 +1665,7 @@ function drawSweepArc(ctx, text, layout, strokeCol) {
 
 function drawCenterBack(ctx, text, layout, strokeCol) {
   const { cx, cy, fs } = layout;
-  const maxW = 260; // max pixel width for center-back text on female's back panel
+  const maxW = 300; // max pixel width for center-back text on female's back panel
   ctx.save();
   ctx.textAlign    = 'center';
   ctx.textBaseline = 'top';
